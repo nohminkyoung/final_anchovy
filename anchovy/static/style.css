@@ -1,4 +1,10 @@
-.comment {
-    border-top:dotted 1px #add;
-    font-size:0.7em;
+html,body {
+    font-family: 'IM Fell Great Primer SC', 'Noto Sans KR', sans-serif;
+    font-size : 12px;
 }
+
+.container_box{ 
+    width: 85%;  
+    margin:30px auto 0 auto;
+} 
+

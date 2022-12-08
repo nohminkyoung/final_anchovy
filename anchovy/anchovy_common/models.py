@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser
 class Custom_User(AbstractUser):
     nickname = models.CharField(max_length=32, verbose_name = '유저 닉네임',default = '') # 닉네임 추가  
     
-    
 class User_status(models.Model):
     author = models.ForeignKey(Custom_User, on_delete=models.CASCADE)
     username = models.CharField(max_length=150, verbose_name = '유저 아아디')
@@ -27,4 +26,3 @@ class battle(models.Model):
     earn_nickname = models.CharField(max_length=150, verbose_name = '뺏은사람 닉네임')
     lose_date = models.DateField(verbose_name = '뺏긴 날짜')
     lose_time = models.TimeField(verbose_name = '뻇긴 시간')
->>>>>>> nmk2

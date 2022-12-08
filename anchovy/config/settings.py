@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+AUTH_USER_MODEL = 'anchovy_common.Custom_User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anchovy_common.apps.AnchovyCommonConfig',
+    #'anchovy_main.apps.AnchovyMainConfig',
+    #'anchovy_notice.apps.AnchovyNoticeConfig',
+    #'anchovy_settings.apps.AnchovySettingsConfig',
+    #'anchovy_train.apps.AnchovyTrainConfig',
+    #'anchovy_user.apps.AnchovyUserConfig'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        "NAME" : "anchovy",
+        "NAME" : "anchovy_db",
         "USER" : 'develop',
         "PASSWORD" : 'anchovy1!',
         'HOST' : 'database-dev.cclpxl5ttlgd.ap-northeast-2.rds.amazonaws.com',
@@ -134,3 +140,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+

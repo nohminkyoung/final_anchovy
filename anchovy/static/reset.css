@@ -1,0 +1,21 @@
+/***** reset *****/
+a,address, article,aside,
+b,body,center,dd,del,details,
+dfn,div,dl,dt,em,footer,form,
+h1,h2,h3,h4,h5,h6,header,
+html,i,iframe,img,ins,label,
+legend,li,main,mark,menu,nav,object,
+ol,p,section,span,strong,summary,table,
+tbody,td,tfoot,th,thead,tr,tt,u,ul,video{
+    margin:0;padding:0;border:0;
+}
+
+button{border:0}
+article,aside,details,
+figcaption,figure,footer,header,
+hgroup,main,menu,nav,section{display:block}
+menu,ol,ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}
+table{border-collapse:collapse;border-spacing:0}
+

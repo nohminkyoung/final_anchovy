@@ -1,1 +1,63 @@
-a
+{% extends "detail_base.html" %}
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  //$('#top_menu .logo').css('display', 'block');
+  
+  // 캘린더 페이지 적용
+  //$('#top_menu .re_icon').css('display', 'block');
+  
+  // 친구 상세페이지 적용
+  $('#top_menu .friend_status').css('display', 'block');
+  
+  // 친구 상세페이지 적용 (친구 추가 및 친구 해제)
+  $(".friend_status img").click(function(){
+    if($(this).hasClass("clicked")){
+      $(this).siblings().addClass("clicked");
+      $(this).removeClass("on clicked");
+    }else{
+      $(this).addClass("clicked");
+      $(this).siblings().removeClass("clicked");
+    }
+  });
+
+  // 알림 페이지 적용
+  //$('#top_menu .prev').css('display', 'none');
+  //$('#top_menu .logo').css('display', 'block');
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="an_container">
+
+  <p class="an_title_400">
+    <strong>닉네임</strong>님은<br>
+    <strong>2 프로틴</strong>으로 <strong>멸치</strong>입니다.
+  </p>
+  <p class="recode">20/11/28  스쿼트 27점 달성</p>
+  <p class="">목표 점수</p>
+  
+  
+  <p class="an_sm_txt">72 120</p>
+  
+  <div class="btn_box">
+    <button type="button">성장하기</button>
+    <button type="button">운동하기</button>
+  </div>  
+
+  <p class="an_sm_txt c_info">
+    반갑네 황새치라고 하네.. 나로 말을 할 것 같으면 
+    영국에서도 가장 엘레강스한 황새치 중 황새치이지. 
+    그렇게 보이지 않는다고? 
+    그건 자네가 아직까지 부족하다는 증거이지.. 
+    자네가 엘레강스 해지면 나를 제대로 볼 수 있을 것일세
+  </p>
+  <p class="an_error_txt">* 닉네임에는 공백을 추가 할 수 없습니다.</p>
+</div>
+
+{% include 'navbar.html' %}
+{% endblock %}

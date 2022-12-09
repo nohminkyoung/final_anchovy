@@ -1,10 +1,58 @@
-html,body {
-    font-family: 'IM Fell Great Primer SC', 'Noto Sans KR', sans-serif;
-    font-size : 12px;
+/*********** 공통 ************/
+html,body {font-family: 'Noto Sans KR', sans-serif; font-size : 4.5vw; font-weight:400}
+body{line-height:1.3}
+.an_container{width: 82%; margin:30px auto 0 auto;} 
+
+/***** title *****/
+/* 기본 (bold) */
+.an_title {font-size:6.2vw; font-weight: 700;}  
+/* 기본 (500) */
+.an_title_400{font-size:6.2vw; font-weight: 400;} 
+/* 작은 (bold) : 세트 선택, 운동중, 친구목록, 랭킹 */
+.an_title_sm_500{font-size:5vw; font-weight: 700;} 
+/* 큰 (bold) : 스쿼트 */
+.an_title_lg_700{font-size:8.5vw; font-weight: 700;} 
+
+
+/***** 본문 *****/
+/* 안내문구 및 주석, 게이지 숫자, 캐릭터 소개, 캘린더 */
+.an_sm_txt {font-size:3.4vw;}
+/* 시스템 메세지 */
+.an_error_txt {font-size:3.4vw; color:#ED2823}
+.an_success_txt {font-size:3.4vw; color:#0039FF}
+
+
+/* 임시 적용 */
+/* 기록 */
+.recode {margin-top:10px;}
+
+/* 캐릭터 설명 */
+.c_info {
+    border:3px solid #000; 
+    border-radius:4vw; 
+    padding:3.5vw; margin:10px 0;
 }
 
-.container_box{ 
-    width: 85%;  
-    margin:30px auto 0 auto;
-} 
+/* 버튼 */
+.btn_box {
+    display: flex; 
+    justify-content: space-between; 
+    margin:20px 0;
+}
+.btn_box button {
+    text-align: center; 
+    border-radius: 2vw; 
+    padding:3vw 10.2vw; 
+    background:#000; 
+    color:#fff
+}
 
+/******************* 상세페이지 베이스 ********************/
+#top_menu {position:relative; width:82%; height: 8vw; margin:5vw auto 0;}
+#top_menu li img {height:7.5vw}
+#top_menu li img.on {display:block}
+#top_menu li img.logo {height:15vw}
+#top_menu .top_center img {display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)}
+#top_menu .friend_status {display:none}
+#top_menu .friend_status img {display:none; position:absolute; top:0; right:0;}
+#top_menu .friend_status img.clicked {display:block;}

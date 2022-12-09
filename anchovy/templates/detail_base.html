@@ -16,12 +16,28 @@
         
         <title>AI 운동</title>
     </head>
-<body> 
-{% block content %}
-{% endblock %}
-<script src="{% static 'jquery-3.4.1.min.js' %}"></script>
-<script src="{% static 'bootstrap.min.js' %}"></script>
-{% block script %}
-{% endblock %}
-</body>
+  <body>
+
+    <!-- 상단 메뉴 시작 -->
+    <ul id="top_menu">
+      <li class="prev"><a><img src="/static/image/previous.png" alt="이전" /></a></li>
+      <li class="top_center">
+        <img class="logo" src="/static/image/logo.png" alt="멸치 로고" />
+        <img class="re_icon"src="/static/image/record.png" alt="기록 아이콘" />
+      </li>
+      <li class="friend_status">
+        <img class="clicked " src="/static/image/add_user.png" alt="친구 추가 안됨" />
+        <img src="/static/image/add_user_on.png" alt="친구 추가 됨" />
+      </li>
+    </ul>
+    <!-- 상단 메뉴 끝 -->
+    
+    {% block content %}
+    {% endblock %}
+    <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    {% block script %}
+    {% endblock %}
+    
+  </body>
 </html>

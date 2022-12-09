@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'anchovy_common.apps.AnchovyCommonConfig',
-    #'anchovy_main.apps.AnchovyMainConfig',
-    #'anchovy_notice.apps.AnchovyNoticeConfig',
-    #'anchovy_settings.apps.AnchovySettingsConfig',
-    #'anchovy_train.apps.AnchovyTrainConfig',
-    #'anchovy_user.apps.AnchovyUserConfig'
+    'anchovy_main.apps.AnchovyMainConfig',
+    'anchovy_notice.apps.AnchovyNoticeConfig',
+    'anchovy_settings.apps.AnchovySettingsConfig',
+    'anchovy_train.apps.AnchovyTrainConfig',
+    'anchovy_user.apps.AnchovyUserConfig'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,18 @@
+/* 타이틀 */
+.fd_add_cont p {text-align:center;  }
+.fd_add_cont span {
+  display:block; 
+  margin:7vw 0;
+  text-align:center; 
+  font-size:4vw; color:#555;
+}
+
+/* 입력란 */
+input.fd_id {width:100%; border:2px solid #000; padding:3vw 4.5vw; }
+input.fd_id::placeholder {
+  font-size:4vw; padding:0; margin:0;
+  color: #BCBCBC;
+}
+input.fd_id:focus {outline: none;}
+
+/* 버튼 */

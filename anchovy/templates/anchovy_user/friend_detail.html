@@ -1,0 +1,47 @@
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'friend_detail.css' %}">
+
+
+<!-- ****** 본문 ****** -->
+<div class="fd_info an_container">
+  <div class="fd_info_box">
+    <p class="fd_nick an_title">상어대장</p>
+    <p class="fd_id">akisang</p>
+
+    <div class="fd_char"><img src="/static/image/shark_1.png"/></div>
+
+    <p class="protein">22프로틴</p>
+  </div>
+
+  <button type="submit" class="full_btn">공격하기</button>
+</div>
+
+
+<!-- 팝업 시작 -->
+
+<!-- 팝업 끝 -->
+
+{% endblock %}
+
+
+{% block script %}
+<script type='text/javascript'>
+  // 친구 상세페이지 적용
+  $('#top_menu .friend_status').css('display', 'block');
+    
+  // 친구 상세페이지 적용 (친구 추가 및 친구 해제)
+  $(".friend_status img").click(function(){
+    if($(this).hasClass("clicked")){
+      $(this).siblings().addClass("clicked");
+      $(this).removeClass("on clicked");
+    }else{
+      $(this).addClass("clicked");
+      $(this).siblings().removeClass("clicked");
+    }
+  });
+</script>
+{% endblock %}

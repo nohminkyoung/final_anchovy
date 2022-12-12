@@ -1,1 +1,114 @@
-b
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'notice.css' %}">
+
+<!-- 상단 로고 노출 -->
+<div id="top_menu">
+  <span class="top_center">
+    <img class="logo" src="/static/image/logo.png" alt="멸치 로고" />
+  </span>
+</div>
+
+<!-- 알림이 없을때 -->
+<div class="emty_notice an_container">
+  <div><img src="/static/image/logo.png" /></div>
+  <p>아직 소식이 없습니다.</p>
+</div>
+
+
+<!-- 알림 -->
+<div class="an_container notice_box">
+  <div class="day">
+    <p class="date">2022.10.04</p>
+    <ul>
+      <li>
+        <div class="left">
+          <p class="no_status">⬆️ 프로틴 상승!! </p>
+          <span class="no_txt">참치나와님의 프로틴을 뺏었어요!</span>
+        </div>
+        <span class="no_time">3시간 전</span>
+      </li>
+      <li>
+        <div class="left">
+          <p class="no_status">⬇️ 프로틴 손실!! </p>
+          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
+        </div>
+        <span class="no_time">22시간 전</span>
+      </li>
+    </ul>
+  </div>
+  <div class="day">
+    <p class="date">2022.09.20</p>
+    <ul>
+      <li>
+        <div class="left">
+          <p class="no_status">⚠️ 근손실 위험!!  </p>
+          <span class="no_txt">운동을 안한지 오래 됐어요!</span>
+        </div>
+        <span class="no_time"></span>
+      </li>
+      <li>
+        <div class="left">
+          <p class="no_status">⬇️ 프로틴 손실!! </p>
+          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
+        </div>
+        <span class="no_time"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="day">
+    <p class="date">2022.09.20</p>
+    <ul>
+      <li>
+        <div class="left">
+          <p class="no_status">⚠️ 근손실 위험!!  </p>
+          <span class="no_txt">운동을 안한지 오래 됐어요!</span>
+        </div>
+        <span class="no_time"></span>
+      </li>
+      <li>
+        <div class="left">
+          <p class="no_status">⬇️ 프로틴 손실!! </p>
+          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
+        </div>
+        <span class="no_time"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="day">
+    <p class="date">2022.09.20</p>
+    <ul>
+      <li>
+        <div class="left">
+          <p class="no_status">⚠️ 근손실 위험!!  </p>
+          <span class="no_txt">운동을 안한지 오래 됐어요!</span>
+        </div>
+        <span class="no_time"></span>
+      </li>
+      <li>
+        <div class="left">
+          <p class="no_status">⬇️ 프로틴 손실!! </p>
+          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
+        </div>
+        <span class="no_time"></span>
+      </li>
+    </ul>
+  </div>
+  
+</div>
+
+
+
+{% include 'navbar.html' %}
+{% endblock %}
+
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+</script>
+{% endblock %}

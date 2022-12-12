@@ -1,0 +1,77 @@
+/************* 탭메뉴 **************/
+.tab_title li {
+  float: left;
+  width: 50%; padding: 10px 15px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+.tab_title li.on {border-bottom:2px solid #000;font-weight: bold;}
+
+
+
+
+
+/************* 친구 목록 **************/
+.tab_cont {clear: both; height: 122vw; overflow: auto;}
+.tab_cont div {display: none; text-align: center;}
+.tab_cont div.on {display: block;}
+
+.tab_cont ul.fd_list::after {display: inline-block; clear: both; }
+.tab_cont ul.fd_list li {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  float: left; text-align: center;
+  width: 25.9vw; height: 34vw; padding:4.5vw 2vw 3vw; margin:2vw 2vw 0 0; 
+  border:2px solid #000; border-radius:3vw
+}
+.tab_cont ul.fd_list li:first-child {justify-content: flex-end;}
+.tab_cont ul.fd_list li:nth-child(3n) {margin-right:0;}
+.tab_cont ul.fd_list li:nth-child(-n+3) {margin-top:4vw;}
+.tab_cont ul.fd_list li:nth-last-child(3) {margin-bottom:2vw;}
+/* 추가 버튼 */
+.tab_cont ul.fd_list li.add_btn img {width:6vw; height:unset}
+.tab_cont ul.fd_list li.add_btn span {margin-top:8vw}
+/* 캐릭터 */
+.tab_cont ul.fd_list li img {width:18vw; height: 18vw;}
+.tab_cont ul.fd_list li span {display: block; margin-top:2vw}
+
+
+
+
+
+/************* 랭킹 **************/
+.tab_cont .rk_list {margin-top:3vw}
+.tab_cont .rk_list > li {padding:2vw 0; border-bottom:1px solid #ececec}
+
+/* 공통 */
+.tab_cont .rk_info {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+.tab_cont .rk_info li:nth-child(2) {width:25vw; overflow: hidden; text-overflow:ellipsis; white-space:nowrap;}
+.tab_cont .rk_info li img {width:11vw}
+
+/* 나의 순위 및 정보 */
+.tab_cont div.my_rk {
+  display: block;
+  border: 2px solid #000;
+  border-radius: 2vw;
+  padding: 2vw 3vw;
+  background-color: #fff;
+  font-weight: 500;
+  width: 86%;
+  position: fixed;
+  bottom: 21vw;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+
+
+
+

@@ -20,7 +20,7 @@
 
     <!-- 상단 메뉴 시작 -->
     <ul id="top_menu">
-      <li class="prev"><a><img src="/static/image/previous.png" alt="이전" /></a></li>
+      <li class="prev"><a href="{{request.META.HTTP_REFERER}}"><img src="/static/image/previous.png" alt="이전" /></a></li>
       <li class="top_center">
         <img class="logo" src="/static/image/logo.png" alt="멸치 로고" />
         <img class="re_icon"src="/static/image/record.png" alt="기록 아이콘" />
@@ -38,6 +38,5 @@
     <script src="{% static 'bootstrap.min.js' %}"></script>
     {% block script %}
     {% endblock %}
-    
   </body>
 </html>

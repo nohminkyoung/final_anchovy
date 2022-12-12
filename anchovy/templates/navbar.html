@@ -1,4 +1,50 @@
+{% load static %}
+<script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+
+
 <!-- 네이게이션바 -->
 <nav>
-
+  <div>
+    <ul class="notice_link"> 
+      <a href="/anchovy_notice">
+        <li class="de"><img src="/static/image/notice.png" alt="알림"/></a></li>
+        <li class='ac'><img src="/static/image/notice_on.png" alt="알림 활성화"/></li>
+      </a>
+    </ul> 
+    <ul class="main_link">
+      <a href="/anchovy_main/">
+        <li class="de"><img src="/static/image/home.png" alt="홈"/></li>
+        <li class='ac'><img src="/static/image/home_on.png" alt="홈 활성화"/></li>
+      </a>
+      </ul>
+      <ul class="fd_link">
+        <a href="/anchovy_user/">
+          <li class="de"><img src="/static/image/friends.png" alt="친구목록"/></li>
+          <li class='ac'><img src="/static/image/friends_on.png" alt="친구목록 활성화"/></li>
+        </a>
+    </ul>
+  </div>
 </nav>
+
+
+{% block script %}
+<script type='text/javascript'>
+
+  var url = $(location).attr("href")
+  var notice = url.slice(-16)
+  var main = url.slice(-14)
+  var user = url.slice(-14)
+
+  if ( notice == "/anchovy_notice/"){
+    $('.notice_link li.ac').css('display', 'block');
+    $('.notice_link li.de').css('display', 'none');
+  } else if ( main == "/anchovy_main/"){
+    $('.main_link li.ac').css('display', 'block');
+    $('.main_link li.de').css('display', 'none');
+  }else if ( user == "/anchovy_user/"){
+    $('.fd_link li.ac').css('display', 'block');
+    $('.fd_link li.de').css('display', 'none');
+  }
+</script>
+
+{% endblock %}

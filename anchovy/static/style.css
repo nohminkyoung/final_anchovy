@@ -1,20 +1,31 @@
-/*********** 공통 ************/
+/**************************** 베이스 ******************************/
 html,body {font-family: 'Noto Sans KR', sans-serif; font-size : 4.5vw; font-weight:400}
-body{line-height:1.3}
-.an_container{width: 82%; margin:30px auto 0 auto;} 
+body{line-height:1.3; position: relative;}
+body.pop::before{
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.8);
+    /* -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(2px);     */
+}
+.an_container{width: 82%; margin:30px auto 0 auto; } 
 
-/***** title *****/
+/********** title **********/
 /* 기본 (bold) */
 .an_title {font-size:6.2vw; font-weight: 700;}  
-/* 기본 (500) */
+/* 기본 (400) */
 .an_title_400{font-size:6.2vw; font-weight: 400;} 
 /* 작은 (bold) : 세트 선택, 운동중, 친구목록, 랭킹 */
-.an_title_sm_500{font-size:5vw; font-weight: 700;} 
+.an_title_sm_700{font-size:5vw; font-weight: 700;} 
 /* 큰 (bold) : 스쿼트 */
 .an_title_lg_700{font-size:8.5vw; font-weight: 700;} 
 
 
-/***** 본문 *****/
+/********** 본문 **********/
 /* 안내문구 및 주석, 게이지 숫자, 캐릭터 소개, 캘린더 */
 .an_sm_txt {font-size:3.4vw;}
 /* 시스템 메세지 */
@@ -22,7 +33,54 @@ body{line-height:1.3}
 .an_success_txt {font-size:3.4vw; color:#0039FF}
 
 
-/* 임시 적용 */
+
+/********** 버튼 **********/
+/* 양쪽 버튼 */
+.btn_box {display: flex;  justify-content: space-between; margin:20px 0;}
+.btn_box button {
+    text-align: center;  
+    border-radius: 2vw; padding:3vw 10.2vw;   
+    background:#000; color:#fff
+}
+
+/* full 버튼 */
+.full_btn {
+    width:inherit; padding:3.5vw 0;
+    position:fixed; left:50%; bottom:8vw; 
+    transform:translateX(-50%);
+    background:#000; color:#fff;
+    border-radius: 2vw;
+    font-weight:300
+}
+
+
+/********** 팝업 **********/
+.popup_box {
+    display: none;
+    z-index: 10000000000000;
+    position: absolute; left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1.5px solid #000;
+    border-radius: 4vw;
+    width: 80%;
+    text-align: center;
+    padding: 40px 0 30px;
+}
+.popup_box.open {display:block}
+.popup_box .pop_btn{
+    background: #000;
+    color: #fff;
+    padding: 3.5vw 12vw; margin-top: 8vw;
+    border-radius: 2vw;
+}
+
+
+
+
+
+
+/* 임시 적용(추후에 삭제하거나 변경하기) */
 /* 기록 */
 .recode {margin-top:10px;}
 
@@ -33,26 +91,48 @@ body{line-height:1.3}
     padding:3.5vw; margin:10px 0;
 }
 
-/* 버튼 */
-.btn_box {
-    display: flex; 
-    justify-content: space-between; 
-    margin:20px 0;
-}
-.btn_box button {
-    text-align: center; 
-    border-radius: 2vw; 
-    padding:3vw 10.2vw; 
-    background:#000; 
-    color:#fff
-}
+
 
 /******************* 상세페이지 베이스 ********************/
-#top_menu {position:relative; width:82%; height: 8vw; margin:5vw auto 0;}
-#top_menu li img {height:7.5vw}
-#top_menu li img.on {display:block}
-#top_menu li img.logo {height:15vw}
+#top_menu {position:relative; width:82%; height: 8vw; margin:5vw auto 10vw;}
+#top_menu img {height:7.5vw}
+#top_menu img.on {display:block}
+#top_menu img.logo {height:15vw}
 #top_menu .top_center img {display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)}
 #top_menu .friend_status {display:none}
 #top_menu .friend_status img {display:none; position:absolute; top:0; right:0;}
 #top_menu .friend_status img.clicked {display:block;}
+
+
+
+/************************* 하단 메뉴(navbar) *******************/
+nav {
+    position:fixed; 
+    left:50%; bottom:0; 
+    transform: translateX(-50%); 
+    width:100%; height: 19.2vw; 
+    padding: 3vw 0;
+    background-color: #fff;
+}
+nav div {
+    display: flex; 
+    justify-content: space-between; align-items: center;
+    width:82%; height: inherit; 
+    padding-bottom: 5vw; margin:0 auto; 
+}
+nav div ul {position: relative; width: 8vw;}
+nav div ul li {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+nav div ul li.ac {display: none;}
+nav div ul li.de {display: block;}
+
+/* 알림 아이콘 */
+nav div ul.notice_link img {width:10vw}
+nav div ul.notice_link li.ac img {width:13vw}
+
+/* 홈 아이콘 */
+nav div ul.main_link li img {width:8vw}
+nav div ul.main_link li.ac img {width:10vw;}
+
+/* 친구 목록 아이콘 */
+nav div ul.fd_link img {width:9vw}
+nav div ul.fd_link li.ac img {width:11vw}

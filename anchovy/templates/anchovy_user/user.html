@@ -1,1 +1,259 @@
-e
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'user.css' %}">
+
+<!-- 상단 로고 노출 -->
+<div id="top_menu">
+  <span class="top_center">
+    <img class="logo" src="/static/image/logo.png" alt="멸치 로고" />
+  </span>
+</div>
+
+<!-- ****** 본문 ****** -->
+<div class="an_container">
+  <ul class="tab_title">
+    <li class="on">친구 목록</li>
+    <li>랭킹</li>
+  </ul>
+
+  <div class="tab_cont">
+    <!-- 친구 목록 -->
+    <div class="on" >
+      <ul class="fd_list">
+        <li class="add_btn">
+          <a href="/anchovy_user/friend_add/">
+            <img src="/static/image/add_btn.png" alt="추가하기" />
+            <span class="an_sm_txt">추가하기</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/bone.png" alt="뼈 캐릭터" />
+            <span class="an_sm_txt">friend_one</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/shark_5.png" alt="상어 lv.5 캐릭터" />
+            <span class="an_sm_txt">friend_two</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/mackerel_2.png" alt="고등어 lv.2 캐릭터" />
+            <span class="an_sm_txt">friend_three</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/anchovy_3.png" alt="멸치 lv.3 캐릭터" />
+            <span class="an_sm_txt">friend_four</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/bone.png" alt="뼈 캐릭터" />
+            <span class="an_sm_txt">friend_one</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/shark_5.png" alt="상어 lv.5 캐릭터" />
+            <span class="an_sm_txt">friend_two</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/mackerel_2.png" alt="고등어 lv.2 캐릭터" />
+            <span class="an_sm_txt">friend_three</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/anchovy_3.png" alt="멸치 lv.3 캐릭터" />
+            <span class="an_sm_txt">friend_four</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/shark_5.png" alt="상어 lv.5 캐릭터" />
+            <span class="an_sm_txt">friend_two</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/mackerel_2.png" alt="고등어 lv.2 캐릭터" />
+            <span class="an_sm_txt">friend_three</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/anchovy_3.png" alt="멸치 lv.3 캐릭터" />
+            <span class="an_sm_txt">friend_four</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/shark_5.png" alt="상어 lv.5 캐릭터" />
+            <span class="an_sm_txt">friend_two</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/mackerel_2.png" alt="고등어 lv.2 캐릭터" />
+            <span class="an_sm_txt">friend_three</span>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <img src="/static/image/anchovy_3.png" alt="멸치 lv.3 캐릭터" />
+            <span class="an_sm_txt">friend_four</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- 친구 목록 끝 -->
+
+    <!-- 랭킹 -->
+    <div>
+      <ul class="rk_list">
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>1등</li>
+              <li>나는야상어대장</li>
+              <li>170프로틴</li>
+              <li><img src="/static/image/shark_6.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>2등</li>
+              <li>멸치나와</li>
+              <li>150프로틴</li>
+              <li><img src="/static/image/shark_6.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>3등</li>
+              <li>휘리릭</li>
+              <li>148프로틴</li>
+              <li><img src="/static/image/shark_6.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>4등</li>
+              <li>멸치변신</li>
+              <li>140프로틴</li>
+              <li><img src="/static/image/shark_5.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>5등</li>
+              <li>프로틴킹</li>
+              <li>132프로틴</li>
+              <li><img src="/static/image/shark_5.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>6등</li>
+              <li>하잉</li>
+              <li>120프로틴</li>
+              <li><img src="/static/image/shark_4.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>7등</li>
+              <li>duddj</li>
+              <li>105프로틴</li>
+              <li><img src="/static/image/mackerel_5.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>8등</li>
+              <li>dlrjtehduddj</li>
+              <li>90프로틴</li>
+              <li><img src="/static/image/mackerel_3.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>9등</li>
+              <li>프로틴냠냠</li>
+              <li>82프로틴</li>
+              <li><img src="/static/image/swordfish_4.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li>
+          <a href="/anchovy_user/friend_detail/">
+            <ul class="rk_info">
+              <li>10등</li>
+              <li>치킨이짱</li>
+              <li>80프로틴</li>
+              <li><img src="/static/image/anchovy_3.png"/></li>
+            </ul>
+          </a>
+        </li>
+        <li style="height:25vw"></li>
+      </ul>
+
+      <div class="my_rk">
+        <ul class="rk_info">
+          <li>150등</li>
+          <li>MEME</li>
+          <li>2프로틴</li>
+          <li><img src="/static/image/anchovy_1.png"/></li>
+        </ul>
+      </div>
+    </div>
+    <!-- 랭킹 끝 -->
+  </div>
+</div>
+
+{% include 'navbar.html' %}
+{% endblock %}
+
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+
+  // 탭 메뉴 구현
+  $(document).ready(function() {
+    $(".tab_title li").click(function() {
+      var idx = $(this).index();
+      $(".tab_title li").removeClass("on");
+      $(".tab_title li").eq(idx).addClass("on");
+      $(".tab_cont > div").hide();
+      $(".tab_cont > div").eq(idx).show();
+    })
+  });
+</script>
+{% endblock %}

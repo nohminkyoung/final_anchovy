@@ -1,37 +1,36 @@
 {% extends "detail_base.html" %}
 
 {% block script %}
-<script type='text/javascript'>
-  // 멸치 로고 노출
-  //$('#top_menu .logo').css('display', 'block');
-  
-  // 캘린더 페이지 적용
-  //$('#top_menu .re_icon').css('display', 'block');
-  
-  // 친구 상세페이지 적용
-  $('#top_menu .friend_status').css('display', 'block');
-  
-  // 친구 상세페이지 적용 (친구 추가 및 친구 해제)
-  $(".friend_status img").click(function(){
-    if($(this).hasClass("clicked")){
-      $(this).siblings().addClass("clicked");
-      $(this).removeClass("on clicked");
-    }else{
-      $(this).addClass("clicked");
-      $(this).siblings().removeClass("clicked");
-    }
-  });
+  <script type='text/javascript'>
+    // 멸치 로고 노출
+    //$('#top_menu .logo').css('display', 'block');
+    
+    // 캘린더 페이지 적용
+    //$('#top_menu .re_icon').css('display', 'block');
+    
+    // 친구 상세페이지 적용
+    $('#top_menu .friend_status').css('display', 'block');
+    
+    // 친구 상세페이지 적용 (친구 추가 및 친구 해제)
+    $(".friend_status img").click(function(){
+      if($(this).hasClass("clicked")){
+        $(this).siblings().addClass("clicked");
+        $(this).removeClass("on clicked");
+      }else{
+        $(this).addClass("clicked");
+        $(this).siblings().removeClass("clicked");
+      }
+    });
 
-  // 알림 페이지 적용
-  //$('#top_menu .prev').css('display', 'none');
-  //$('#top_menu .logo').css('display', 'block');
-</script>
+    // 알림 페이지 적용
+    //$('#top_menu .prev').css('display', 'none');
+    //$('#top_menu .logo').css('display', 'block');
+  </script>
 {% endblock %}
 
 
 
 {% block content %}
-
 <div class="an_container">
 
   <p class="an_title_400">

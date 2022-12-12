@@ -1,0 +1,49 @@
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'friend_add.css' %}">
+
+<!-- ****** 본문 ****** -->
+<div class="an_container fd_add_cont">
+  <p class="an_title">
+    같이 운동 할 친구를<br>
+    불러봐요.
+  </p>
+  <span class="">아이디를 입력해주세요.</span>
+  <input type="text" class="fd_id" placeholder="공백 없이 입력해주세요." 
+    name="username" id="" value="">
+
+  <button type="submit" class="full_btn add_btn">추가하기</button>
+</div>
+
+<!-- 팝업 시작 -->
+  <div class="popup_box">
+    <div class="add_success popup">
+      <p class="pop_txt">친구가 추가 되었습니다.</p>
+      <button type="button" class="pop_btn">확인</button>
+    </div>
+  </div>
+<!-- 팝업 끝 -->
+
+{% endblock %}
+
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+
+  // 팝업 노출
+  $(".add_btn").click(function(){
+      $('.popup_box').addClass('open');  
+      $('body').addClass('pop');  
+      $(this).css('z-index', '-1');
+  });
+  $(".pop_btn").click(function(){
+    $('.popup_box').removeClass('open');
+    $('body').removeClass('pop');
+  });
+</script>
+{% endblock %}

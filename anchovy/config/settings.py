@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 import pymysql
 
 pymysql.install_as_MySQLdb()
@@ -138,6 +138,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    # 공통 static
+    os.path.join(BASE_DIR, 'static'),
+    
+    # 개별 static
+    os.path.join(BASE_DIR,'anchovy_user', 'static'),
+    os.path.join(BASE_DIR,'anchovy_notice', 'static'),
+    # os.path.join(BASE_DIR,'앱 이름','앱 안에 생성한 static 폴더'),
 ]
 

@@ -1,0 +1,38 @@
+/* 그래프 및 운동 종류 */
+.train_result .result_top {display:flex; justify-content: space-around; align-items: center; margin-top:8vw}
+.train_result .result_top .train_type img {width:6vw}
+
+/* 그래프 */
+.graph { 
+  position: relative;
+  width: 34vw;
+  height: 34vw;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.result_top .graph span.center { 
+  background: #fff;
+  display: block;
+  position: absolute; 
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 22vw; height: 22vw;
+  border:1.5px solid #000; border-radius: 50%;
+  text-align: center; line-height: 20.5vw; 
+  font-size: 5.8vw; font-weight:bold
+}
+
+
+/* 세트별 결과 */
+.result_list {margin-top:7vw}
+.result_list li {
+  display:flex; justify-content: space-between;
+  margin-bottom:3.5vw
+}
+.result_list li strong {font-size:6vw}
+
+/* 총 점수 */
+.total_score {text-align: center; margin-top:6vw; }
+.total_score strong {font-size:7vw}
+
+

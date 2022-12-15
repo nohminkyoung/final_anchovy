@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -144,6 +144,8 @@ STATICFILES_DIRS = [
     # 개별 static
     os.path.join(BASE_DIR,'anchovy_user', 'static'),
     os.path.join(BASE_DIR,'anchovy_notice', 'static'),
+    os.path.join(BASE_DIR,'anchovy_train', 'static'),
+    os.path.join(BASE_DIR,'anchovy_common', 'static'),
     # os.path.join(BASE_DIR,'앱 이름','앱 안에 생성한 static 폴더'),
 ]
 

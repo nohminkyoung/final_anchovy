@@ -4,7 +4,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'reset.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
         
@@ -14,13 +13,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer+SC&display=swap" rel="stylesheet">
         
+        <!-- 스와이퍼 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+
         <title>AI 운동</title>
     </head>
 <body> 
+{% comment %} {% include 'loading.html' %} {% endcomment %}
 {% block content %}
 {% endblock %}
 <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
-<script src="{% static 'bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 {% block script %}
 {% endblock %}
 </body>

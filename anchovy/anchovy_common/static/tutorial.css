@@ -1,0 +1,39 @@
+/* 튜토리얼 */
+.tutorial {text-align: center; margin-top: 21vw;}
+.tutorial .tu_txt {
+  color:#5F9DF7; 
+  display: block; margin-top: 6vw;
+  line-height: 7.5vw;
+}
+.tutorial .tu_txt span {display: block; margin-top: -1vw;}
+.tutorial .swiper-slide:nth-child(1) .tu_txt {line-height:7vw} 
+.tutorial .tu_img {height:130vw; overflow:hidden; margin-top: 8vw;}
+.tutorial .tu_img img {height: 110vw;}
+
+.tutorial .swiper-slide:last-child .tu_img {height:75vw; margin-top:25vw}
+.tutorial .swiper-slide:last-child .tu_img img {width:80vw; height:unset}
+
+.tutorial .swiper-slide:nth-child(1) .tu_img,
+.tutorial .swiper-slide:nth-child(3) .tu_img {padding-left:8vw}
+
+/* 버튼 */
+.tu_btns {display: unset; }
+.tu_btns a {
+  display:flex; 
+  justify-content: space-between; align-items: center;
+  width:27%; margin:0 auto
+}
+.tu_btns a img {width:5vw; padding-top:0.8vw;}
+
+
+/* 스와이퍼 수정 */
+.swiper-horizontal>.swiper-pagination-bullets, 
+.swiper-pagination-bullets.swiper-pagination-horizontal, 
+.swiper-pagination-custom, .swiper-pagination-fraction{top:9vw; bottom:unset !important}
+
+/* dot */
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, 
+.swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {background:#000}
+
+.tu_dot .swiper-pagination-bullet {background:#ddd}
+.tu_dot .swiper-pagination-bullet-active {width:5vw; border-radius: 2vw;}

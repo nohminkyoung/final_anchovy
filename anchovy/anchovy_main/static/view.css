@@ -1,0 +1,223 @@
+.cal_year {
+    text-align: center;
+}
+
+.cal_month_area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:4vw;
+}
+.cal_month{
+    margin-left:10vw;
+    margin-right:10vw;
+}
+
+.prev_btn img{
+    width: 6vw;
+}
+
+.next_btn img{
+    width: 6vw;
+}
+
+.status{
+    display: flex;
+    align-items: center;
+    margin-top:8vw;
+    margin-bottom:3vw;
+    padding-left:2vw;
+
+}
+.status li{
+display: block;
+margin-right:2vw;
+}
+
+.cal_week th{
+    font-size:3.4vw;
+    padding-left:2vw
+    
+}
+/*캘린더 테이블 꾸미기*/
+thead.cal_week{
+    height:10vw;
+    text-align: center;
+}
+#custom_set_date tr td{
+    height: 10vw;
+    font-size:3.4vw;
+    padding-top:3vw;
+    padding-bottom: 4vw;
+    text-align: center;
+}
+/*원 만들기*/
+.upper_body_circle{
+    margin: 0 auto;
+    width: 3vw;
+    height: 3vw;
+    background-color: #F12D2D;
+    border-radius: 50%;
+}
+
+.lower_body_circle{
+    margin: 0 auto;
+    width: 3vw;
+    height: 3vw;
+    background-color: #118DF0;
+    border-radius: 50%;
+}
+
+.stolen_circle{
+    margin: 0 auto;
+    width: 3vw;
+    height: 3vw;
+    background-color: #1FB57B;
+    border-radius: 50%;
+}
+
+.steal_circle{
+    margin: 0 auto;
+    width: 3vw;
+    height: 3vw;
+    background-color: #9C1DE7;
+    border-radius: 50%;
+}
+
+
+/*캘린더 안에 원 만들기*/
+.exercise_check{
+    margin-top:2vw;
+    display: flex;
+    justify-content:center;
+    margin-bottom:1.5vw;
+    
+}
+
+.exercise_check div:nth-child(1){
+    margin-right: 0.8vw;
+}
+
+.battle_check{
+    display: flex;
+    justify-content:center;
+}
+
+.battle_check div:nth-child(1){
+    margin-right: 0.8vw;
+}
+
+.upper_body_circle_m{
+    width: 2vw;
+    height: 2vw;
+    background-color: #F12D2D;
+    border-radius: 50%;
+}
+
+.lower_body_circle_m{
+    width: 2vw;
+    height: 2vw;
+    background-color: #118DF0;
+    border-radius: 50%;
+}
+
+.stolen_circle_m{
+    width: 2vw;
+    height: 2vw;
+    background-color: #1FB57B;
+    border-radius: 50%;
+}
+
+.steal_circle_m{
+    width: 2vw;
+    height: 2vw;
+    background-color: #9C1DE7;
+    border-radius: 50%;
+}
+.now_check_area{
+    padding-left:1vw;
+    width: 100%;
+}
+
+.now_check{
+    width: 8vw;
+    height: 8vw;
+    margin:0 auto;
+    background-color: #000;
+    border-radius: 50%;
+    color:#fff;
+    text-align: center;
+    display:table-cell;
+    vertical-align: middle;
+}
+
+
+
+/*바텀 시트*/
+
+.bottom_open{
+    display: none;
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #fff;
+    opacity: 0;
+    z-index:333;
+}
+
+.bottom_sheet{
+    position:fixed;
+    bottom:-100vw;
+    background-color: #fff;
+    width:100%;
+    height:100vw;
+    border-top-left-radius: 8vw;
+    border-top-right-radius: 8vw;
+    z-index: 444;
+    box-shadow: 0px -3px 50px 0px #999;
+}
+.icon_area{
+    padding-top:4vw;
+}
+.bottom_sheet_icon{
+    background-color: #8d8d8d;
+    width:9vw;
+    height:1vw;
+    border-radius: 10vw;
+    margin:auto;
+    margin-top:1vw;
+}
+
+.bottom_title_area{
+    width: 82%; margin:30px auto 0 auto;
+}
+
+.bottom_exercise_area{
+    width: 82%; margin:30px auto 0 auto;
+}
+
+.ex_title{
+    font-size:4vw;
+    font-weight: 700;
+}
+
+.exercise_text_area{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top:4vw;
+}
+
+.exercise_text_area :nth-child(2){
+    padding-left:4vw;
+}
+
+.exercise_text_area :nth-child(3){
+    padding-left:8vw;
+}
+.exercise_text_area :nth-child(4){
+    padding-left: 23vw;
+}

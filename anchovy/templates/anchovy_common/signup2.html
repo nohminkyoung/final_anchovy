@@ -1,0 +1,108 @@
+{% extends "detail_base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'signup.css' %}">
+
+
+<!--기본 크기의 컨테이너 불러옴-->
+<div class="an_container">
+    <!--회원가입 알림문구-->
+    <div class = 'sign_margin'>
+    <p class= 'an_title'>회원가입<br>
+    <span class='an_sm_gray'>* 회원님 모든 항목은 모두 입력해주셔야합니돠!!!</span></p>
+    </p>
+    </div>
+
+    <div class="signup_cont"> 
+        <!--회원가입 구현 시작-->
+        <form method="post" class="post-form">
+            {% csrf_token %}
+            {% comment %} {% include 'form_errors.html' %} {% endcomment %}
+            
+            <!--닉네임-->
+            <div class="form-group">
+                <label class="an_input" for="nickname">닉네임</label>
+                <input class="an_request nic_box" type="text" class="form-control" name="nickname" id="nickname" style="border:none"
+                    value="{{ form.nickname.value|default_if_none:'' }}" placeholder="공백없이 입력해주세요.">
+            </div>
+
+            <div class = "un_border">
+                <div class = "an_error_txt ">
+                    {{ error_nick }}
+                </div>
+            </div>
+
+            <!--아이디-->
+            <div class="form-group" >
+                <label class="an_input" for="username">아이디</label>
+                
+                <div class='check_box' >
+                    <input class="an_request id_box" type="text" class="form-control" name="username" id="username" style="border:none"
+                    value="{{ form.username.value|default_if_none:'' }}" placeholder="공백없이 입력해주세요." >
+                    <!--중복확인버튼-->
+                    <button type="button" class='an_sm_txt'>중복확인</button>
+                   
+                </div>
+            </div>
+
+            <div class = "un_border">
+                <div class = "an_error_txt ">
+                    {{ error_id }}
+                </div>
+            </div>
+
+            <!--비밀번호-->
+            <div class="form-group">
+                <label class="an_input" for="password1">비밀번호</label>
+                <input class="an_request pw_box" type="password" class="form-control" name="password1" id="password1" style="border:none"
+                    value="{{ form.password1.value|default_if_none:'' }}" placeholder="8~15 이내로 입력해주세요." maxlength=15>
+            </div>
+
+            <div class = "un_border">
+                <div class = "an_error_txt ">
+                    {{ error_pw1 }}
+                </div>
+            </div>
+
+            <!--비밀번호 확인-->
+            <div class="form-group">
+                <label class="an_input" for="password2">비밀번호 확인</label> 
+                <input class="an_request pw_box" type="password" class="form-control" name="password2" id="password2" style="border:none"
+                    value="{{ form.password2.value|default_if_none:'' }}"maxlength=15>
+            </div>
+
+            <div class = "un_border">
+                <div class = "an_error_txt ">
+                    {{ error_pw2_no }}
+                </div>
+            </div>
+            <div class = "un_border">
+                <div class = "an_success_txt ">
+                    {{ error_pw2_ok }}
+                </div>
+            </div>
+
+        <!--가입버튼-->
+        <button type="submit" class='im full_btn'>SIGNUP</button> 
+           
+        </form> 
+        
+    </div>
+    
+</div>
+{% endblock %}
+
+<!--로고 불러오기-->
+{% block script %}
+  <script type='text/javascript'>
+    // 멸치 로고 노출
+    $('#top_menu .logo').css('display', 'block');
+
+    // 연결된 주소 변경
+    $('#top_menu .prev a').attr("href", "login") 
+	
+
+  </script>
+{% endblock %}
+
+

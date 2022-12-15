@@ -57,7 +57,7 @@ body.pop::before{
 .popup_box {
     display: none;
     z-index: 10000000000000;
-    position: absolute; left: 50%; top:50%;
+    position: fixed; left: 50%; top:50%;
     transform: translate(-50%, -50%);
     background: #fff;
     border: 1.5px solid #000;

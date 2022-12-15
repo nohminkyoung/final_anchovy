@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'anchovy_notice.apps.AnchovyNoticeConfig',
     'anchovy_settings.apps.AnchovySettingsConfig',
     'anchovy_train.apps.AnchovyTrainConfig',
-    'anchovy_user.apps.AnchovyUserConfig'
+    'anchovy_user.apps.AnchovyUserConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        "NAME" : "anchovy_db",
+        "NAME" : "test_anchovy_db",
         "USER" : 'develop',
         "PASSWORD" : 'anchovy1!',
         'HOST' : 'database-dev.cclpxl5ttlgd.ap-northeast-2.rds.amazonaws.com',

@@ -1,0 +1,188 @@
+/* 타이틀 */
+p.an_title {text-align: center;}
+
+.setting_list li {
+    width:95%; padding:3.5vw; margin-bottom: 10px;
+    color :white; background :black; 
+    font-weight:300; text-align:left;
+    border-radius: 2vw; 
+} 
+/* 깃허브 그림 */
+.people {text-align: center; margin:6vw 0;}
+.people img {width:10vw;}
+
+
+/* 닉네임 변경 타이틀 */
+.nickname_cont p {text-align:center;}
+.nickname_cont span {
+  display:block; 
+  margin:7vw 0;
+  text-align:center; 
+  font-size:4vw; color:#555;
+}
+
+/* 닉네임 변경 입력란 */
+.nick_id {width:100%; border:2px solid #000; padding:3vw 4.5vw; margin-top:7vw;}
+.nick_id::placeholder {
+  font-size:4vw; padding:0; margin:0;
+  color: #BCBCBC;
+}
+.nick_id:focus {outline: none;}
+
+
+/* 로그아웃 */
+.btn_box {
+  width:82%; 
+  margin:0 auto; 
+  display: flex; 
+  justify-content: space-between;
+}
+
+/* 버튼 */
+.popup_box .pop_btn {width: 46%; padding: 3.5vw 5vw;}
+
+
+/* 회원 탈퇴 타이틀 */
+.quit_cont p {text-align:left;}
+.quit_cont span {
+  display:block; 
+  z-index:-1;
+  text-align:center;
+  font-size:4vw; color:#555;
+}
+
+/* 회원탈퇴 앤쵸비 */
+.quit_anchovy {width: 70vw; margin: 3vw auto; position:relative}
+.quit_anchovy img {width: 100%; transform:rotate(-90deg);}
+
+
+/* 탈퇴-돌아가기 버튼 */
+.return_btn {
+  width:80%; padding:3.5vw 0;
+  position:fixed; left:50%; bottom:25vw; 
+  transform:translateX(-50%);
+  background:#000; color:#fff;
+  border-radius: 2vw;
+  font-weight:300;
+  z-index:-1;
+}
+
+/* 탈퇴하기 버튼 */
+.quit_btn {
+  width:inherit; 
+  position:fixed; left:50%; right:50%; bottom:10vw; 
+  transform:translateX(-50%);
+  background-color: #00ff0000; color:#b9e0ff;
+  border-radius: 2vw;
+  font-weight:100;
+  text-decoration: underline;
+}
+
+
+/********************  만든 사람들 ***********************/
+.people_cont {position:relative}
+
+
+/* 슬라이드  */
+.mySwiper {padding-right:0.3vw}
+.people_cont .swiper-wrapper {margin-bottom:7vw}
+.people_cont .swiper-scrollbar-drag {background:#000}
+
+
+/* 만든 사람들 슬라이드 박스 */
+.solid {
+  border: 0.5vw solid #000;
+  border-radius: 2vw;
+  margin: 0vw;
+  padding: 3vw; 
+  height:71.7vw
+}
+
+.question {font-weight:bold; font-size:4.9vw}
+.qu_txt {
+  text-align:left;
+  line-height:1.3;
+  margin: 3vw 0 6vw;
+}
+
+.qu_per_box {margin:0.4vw 0 3vw}
+
+
+.qu_item li {margin-bottom:2vw}
+.qu_txt strong {font-size:5.5vw}
+.qu_item img {width:34vw }
+.qu_item,.qu_per {font-size: 3.5vw;}
+
+/* 프로그레스바 */
+.qu_pg {
+  display:inline-block; 
+  height:3vw; width:50%;     
+  margin-right: 3vw; 
+  background:#000;
+}
+.per_60 {width:60%}
+.per_40 {width:40%}
+
+
+/* 팀원 정보 */
+.up_pls, .down_pls  {width:60%; margin:8vw auto 0; text-align: center;}
+.up_pls img {width:3vw; transform: rotate(-180deg);}
+.up_pls p {font-size: 3.8vw; margin: 21vw 0 2vw;}
+
+.down img {width:3vw}
+
+.team_info {margin-top:20vw}
+.team_info li {display:flex; margin-bottom:10vw}
+.team_info li img {width:20vw}
+.team_info .info_txt {margin-left:4vw}
+.team_info .info_txt span {display:block; margin-bottom:2vw; font-size:3.8vw}
+.team_info .info_txt span img {width:4.5vw; margin-left:2vw}
+.team_info .info_txt a {text-decoration-line: underline;}
+
+.bottom_sheet{
+  position:fixed;
+  bottom:-100%;
+  background-color: #fff;
+  width:100%;
+  height:100%;
+  z-index: 444;
+}
+
+.down_pls p {margin-bottom:2vw; font-size:3.8vw}
+.down_pls .down img {width:3vw}
+
+
+.up_pls img {animation: motion 0.3s linear 0s infinite alternate; margin-top: 0;}
+        
+@keyframes motion {
+   0% {margin-top: 0px;}
+   100% {margin-top: 10px;}
+}
+
+/******** 눈물 *********/
+/* 흘리는 눈물 */
+.tearing {
+  position: absolute;
+    left: 10vw; top: 35vw;
+    width: 3vw; height: 119vw;
+    border-radius: 50% 50% 0 0;
+    background-color: #b9e0ff;
+    
+}
+/* 눈물 */
+.tears{
+  position:fixed;
+  bottom:0; left:0; right:0;
+  background-color:#b9e0ff;
+  z-index:-1;
+  animation: play-state 2.5s linear infinite alternate;
+}
+
+@-webkit-keyframes play-state{
+  from{
+    height: 2vw;
+  }
+  to{
+    height: 20vw;
+  }
+}

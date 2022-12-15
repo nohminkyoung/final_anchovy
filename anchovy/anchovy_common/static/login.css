@@ -1,0 +1,54 @@
+/* 기본글씨 */
+.im {font-family: 'IM Fell Great Primer SC';}
+
+/* 페이지 공백설정 */
+.log_box {width: 60%; margin:17vw auto 0 auto; } 
+
+/* 로고이미지 */
+.logo img {width:30vw}
+
+/* 로그인 시작 - 로고이미지와 사이 벌리기 */
+.login_info {margin-top:13vw;}
+
+/* ID,PW 폰트 */
+.an_idpw{font-size:4vw; font-weight: 400; color:#555;}
+.an_request{font-size:3.5vw; font-weight: 400; border: none;
+  width: 79%;
+  padding: 2vw;}
+.an_btn{font-size:3.5vw; font-weight: 400;}
+input.an_request::placeholder {color: #bcbcbc;}
+
+.login_info div{
+  border-bottom:1px solid #000; display: flex;
+  justify-content: space-between;align-items: center;
+}
+.login_info div.id_box {margin-bottom:4vw;}
+
+
+/* 로그인 버튼 */
+.btn_box_login  {display: flex;  justify-content: space-between; margin-top: 10vw;}
+.btn_box_login button {
+  text-align: center;  
+  border-radius:2vw; padding:3vw 23.7vw;   
+  background:#000; color:#fff
+}
+.un_border{border-bottom: unset !important ; }
+
+/* 회원가입 버튼 */
+.btn_box_signup  {display: flex;  justify-content: space-between; margin-top:3vw;; margin-bottom: 4vw;}
+.btn_box_signup button {
+  text-align: center;  
+  border-radius:2vw; padding:3vw 23vw;   
+  background:#000; color:#fff
+}
+
+.sns_img{
+  width: 10vw; float:left; margin-left:10vw; margin-top: 10vw;
+}
+
+.sns_list ul {display:flex; justify-content: center; margin-top:7vw;}
+.sns_list ul li {margin-right:3vw}
+.sns_list ul li:last-child {margin-right:0}
+
+.alert-danger{border-bottom: unset !important ; }
+.alert-danger strong {font-weight: 300;}

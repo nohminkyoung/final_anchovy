@@ -1,4 +1,225 @@
-{% extends "detail_base.html" %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'main.css'%}">
+
+<div class="an_container">
+  <!--상단 텍스트 영역-->
+  <div class="main_title_area">
+    <p class="an_title_400">
+      {% if user.is_authenticated %}
+      <strong>{{ log_user.nickname }} </strong>님은<br>
+      <strong>{{ log_status.protein}} 프로틴</strong>으로 <strong>멸치</strong>입니다.
+      {% endif %}
+    </p>
+    <div class="setting_img_area">
+       <img src="/static/image/setting.png"/>
+    </div>
+  </div>
+
+  <div>
+    <a href="/anchovy_main/view">
+      <ul class="main_record_area">
+        <li class="recode">20/11/28  스쿼트 27점 달성</li>
+        <li><img src="/static/image/next.png"/></li>      
+      </ul>
+    </a>
+    </div>
+
+  <!--캐릭터 영역-->
+  <div class="main_char_area">
+    <div class="main_char">
+      <img src="/static/image/shark_1.png"/>
+    </div>
+    <div class="char_info" onclick="openNav()">
+        <img src="/static/image/info.png"/>
+    </div>
+  </div>
+ 
+  <!--목표점수 영역-->
+  <div class="main_status_area">
+    <p class="">목표 점수</p>
+    <div class="progress_area">
+      <div class="an_sm_txt">72</div>
+      <div class="an_sm_txt">120</div>
+    </div>
+    <div class="coupon">
+      <img src="/static/image/coupon.png"/>
+      <span>x 2</span>
+    </div>
+  </div>
+  
+  <!--버튼 영역-->
+  <div class="btn_box">
+    <button class="add_btn" type="button">성장하기</button>
+    <button type="button">운동하기</button>
+  </div> 
+
+  <!-- 팝업 시작 -->
+  <div class="popup_box">
+    <div class="add_success popup">
+      <p class="pop_txt">사용 가능한 티켓이 없습니다.</p>
+      <button type="button" class="pop_btn">확인</button>
+    </div>
+  </div>
+  <!-- 팝업 끝 -->
+
+</div>
+
+<!-- 풀팝업 시작 -->
+<div id="myNav" class="overlay">
+  <div class="an_container">
+
+    <!--************** -->
+    <!--   풀 상단     -->
+    <!--************** -->
+    <div>
+      <ul class="overlay-top">
+        <li class="an_title">캐릭터 소개</li>
+        <li onclick="closeNav()"><img src="/static/image/close.png"/></li>      
+      </ul>
+    </div>
+
+    <!--************** -->
+    <!--   풀 콘텐츠   -->
+    <!--************** -->
+
+    <div class="overlay-content">
+      <!--풀 팝업 안내 문구-->
+      <div class="overlay-info-word">
+        <ul class="an_sm_txt overlay_info">
+          <li>
+            * 일주일 단위로 캐릭터 기준에 맞는 점수에 도달하면 쿠폰 하나를 얻을 수 있어요.
+          </li>
+          <li>
+            * 쿠폰은 매주 월요일 00시가 되면  업데이트가 되요.
+          </li>
+          <li>
+            * 캐릭터 기준에 맞는 프로틴에 도달하면 캐릭터가 변화해요.
+          </li>
+          <li>
+            * 쿠폰을 이용해 성장하거나 친구 프로틴을 뻇어올수 있어요.
+          </li>
+        </ul>
+      </div>
+      <!--풀 팝업 캐릭터 소개-->
+      <div class="overlay-char_info">
+        <!-- 해골 -->
+        <div>
+          <div class="char_info_status">
+            <div>
+              <img src="/static/image/bone.png"/>
+            </div>
+            <div>
+              <p class="an_sm_txt info_b">프로틴 0</p>
+              <p class="an_sm_txt info_b">일주일에 3일 운동하기</p>
+            </div>
+          </div>
+          <div class="char_info_word">
+            <div class="c_info">
+              <p class="an_sm_txt">
+                안녕…… 나는 까시야….. <br>
+                나는 멸치라도 되면 좋겠어……….<br>
+                누가 프로틴 하나만 줘봐……
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 멸치 -->
+        <div>
+          <div class="char_info_status">
+            <div>
+              <img src="/static/image/anchovy_1.png"/>
+            </div>
+            <div>
+              <p class="an_sm_txt info_b">프로틴 2</p>
+              <p class="an_sm_txt info_b">120점</p>
+            </div>
+          </div>
+          <div class="char_info_word">
+            <div class="c_info">
+              <p class="an_sm_txt">
+                안녕하새오 저는 멸치애오. <br>
+                나중에 커서 늠름한 족장이 될거애오. <br>
+                열심히 운동하면 멋찌게 변하게쬬?
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 황새치 -->
+        <div>
+          <div class="char_info_status">
+            <div>
+              <img src="/static/image/swordfish_1.png"/>
+            </div>
+            <div>
+              <p class="an_sm_txt info_b">프로틴 5</p>
+              <p class="an_sm_txt info_b">150점</p>
+            </div>
+          </div>
+          <div class="char_info_word">
+            <div class="c_info">
+              <p class="an_sm_txt">
+                반갑네 황새치라고 하네.. 나로 말을 할 것 같으면 <br>
+                영국에서도 가장 엘레강스한 황새치 중 황새치이지. <br>
+                그렇게 보이지 않는다고? <br>
+                그건 자네가 아직까지 부족하다는 증거이지.. <br>
+                자네가 엘레강스 해지면 나를 제대로 볼 수 있을 것일세
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 고등어 -->
+        <div>
+          <div class="char_info_status">
+            <div>
+              <img src="/static/image/mackerel_1.png"/>
+            </div>
+            <div>
+              <p class="an_sm_txt info_b">프로틴 12</p>
+              <p class="an_sm_txt info_b">180점</p>
+            </div>
+          </div>
+          <div class="char_info_word">
+            <div class="c_info">
+              <p class="an_sm_txt">
+                안녕-! 나는 마법학교 1학년이야 <br>
+                내가 마법사가 되어서 너가 몸짱이 되게 해줄게-! <br>
+                어때? 끌리지~?
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 상어 -->
+        <div>
+          <div class="char_info_status">
+            <div>
+              <img src="/static/image/shark_1.png"/>
+            </div>
+            <div>
+              <p class="an_sm_txt info_b">프로틴 22</p>
+              <p class="an_sm_txt info_b">210점</p>
+            </div>
+          </div>
+          <div class="char_info_word">
+            <div class="c_info">
+              <p class="an_sm_txt">
+                용궁에 온 걸 환영하오. 나는 상어 왕이오. <br>
+                근육을 키워서 내 옷과 왕관을 찾아올 수 있겠소?
+              </p>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
+<!-- 풀팝업 끝 -->
+
+{% include 'navbar.html' %}
+{% endblock %}
 
 {% block script %}
   <script type='text/javascript'>
@@ -22,41 +243,28 @@
       }
     });
 
+     // 성장하기팝업 노출
+     $(".add_btn").click(function(){
+      $('.popup_box').addClass('open');  
+      $('body').addClass('pop');
+    });
+    $(".pop_btn").click(function(){
+      $('.popup_box').removeClass('open');
+      $('body').removeClass('pop');
+    });
+
+      // 풀팝업 노출
+      function openNav() {
+        document.getElementById("myNav").style.width = "100%";
+      }
+      
+      function closeNav() {
+        document.getElementById("myNav").style.width = "0%";
+      }
+
+   
     // 알림 페이지 적용
     //$('#top_menu .prev').css('display', 'none');
     //$('#top_menu .logo').css('display', 'block');
   </script>
-{% endblock %}
-
-
-
-{% block content %}
-<div class="an_container">
-
-  <p class="an_title_400">
-    <strong>닉네임</strong>님은<br>
-    <strong>2 프로틴</strong>으로 <strong>멸치</strong>입니다.
-  </p>
-  <p class="recode">20/11/28  스쿼트 27점 달성</p>
-  <p class="">목표 점수</p>
-  
-  
-  <p class="an_sm_txt">72 120</p>
-  
-  <div class="btn_box">
-    <button type="button">성장하기</button>
-    <button type="button">운동하기</button>
-  </div>  
-
-  <p class="an_sm_txt c_info">
-    반갑네 황새치라고 하네.. 나로 말을 할 것 같으면 
-    영국에서도 가장 엘레강스한 황새치 중 황새치이지. 
-    그렇게 보이지 않는다고? 
-    그건 자네가 아직까지 부족하다는 증거이지.. 
-    자네가 엘레강스 해지면 나를 제대로 볼 수 있을 것일세
-  </p>
-  <p class="an_error_txt">* 닉네임에는 공백을 추가 할 수 없습니다.</p>
-</div>
-
-{% include 'navbar.html' %}
 {% endblock %}

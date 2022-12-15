@@ -1,0 +1,43 @@
+.train_choice {clear: both; height: 125vw; overflow: auto;}
+.train_choice .tit {font-weight:700; margin:4vw 0 }
+.train_choice .set_ch .tit {margin-top:0}
+
+.train_choice ul li span {display:block; margin-bottom:3vw; color:#8d8d8d; }
+
+.train_choice ul li ul.btn_list::after {content:""; display:block; clear: both;}
+.train_choice ul li ul.btn_list li {
+  float: left; margin:0 2vw 3vw 0;
+  text-align: center;
+  width: 25.9vw;
+}
+.train_choice ul li ul.btn_list li:nth-child(3n) {margin-right:0}
+.train_choice ul li ul.btn_list li button {
+  width: inherit;
+  border:2px solid #000; 
+  border-radius: 3vw; 
+  padding:1.8vw 5vw; 
+  
+}
+
+/* 클릭시 */
+.train_choice ul li ul.btn_list li.select button {background:#000; color:#fff}
+
+.tu_btns label, .tu_btns button {height:13vw}
+.tu_btns label {
+  position: relative;
+  width: 48%;
+  font-size: 4.2vw;
+  padding: 3.7vw 0 4vw;
+  background:#000; color:#fff;
+  border-radius:2vw;
+  font-weight:300;
+}
+.tu_btns label input{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin:0;
+}
+.tu_btns button {width:48%; font-size:4.3vw; padding:4vw 6.2vw}

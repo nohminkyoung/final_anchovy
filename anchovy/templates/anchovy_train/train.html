@@ -1,1 +1,29 @@
-d
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'train.css' %}">
+
+<div class="train_choice an_container">
+  <p class="an_title">운동 선택</p>
+  <span class="choice_txt">운동할 부위를 선택해주세요.</span>
+  <div class="choice_btn">
+    <button onclick="location.href='/anchovy_train/train_choice/' ">
+      <img src="/static/image/squat_btn.png" />
+    </button>
+    <button onclick="location.href='/anchovy_train/train_choice/' ">
+      <img src="/static/image/pushup_btn.png" />
+    </button>
+  </div>
+  <span class="an_sm_txt ">* 정확한 자세로 진행시 횟수 당 1점이 추가돼요.</span>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+</script>
+{% endblock %}

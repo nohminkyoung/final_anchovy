@@ -1,4 +1,8 @@
 /***** reset *****/
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
 a,address, article,aside,
 b,body,center,dd,del,details,
 dfn,div,dl,dt,em,footer,form,
@@ -12,7 +16,7 @@ tbody,td,tfoot,th,thead,tr,tt,u,ul,video{
 
 a, a:active {color: unset; text-decoration-line : none;}
 input {border-radius: unset;}
-button{border:0}
+button{border:0; background: unset; color: #000;}
 article,aside,details,
 figcaption,figure,footer,header,
 hgroup,main,menu,nav,section{display:block}
@@ -21,3 +25,12 @@ blockquote,q{quotes:none}
 blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}
 table{border-collapse:collapse;border-spacing:0}
 
+
+input, textarea, button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+}

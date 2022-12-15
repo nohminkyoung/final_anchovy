@@ -1,0 +1,255 @@
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'view.css'%}">
+    
+    <div class="an_container">
+        <div class="calendar">
+            <div class="cal_header">
+                <div class="cal_h_year"></div>
+                <div class="cal_h_month"></div>
+            </div>
+            <div class="cal_status">
+            </div>
+            <div id="calendarForm"></div>
+        </div>
+    </div>
+    <div id="cal_id">
+    </div>
+
+<!--바텀 시트-->
+
+{% endblock %}
+
+{% block script %}
+    <script type='text/javascript'>
+        $('#top_menu .re_icon').css('display', 'block');
+    
+        // 달력 스크립트
+        (function () {
+            calendarMaker($("#calendarForm"), new Date());
+        })();
+        
+        var nowDate = new Date();
+        
+        function calendarMaker(target, date) {
+            
+            if (date == null || date == undefined) {
+                date = new Date();
+            }
+
+            // 오늘 날짜 확인
+            nowDate = date;
+
+            Today = new Date();
+            var TodaycheckMonth = Today.getMonth()+1;
+            var TodaycheckYear = Today.getFullYear();
+            var TodaycheckDate = Today.getDate();
+            
+            if ($(target).length > 0) {
+                var year = nowDate.getFullYear();
+                var month = nowDate.getMonth() + 1;
+                $(target).empty().append(assembly(year, month));
+            } else {
+                console.error("custom_calendar Target is empty!!!");
+                return;
+            }
+        
+            var thisMonth = new Date(nowDate.getFullYear(), nowDate.getMonth(), 1);
+            var thisLastDay = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0);
+            
+            //console.log(test);
+            //console.log('Month:'+ ToMonth);
+            //console.log('day:'+ ToDay);
+            
+            var tag = "<tr>";
+            var cnt = 0;
+            //빈 공백 만들어주기
+            for (i = 0; i < thisMonth.getDay(); i++) {
+                tag += "<td></td>";
+                cnt++;
+            }
+        
+            //날짜 채우기 & 상태 값 추가
+            for (i = 1; i <= thisLastDay.getDate(); i++) {
+                if (cnt % 7 == 0) { tag += "<tr>"; }
+                if (year == TodaycheckYear && month == TodaycheckMonth && i== TodaycheckDate){
+                    tag += "<td class='cal_num'>" + "<div class='now_check_area'><div class='now_check'>"+"<p>"+i+"</p>"+"</div></div>";
+                }
+                else{
+                    tag += "<td class='cal_num'>" + i;
+                }
+                tag += "<div class='exercise_check'>";
+                tag += "<div class='upper_body_circle_m'></div>";
+                tag += "<div class='lower_body_circle_m'></div>";
+                tag += "</div>";
+                tag += "<div class='battle_check'>";
+                tag += "<div class='stolen_circle_m'></div>";
+                tag += "<div class='steal_circle_m'></div>";
+                tag += "</div>";
+                tag += "</td>";
+                cnt++;
+                if (cnt % 7 == 0) {
+                    tag += "</tr>";
+                }
+            }
+
+            $(target).find("#custom_set_date").append(tag);
+            calMoveEvtFn();
+        
+            function assembly(year, month) {
+                var calendar_html_code =
+                    "<table class='custom_calendar_table'>" +
+                    "<colgroup>" +
+                    "<col style='width:81px'/>" +
+                    "<col style='width:81px'/>" +
+                    "<col style='width:81px'/>" +
+                    "<col style='width:81px'/>" +
+                    "<col style='width:81px'/>" +
+                    "<col style='width:81px'/>" +
+                    "<col style='width:81px'/>" +
+                    "</colgroup>" +
+                    "<p class='cal_year'>"+ year +"년</p>"+
+                    "<div class='cal_month_area'>"+
+                    "<div class='prev_btn prev'><img src='/static/image/prev.png'/></div>"+
+                    "<div class='cal_month'><p class='an_title'>"+month+"월</p></div>"+
+                    "<div class='next_btn next'><img src='/static/image/next.png'/></div>"+
+                    "</div>"+
+                    "<div class='cal_status'>"+
+                    "<ul class='status'>"+
+                    "<li class='status_img'><div class='upper_body_circle'></div></li>"+
+                    "<li class='status_text an_sm_txt'>상체</li>"+
+                    "<li class='status_img'><div class='lower_body_circle'></div></li>"+
+                    "<li class='status_text an_sm_txt'>하체</li>"+
+                    "<li class='status_img'><div class='stolen_circle'></div></li>"+
+                    "<li class='status_text an_sm_txt'>뺏김</li>"+
+                    "<li class='status_img'><div class='steal_circle'></div></li>"+
+                    "<li class='status_text an_sm_txt'>뺏음</li>"+
+                    "</ul>"+
+                    "</div>"+
+                    "<thead  class='cal_week'>" +
+                    "<th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>" +
+                    "</thead>" +
+                    "<tbody id='custom_set_date'>" +
+                    "</tbody>" +
+                    "</table>";
+                return calendar_html_code;
+            }
+        
+            function calMoveEvtFn() {
+                //전달 클릭
+                $(".prev_btn").click(function(){
+                    nowDate = new Date(nowDate.getFullYear(), nowDate.getMonth() - 1, nowDate.getDate());
+                    calendarMaker($(target), nowDate);
+                });
+                
+                // 다음 달 클릭
+                $(".next_btn").click(function(){
+                    nowDate = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate());
+                    calendarMaker($(target), nowDate);
+                });
+            
+                //일자 선택 클릭
+                $(".custom_calendar_table").on("click", "td", function () {
+                    $(".custom_calendar_table .select_day").removeClass("select_day");
+                    $(this).removeClass("select_day").addClass("select_day");
+                });
+            }
+
+            function bottom_create(){
+                
+                var bottom_sheet = "";
+                var bottom_open = "" ;
+                
+                bottom_sheet += "<div class='bottom_sheet'>";
+                bottom_sheet += "</div>";
+                bottom_open += "<div class='bottom_open'></div>";
+
+                $("#cal_id").empty();
+	            $("#cal_id").append(bottom_sheet);
+	            $("#cal_id").append(bottom_open);
+            }
+
+            function bottom_action(){
+
+                $(".bottom_open").click(function(){
+                    console.log('배경 클릭');
+                    $('.bottom_sheet').animate({'bottom':'-=100vw'}, 500);
+                    $('.bottom_open').css('display', 'none');
+                });
+        
+                $(".bottom_sheet").click(function(){
+                    console.log('바텀시트 클릭');
+                });
+                
+                $(".cal_num").click(function(){
+
+                    var day = $(this).text();
+                    var Year = $('.cal_year').text().substr(0,4);
+
+                    if ($('.cal_month').text().length == 2){
+                        var Month = $('.cal_month').text().substr(0,1);
+                    }
+                    else{
+                        var Month = $('.cal_month').text().substr(0,2);
+                    }
+                    
+                    var week = ['일', '월', '화', '수', '목', '금', '토'];
+                    var dw = week[new Date(Year+'-'+Month+"-"+day).getDay()];
+                    
+                    // 클릭 시 해당 날짜에 대해 데이터 받아서 : html 에서 불러오기
+                    // 데이터 베이스를 통해 연결 후 데이터 베이스 불러오기
+                    console.log('num 클릭'); 
+                    $('.bottom_sheet').animate({'bottom':'+=100vw'}, 500);
+                    $('.bottom_open').css('display', 'block');
+                    
+                    bottom_contents(day, dw);
+        
+        
+                });
+            }
+            
+            
+            function bottom_contents(day,dw){
+                var Title = "";
+                var Exercise = "";
+                var Notice = "";
+                var icon = "";
+                icon += "<div class='icon_area'>"
+                icon += "<div class='bottom_sheet_icon'></div>";
+                icon += "<div class='bottom_sheet_icon'></div>";
+                icon += "</div>"
+                Title += "<div class='bottom_title_area'><p class='an_title'>"+day+"."+dw+"</p></div>";
+                Exercise += "<div class='bottom_exercise_area'><p class='ex_title'>운동 내역</p>";
+                Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
+                Exercise += "<p>스쿼트</p>";
+                Exercise += "<p>5세트 15회</p>";
+                Exercise += "<p>45점</p></div>";
+                Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
+                Exercise += "<p>스쿼트</p>";
+                Exercise += "<p>5세트 15회</p>";
+                Exercise += "<p>45점</p></div>";
+                Exercise += "</div>";
+                Notice += "<div class='bottom_exercise_area'><p class='ex_title'>알림</p>";
+                Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
+                Notice += "<p>친구 1님에게 1프로틴을 뺏겼습니다.</p></div>";
+                Notice += "</div>";
+                $(".bottom_sheet").empty();
+	            $(".bottom_sheet").append(icon);
+	            $(".bottom_sheet").append(Title);
+	            $(".bottom_sheet").append(Exercise);
+	            $(".bottom_sheet").append(Notice);
+                
+            }
+        
+            bottom_create();
+            bottom_action();
+            
+        }
+
+        
+        
+        
+    </script>
+{% endblock %}

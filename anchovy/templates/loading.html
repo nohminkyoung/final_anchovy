@@ -1,0 +1,22 @@
+{% load static %}
+<script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<div id="loading">
+  <img class="loading" src="/static/image/loading.gif" alt="Loading">
+</div>
+
+
+{% block script %}
+<script type='text/javascript'>
+  const loader = $('#loading');
+  const html = $('html');
+  html.css({'overflow' : 'hidden'}); //로딩 중 스크롤 방지
+
+  $(window).on('load', ()=>{
+       setTimeout(() => { //  <-* 로딩속도 구현      
+      loader.fadeOut(1000);  
+      html.css({'overflow' : 'auto'}); //스크롤 방지 해제
+    }, 1500);  //  <-* 로딩속도 구현
+})</script>
+{% endblock %}

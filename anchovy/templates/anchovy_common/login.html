@@ -1,22 +1,68 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-<div class="container my-3">
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{next}}">
-        {%  include "form_errors.html" %}
-        <div class="mb-3">
-            <label for="username">사용자ID</label>
-            <input type="text" class="form-control" name="username" id="username"
-            value="{{ form.username.value|default_if_none:'' }}">
+<link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+
+<div class = 'log_box'>
+    <div class = 'logo'> <!-- 로고 삽입-->
+        <center>
+        <img src="/static/image/big_logo.png"  alt="로그인 로고" />
+        </center>
+    </div>
+
+    <div class = "row mt-5">
+        <div class = "col-12">
+            {{ error }}
         </div>
-        <div class="mb-3">
-            <label for="password">비밀번호</label>
-            <input type="password" class="form-control" name="password" id="password"
-            value="{{ form.password.value|default_if_none:'' }}">
-        </div>
-        <button type="submit" class="btn btn-primary">로그인</button>
+    </div>
+    
+    <div class="login_info"> <!--로그인 구현시작-->
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{next}}">
+
+            <div class="id_box"> <!--ID-->
+                <label  for="username" class='im'>I D</label>
+
+                <input class="an_request" type="text" class="form-control" name="username" id="username"
+                    value="{{ form.username.value|default_if_none:'' }}" placeholder="ID를 입력하세요."/>
+
+            </div>
+            
+            <div> <!--PW-->
+                <label for="password" class ='im'>PW</label>
+
+                <input class="an_request" type="password" class="form-control" name="password" id="password"
+                value="{{ form.password.value|default_if_none:'' }}" placeholder="PW를 입력하세요.">
+            </div>
+           
+            
+            <div class="btn_box_login un_border" > <!--로그인 버튼-->
+                <button type="submit" class = 'im an_btn'>LOGIN</button>
+            </div>
+            
+            <div class="btn_box_signup un_border"> <!--회원가입 버튼-->
+                <button type="button" class = 'im an_btn' onclick="location.href='/anchovy_common/signup'"> <!—회원가입 링크—>
+                    SIGNUP
+                </button>
+            </div>
     </form>
-    <a href="/anchovy_common/signup">회원가입</a>
+</div>    
+        
+    
+        <center> <!—아이디비번찾기 중심맞춰넣기—>
+        <p class='an_sm_txt'>아이디 찾기 &nbsp;&nbsp; 비밀번호 찾기 </p>
+        </center>
+
+    <div class="sns_list">
+        <ul>
+            <li><img class="kakao" src="/static/image/kakao.png" width="35vw" height="35vw", alt="카카오톡 로그인" /></li>
+            <li><img class="google" src="/static/image/google.png" width="35vw" height="35vw", alt="구글 로그인" /></li>
+            <li><img class="naver " src="/static/image/naver.png" width="35vw" height="35vw", alt="네이버 로그인" /></li>
+        </ul>
+    </div>
+
+    
 </div>
+
 {% endblock %}

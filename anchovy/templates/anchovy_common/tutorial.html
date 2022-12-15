@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'tutorial.css' %}">
+<div class="tutorial_box">
+  <div class="swiper tu_dot">
+    <div class="swiper-pagination">
+  </div>
+
+  <div class="swiper tutorial an_container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <p class="an_title">회원님의 선택은?</p>
+        <span class="tu_txt">내 캐릭터 근성장<span>vs</span>친구 근육 뺏기</span>
+        <div class="tu_img"><img src="/static/image/tu_1.png" alt="" /></div>
+      </div>
+      <div class="swiper-slide">
+        <p class="an_title">언제, 어디서나 간편하게</p>
+        <span class="tu_txt">스마트폰만 있으면<br>AI 트레이너 항시 대기!</span>
+        <div class="tu_img"><img src="/static/image/tu_2.png" alt="" /></div>
+      </div>
+      <div class="swiper-slide">      
+        <p class="an_title">뺏고 뺏기는 그런 사이</p>
+        <span class="tu_txt">친구야 근손실 왔다<br>운동하자</span>
+        <div class="tu_img"><img src="/static/image/tu_3.png" alt="" /></div>
+      </div>
+      <div class="swiper-slide">
+        <p class="an_title">근손실 누가 챙겨</p>
+        <span class="tu_txt">꾸준한 습관 만들기 위해<br>AI 트레이너 등장</span>
+        <div class="tu_img"><img src="/static/image/tu_4.png" alt="" /></div>
+      </div>
+      <div class="swiper-slide">
+        <p class="an_title">바디프로필 가즈아!</p>
+        <span class="tu_txt">캐릭터들과 함께<br>친구들과 함께</span>
+        <div class="tu_img"><img src="/static/image/tu_5.png" alt="" /></div>
+        
+        <div class="btn_box tu_btns">
+          <a class="start" href="/anchovy_main/">
+            시작하기
+            <img src="/static/image/next.png" alt="들어가기 아이콘" />
+          </a>
+        </div>  
+      </div>
+    </div>
+    
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script type='text/javascript'>
+  // 이전 버튼
+  $('#top_menu .prev').css('display', 'none');
+
+  // 스와이퍼
+  var swiper = new Swiper(".tutorial", {
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    spaceBetween: 30,
+  });
+
+  
+	
+
+
+</script>
+{% endblock %}

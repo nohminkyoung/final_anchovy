@@ -1,0 +1,207 @@
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'settings.css' %}">
+
+<!-- ****** 본문 ****** -->
+<div class="an_container people_cont">
+  <p class="an_title" >
+    안녕하세요!!<br>
+    엔초비를 소개합니다. 
+  </p>
+  <div class="people">
+    <a href="//github.com/nohminkyoung/final_anchovy.git" target="_blank">
+      <img src="/static/image/github.png" />
+    </a>
+  </div>
+
+
+  <!-- 슬라이드 -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+
+      <!-- 서비스 -->
+      <div class="swiper-slide">
+        <div class = "solid">
+          <p class="question">Q.</p>
+          <p class="qu_txt">
+              엔초비는 <br>
+              어떤 <strong>서비스</strong> <br>
+              인가요?
+          </p>
+          <p class="qu_item">AI 운동 코치 서비스</p>
+          <div class="qu_per_box">
+            <span class="qu_pg per_60"></span>
+            <span class="qu_per">60%</span>
+          </div>
+          <p class="qu_item">운동 동기부여 서비스</p>
+          <div class="qu_per_box">
+            <span class="qu_pg per_40"></span>
+            <span class="qu_per">40%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 왜 -->
+      <div class="swiper-slide">
+        <div class = "solid">
+          <p class="question">Q.</p>
+          <p class="qu_txt">
+            엔초비를 <br>
+            <strong>왜</strong> 만들려고 <br>
+            했나요?
+          </p>
+          <p class="qu_item">운동 중 부상 방지</p>
+          <div class="qu_per_box">
+            <span class="qu_pg"></span>
+            <span class="qu_per">50%</span>
+          </div>
+          <p class="qu_item">운동 습관 만들기</p>
+          <div class="qu_per_box">
+            <span class="qu_pg"></span>
+            <span class="qu_per">50%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 주요 기능 -->
+      <div class="swiper-slide">
+        <div class = "solid">
+          <p class="question">Q.</p>
+          <p class="qu_txt">
+            엔초비의 <br>
+            <strong>주요 기능</strong>은<br>
+            무엇인가요?
+          </p>
+          <ul class="qu_item">
+            <li># Open Pose</li>
+            <li># Gamification</li>
+            <li># Gamification</li>
+            <li># Gamification</li>
+            <li># Gamification</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 기술 -->
+      <div class="swiper-slide">
+        <div class = "solid">
+          <p class="question">Q.</p>
+          <p class="qu_txt">
+            엔초비는 <br>
+            어떤 <strong>기술</strong>을<br>
+            사용하였나요?
+          </p>
+          <div class="qu_item"><img src="/static/image/all_tech.png" alt="기술 스택" /></div>
+        </div>
+      </div>
+    
+    </div> 
+  
+    <div class="swiper-scrollbar"></div>
+  </div>
+
+
+  <!-- 엔초비 정보 -->
+  <div class="up_pls">
+    <p>물고기의 실체를 밝힙니다..!!</p>
+    <div><img src="/static/image/under_arrow.png" alt="위로" /></div>
+  </div>
+</div>
+
+
+<div class='bottom_sheet'>
+
+  <div class="down_pls">
+    <p>이게다애오..</p>
+    <div class="down"><img src="/static/image/under_arrow.png" alt="아래로" /></div>
+  </div>
+  
+
+  <div class="team_info an_container">
+    <ul>
+      <li>
+        <p class="char_img"><img src="/static/image/anchovy_1.png" alt="" /></p>
+        <p class="info_txt">
+          <span>노민경 (팀장)<img src="/static/image/crown.png" alt="" /></span>
+          <span>담당 업무</span>
+          <a href="mailto:nmk1188@naver.com">nmk1188@naver.com</a>
+        </p>
+      </li>
+      <li>
+        <p class="char_img"><img src="/static/image/swordfish_1.png" alt="" /></p>
+        <p class="info_txt">
+          <span>박소정</span>
+          <span>담당 업무</span>
+          <a href="mailto:sj926thwjdk@naver.com">sj926thwjdk@naver.com</a>
+        </p>
+      </li>
+      <li>
+        <p class="char_img"><img src="/static/image/mackerel_1.png" alt="" /></p>
+        <p class="info_txt">
+          <span>전유진</span>
+          <span>담당 업무</span>
+          <a href="mailto:@dbwlsiernaver.com">dbwlsier@naver.com</a>
+        </p>
+      </li>
+      <li>
+        <p class="char_img"><img src="/static/image/shark_1.png" alt="" /></p>
+        <p class="info_txt">
+          <span>전정훈</span>
+          <span>담당 업무</span>
+          <a href="mailto:wjswjdgns2@gmail.com">wjswjdgns2@gmail.com</a>
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+
+  // 팝업 노출
+  $(".logout_btn").click(function(){
+      $('.popup_box').addClass('open');  
+      $('body').addClass('pop');  
+      $(this).css('z-index', '-1');
+  });
+  $(".pop_btn").click(function(){
+    $('.popup_box').removeClass('open');
+    $('body').removeClass('pop');
+  });
+
+  var swiper = new Swiper(".mySwiper", {
+    scrollbar: {
+      el: ".swiper-scrollbar",
+      hide: true,
+    },
+    slidesPerView: 2,
+    spaceBetween: 10,
+
+  });
+
+
+  // 팀원 정보 
+
+  function bottom_action(){
+
+    $(".down").click(function(){
+        console.log('배경 클릭');
+        $('.bottom_sheet').animate({'bottom':'-=100%'}, 500);
+      });
+
+      $(".up_pls").click(function(){
+        console.log('클릭');
+          $('.bottom_sheet').animate({'bottom':'+=100%'}, 500);
+      });
+  }
+  bottom_action();
+
+</script>
+{% endblock %}

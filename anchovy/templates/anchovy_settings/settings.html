@@ -1,1 +1,47 @@
-c
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'settings.css' %}">
+<div class="an_container">
+  <ul class="setting_list">
+    <li><a href="/anchovy_common/tutorial">튜토리얼</a></li>
+    <li><a href="/anchovy_settings/nickname">닉네임 변경</a></li>
+    <li><a href="/anchovy_settings/people">만든 사람들</a></li>
+    <li class="logout">로그아웃</li>
+    <li><a href="/anchovy_settings/quit">회원 탈퇴</a></li>
+  </ul>
+</div>
+
+<!-- 팝업 시작 -->
+<div class="popup_box">
+  <div class="popup">
+    <p class="pop_txt">로그아웃을 진행할까요?</p>
+    <div class="btn_box">
+      <button type="button" class="pop_btn" onclick="location.href='/anchovy_common/login'">확인</button>
+      <button type="button" class="pop_btn cancel">취소</button>
+    </div>
+  </div>
+</div>
+<!-- 팝업 끝 -->
+{% endblock %}
+
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+
+  // 팝업 노출
+  $(".logout").click(function(){
+      $('.popup_box').addClass('open');  
+      $('body').addClass('pop');  
+      $(this).css('z-index', '-1');
+  });
+  $(".cancel").click(function(){
+    $('.popup_box').removeClass('open');
+    $('body').removeClass('pop');
+  });
+</script>
+{% endblock %}

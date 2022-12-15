@@ -1,0 +1,65 @@
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'settings.css' %}">
+
+<!-- ****** 본문 ****** -->
+
+<div class="an_container quit_cont">
+  <p class="an_title">
+    너무...<br>
+    슬프지 않나요? <br>
+    근손실은...? 
+  </p>
+  <div class="quit_anchovy">
+    <img src="/static/image/anchovy_1.png">
+    <span class="tearing"></span>
+  </div>
+
+  <div class="prev">
+    <a href="{{request.META.HTTP_REFERER}}">
+      <button type="submit" class="return_btn">돌아가기</button>
+    </a>
+  </div>
+  <button type="submit" class="quit_btn">그래도 탈퇴하기</button>
+  
+  <span class="tears"></span>
+</div>
+
+
+
+<!-- 팝업 시작 -->
+<div class="popup_box">
+  <div class="quit_success popup">
+    <p class="pop_txt">정말정말정말 <br> 탈퇴하시겠습니까?</p>
+    <div class="btn_box">
+      <button type="button" class="pop_btn" onclick="location.href='/anchovy_common/login'">확인</button>
+      <button type="button" class="pop_btn">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- 팝업 끝 -->
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+
+  // 팝업 노출
+  $(".quit_btn").click(function(){
+      $('.popup_box').addClass('open');  
+      $('body').addClass('pop');  
+      $(this).css('z-index', '-1');
+  });
+  $(".pop_btn").click(function(){
+    $('.popup_box').removeClass('open');
+    $('body').removeClass('pop');
+  });
+
+</script>
+{% endblock %}

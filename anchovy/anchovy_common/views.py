@@ -16,4 +16,7 @@ def signup(request):
     else:
         form = UserForm()
     return render(request, 'anchovy_common/signup.html',{'form': form})
-    
+
+
+def tutorial(request):
+    return render(request, 'anchovy_common/tutorial.html')

@@ -1,0 +1,76 @@
+{% extends "detail_base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'train_choice.css' %}">
+
+<div class="an_container train_choice">
+  <ul>
+    <!-- 세트 선택 -->
+    <li class="set_ch">
+      <p class="tit">세트 선택</p>
+      <ul class="btn_list">
+        <li><button>3세트</button></li>
+        <li><button>4세트</button></li>
+        <li><button>5세트</button></li>
+      </ul>
+    </li>
+
+    <!-- 횟수 선택 -->
+    <li class="count_ch">
+      <p class="tit">횟수</p>
+      <span class="an_sm_txt">* 과도한 운동 횟수는 위험 할 수 있어요!</span>
+      <ul class="btn_list">
+        <li><button>8회</button></li>
+        <li><button>9회</button></li>
+        <li><button>10회</button></li>
+        <li><button>11회</button></li>
+        <li><button>12회</button></li>
+        <li><button>13회</button></li>
+        <li><button>14회</button></li>
+        <li><button>15회</button></li>
+      </ul>
+    </li>
+
+    <!-- 휴식시간 선택 -->
+    <li class="rest_ch">
+      <p class="tit">휴식 시간</p>
+      <span class="an_sm_txt">* 너무 짧은 휴식은 위험 할 수 있어요!</span>
+      <ul class="btn_list">
+        <li><button>30초</button></li>
+        <li><button>40초</button></li>
+        <li><button>50초</button></li>
+        <li><button>60초</button></li>
+        <li><button>70초</button></li>
+        <li><button>80초</button></li>
+        <li><button>90초</button></li>
+      </ul>
+    </li>
+  </ul>
+  
+</div>
+
+<!-- 버튼 -->
+
+<div class="an_container">
+  <ul class="btn_box">
+    <li><button type="button">연습하기</button></li>
+    <li><button type="button">운동하기</button></li>
+  </ul> 
+</div> 
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+  // 멸치 로고 노출
+  $('#top_menu .logo').css('display', 'block');
+
+  // 버튼 클릭
+  $(".train_choice ul li ul.btn_list li").click(function(){
+      $(this).addClass("select");
+      $(this).siblings().removeClass("select");
+  });
+</script>
+{% endblock %}

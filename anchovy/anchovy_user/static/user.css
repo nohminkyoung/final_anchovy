@@ -65,13 +65,10 @@
   font-weight: 500;
   width: 86%;
   position: fixed;
-  bottom: 21vw;
+  bottom: 24vw;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 1;
 }
-
-
-
-
 
 

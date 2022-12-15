@@ -1,0 +1,9 @@
+.train_choice {text-align: center; margin-top:28%}
+.train_choice span {color:#8D8D8D}
+.train_choice span.choice_txt {display:inline-block; margin-top:5vw;}
+
+.train_choice .choice_btn {margin:12vw 0 15vw;}
+
+.train_choice .choice_btn {display: flex; justify-content: space-between;}
+.train_choice .choice_btn button {background:unset; padding: 0;}
+.train_choice .choice_btn button img {width:38vw;}

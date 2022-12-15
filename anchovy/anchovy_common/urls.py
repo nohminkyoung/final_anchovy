@@ -7,5 +7,6 @@ urlpatterns = [
         template_name='anchovy_common/login.html'
     ), name='login'),
     path('signup', views.signup),
+    path('tutorial/', views.tutorial),
 ]
 

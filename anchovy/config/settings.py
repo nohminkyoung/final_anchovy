@@ -142,10 +142,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     
     # 개별 static
-    os.path.join(BASE_DIR,'anchovy_user', 'static'),
-    os.path.join(BASE_DIR,'anchovy_notice', 'static'),
-    os.path.join(BASE_DIR,'anchovy_train', 'static'),
     os.path.join(BASE_DIR,'anchovy_common', 'static'),
-    # os.path.join(BASE_DIR,'앱 이름','앱 안에 생성한 static 폴더'),
+    os.path.join(BASE_DIR,'anchovy_main', 'static'),
+    os.path.join(BASE_DIR,'anchovy_notice', 'static'),
+    os.path.join(BASE_DIR,'anchovy_settings', 'static'),
+    os.path.join(BASE_DIR,'anchovy_train', 'static'),
+    os.path.join(BASE_DIR,'anchovy_user', 'static'),
+    
 ]
 

@@ -32,9 +32,11 @@
 .main_record_area li:nth-child(2){
     width:5vw;
     text-align: center;
+    padding-bottom: 0.25vw;
 }
 .main_record_area img{
     width: 5vw;
+    vertical-align: middle;
 }
 
 .tab_cont .rk_info li:nth-child(2) {width:25vw; overflow: hidden; text-overflow:ellipsis; white-space:nowrap;}
@@ -50,8 +52,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    margin-top: 4vw;
-    margin-bottom: 4vw;
+    margin-top: 8vw;
   }
   
   /* 캐릭터 */
@@ -102,12 +103,13 @@
     padding-right: 3vw;
 }
 .coupon{
-    margin-top: 2vw;
-    text-align: right;
+    margin-top: 2.3vw;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .coupon img{
-    width: 8vw;
+    width: 6vw;
 }
 
 
@@ -185,3 +187,12 @@
 /*********************************/
 /******     팝업 영역 ************/
 /********************************/
+
+.recode {margin-top:10px;}
+
+/* 캐릭터 설명 */
+.c_info {
+    border:3px solid #000; 
+    border-radius:4vw; 
+    padding:3.5vw; margin:10px 0;
+}

@@ -4,8 +4,7 @@ from . import views #현재 폴더에서 views를 가리킨다.
 
 
 urlpatterns = [
-    path('', views.index),
-    path('tutorial/', views.tutorial),
+    path('settings/',views.settings),
     path('nickname/', views.nickname),
     path('people/', views.people),
     path('logout/', views.logout),

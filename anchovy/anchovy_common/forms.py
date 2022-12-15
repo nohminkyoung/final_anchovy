@@ -5,8 +5,7 @@ from .models import Custom_User
 
 
 class UserForm(UserCreationForm):
-    email = forms.EmailField(label="이메일")
     nickname = forms.CharField(label = "닉네임")
     class Meta:
         model = Custom_User
-        fields = ("username", "password1", "password2", "email",'nickname')
+        fields = ("username", "password1", "password2", 'nickname')

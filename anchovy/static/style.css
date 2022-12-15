@@ -10,8 +10,11 @@ body.pop::before{
     bottom: 0;
     background-color: rgba(0,0,0, 0.8);
     z-index:999;
+    /* -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(2px);     */
 }
 .an_container{width: 82%; margin:30px auto 0 auto; } 
+
 
 /********** title **********/
 /* 기본 (bold) */
@@ -35,9 +38,9 @@ body.pop::before{
 
 /********** 버튼 **********/
 /* 양쪽 버튼 */
-.btn_box {display: flex;  justify-content: space-between; margin:20px 0;}
+.btn_box {display: flex;  justify-content: space-between; margin:5vw 0;}
 .btn_box button {
-    text-align: center;  
+    text-align: center;  width: 47%;
     border-radius: 2vw; padding:3vw 10.2vw;   
     background:#000; color:#fff
 }
@@ -57,7 +60,9 @@ body.pop::before{
 .popup_box {
     display: none;
     z-index: 10000000000000;
-    position: fixed; left: 50%; top:50%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
     border: 1.5px solid #000;
@@ -72,6 +77,19 @@ body.pop::before{
     color: #fff;
     padding: 3.5vw 12vw; margin-top: 8vw;
     border-radius: 2vw;
+}
+
+
+
+/* 임시 적용(추후에 삭제하거나 변경하기) */
+/* 기록 */
+.recode {margin-top:10px;}
+
+/* 캐릭터 설명 */
+.c_info {
+    border:3px solid #000; 
+    border-radius:4vw; 
+    padding:3.5vw; margin:10px 0;
 }
 
 
@@ -119,29 +137,3 @@ nav div ul.main_link li.ac img {width:10vw;}
 /* 친구 목록 아이콘 */
 nav div ul.fd_link img {width:9vw}
 nav div ul.fd_link li.ac img {width:11vw}
-
-
-/* 로딩 화면 */
-#loading {
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    transition: 0.5s;
-    position: fixed;
-    display: block;
-    opacity: 0.99;
-    background-color: #fff;
-    z-index: 99;
-    text-align: center;
-}
-#loading img {
-    display: inline-block;
-    width: 50vw;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    left: 50%;
-    z-index: 100;
-}

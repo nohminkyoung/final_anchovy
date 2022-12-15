@@ -16,7 +16,7 @@ def make_login(request): #auth의 login과 혼동이 안되게 이름 지정
         # 유저가 존재하면 로그인 
         if user is not None: 
             login(request, user) #auth의 로그인을 이용해 로그인
-            return redirect('index') # 로그인 후 인덱스 페이지로 이동
+            return redirect('main') # 로그인 후 인덱스 페이지로 이동
         
         # 에러메세지 시작
         elif not (username and password): # 아이디나 비번이 하나라도 없을때 
@@ -55,7 +55,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
             login(request, user)  # 로그인
-            return redirect('index')
+            return redirect('tutorial')
         
         # 에러시작
         #닉네임 에러
@@ -90,6 +90,7 @@ def signup(request):
     
     return render(request, 'anchovy_common/signup2.html',{'form': form}) #form을 통헤 db에 저장
 
-    
+def tutorial(request):
+    return render(request, 'anchovy_common/tutorial.html')
     
     

@@ -1,10 +1,7 @@
 from django.shortcuts import render
 
-def index(request):
+def settings(request):
     return render(request, 'anchovy_settings/settings.html')
-
-def tutorial(request):
-    return render(request, 'anchovy_settings/tutorial.html')
 
 def nickname(request):
     return render(request, 'anchovy_settings/nickname.html')

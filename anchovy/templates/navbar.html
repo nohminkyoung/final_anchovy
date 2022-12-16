@@ -32,13 +32,13 @@
 
   var url = $(location).attr("href")
   var notice = url.slice(-16)
-  var main = url.slice(-14)
+  var main = url.slice(-19)
   var user = url.slice(-14)
 
   if ( notice == "/anchovy_notice/"){
     $('.notice_link li.ac').css('display', 'block');
     $('.notice_link li.de').css('display', 'none');
-  } else if ( main == "/anchovy_main/"){
+  } else if ( main == "/anchovy_main/main/"){
     $('.main_link li.ac').css('display', 'block');
     $('.main_link li.de').css('display', 'none');
   }else if ( user == "/anchovy_user/"){

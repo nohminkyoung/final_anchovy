@@ -1,3 +1,7 @@
+/* 스크롤 없어져 */
+body{overflow: hidden;}
+
+
 /* 타이틀 */
 p.an_title {text-align: center;}
 
@@ -46,7 +50,6 @@ p.an_title {text-align: center;}
 .quit_cont p {text-align:left;}
 .quit_cont span {
   display:block; 
-  z-index:-1;
   text-align:center;
   font-size:4vw; color:#555;
 }
@@ -64,7 +67,7 @@ p.an_title {text-align: center;}
   background:#000; color:#fff;
   border-radius: 2vw;
   font-weight:300;
-  z-index:-1;
+  
 }
 
 /* 탈퇴하기 버튼 */
@@ -174,7 +177,6 @@ p.an_title {text-align: center;}
   position:fixed;
   bottom:0; left:0; right:0;
   background-color:#b9e0ff;
-  z-index:-1;
   animation: play-state 2.5s linear infinite alternate;
 }
 

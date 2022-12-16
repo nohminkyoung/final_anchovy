@@ -42,7 +42,7 @@ def signup(request):
     if request.method == "POST": # 포스트로 넘어올 때 
         
         form = UserForm(request.POST) 
-        nickname = request.POST.get('nickname','defaultvalue') #input으로 받아진 데이터
+        nickname = request.POST.get('nickname',None) #input으로 받아진 데이터
         username = request.POST.get('username',None) 
         password1 = request.POST.get('password1',None)
         password2 = request.POST.get('password2',None)        
@@ -56,7 +56,7 @@ def signup(request):
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
             login(request, user)  # 로그인
             return redirect('tutorial')
-        
+            
         # 에러시작
         #닉네임 에러
         if " " in nickname : 
@@ -71,19 +71,23 @@ def signup(request):
         elif not username :
             errMsg['error_id'] ='* 아이디는 필수사항 입니다.'
         
+        
         #pw1만의 에러
         if not password1 :
             errMsg['error_pw1'] = '* 비밀번호는 필수사항 입니다. '
-            
-        #pw1+pw2의 에러
-        else:
+        
+        elif password1.isdigit() :
+            errMsg['error_pw1'] = '* 비밀번호가 전부 숫자로만 되어 있습니다. '
+        
+         #pw1+pw2의 에러
+        else:  
             if password1 != password2:
                 errMsg['error_pw2_no'] = '* 비밀번호를 다시 확인해주세요'
-
             elif password1 == password2:
-                errMsg['error_pw2_ok'] ='*사용 가능한 비밀번호 입니다.'
+                errMsg['error_pw2_ok'] = '* 사용가능한 비밀번호입니다'
+
                 
-        return render(request, 'anchovy_common/signup2.html', errMsg) #에러메세지와 같이 불러오기
+        return render(request, 'anchovy_common/signup2.html',{'form': form, 'errMsg':errMsg}) #에러메세지와 같이 불러오기
     
     else: # 포스트 아닐 때 
         form = UserForm()
@@ -92,5 +96,6 @@ def signup(request):
 
 def tutorial(request):
     return render(request, 'anchovy_common/tutorial.html')
+    
     
     

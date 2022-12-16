@@ -16,7 +16,7 @@
   border:2px solid #000; 
   border-radius: 3vw; 
   padding:1.8vw 5vw; 
-  
+  background: #fff;
 }
 
 /* 클릭시 */
@@ -41,3 +41,7 @@
     margin:0;
 }
 .tu_btns button {width:48%; font-size:4.3vw; padding:4vw 6.2vw}
+
+.btn_box li {width:47%}
+.btn_box button {width:100%}
+

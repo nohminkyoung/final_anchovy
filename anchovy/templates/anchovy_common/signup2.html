@@ -17,18 +17,17 @@
         <!--회원가입 구현 시작-->
         <form method="post" class="post-form">
             {% csrf_token %}
-            {% comment %} {% include 'form_errors.html' %} {% endcomment %}
-            
+
             <!--닉네임-->
             <div class="form-group">
                 <label class="an_input" for="nickname">닉네임</label>
-                <input class="an_request nic_box" type="text" class="form-control" name="nickname" id="nickname" style="border:none"
+                <input class="an_request nic_box" type="text" class="form-control" name="nickname" id="nickname" 
                     value="{{ form.nickname.value|default_if_none:'' }}" placeholder="공백없이 입력해주세요.">
             </div>
 
             <div class = "un_border">
                 <div class = "an_error_txt ">
-                    {{ error_nick }}
+                    {{ errMsg.error_nick }}
                 </div>
             </div>
 
@@ -37,7 +36,7 @@
                 <label class="an_input" for="username">아이디</label>
                 
                 <div class='check_box' >
-                    <input class="an_request id_box" type="text" class="form-control" name="username" id="username" style="border:none"
+                    <input class="an_request id_box" type="text" class="form-control" name="username" id="username" 
                     value="{{ form.username.value|default_if_none:'' }}" placeholder="공백없이 입력해주세요." >
                     <!--중복확인버튼-->
                     <button type="button" class='an_sm_txt'>중복확인</button>
@@ -47,38 +46,36 @@
 
             <div class = "un_border">
                 <div class = "an_error_txt ">
-                    {{ error_id }}
+                    {{ errMsg.error_id }}
                 </div>
             </div>
 
             <!--비밀번호-->
             <div class="form-group">
                 <label class="an_input" for="password1">비밀번호</label>
-                <input class="an_request pw_box" type="password" class="form-control" name="password1" id="password1" style="border:none"
+                <input class="an_request pw_box" type="password" class="form-control" name="password1" id="password1" 
                     value="{{ form.password1.value|default_if_none:'' }}" placeholder="8~15 이내로 입력해주세요." maxlength=15>
             </div>
 
             <div class = "un_border">
                 <div class = "an_error_txt ">
-                    {{ error_pw1 }}
+                    {{ errMsg.error_pw1 }}
                 </div>
             </div>
 
             <!--비밀번호 확인-->
             <div class="form-group">
                 <label class="an_input" for="password2">비밀번호 확인</label> 
-                <input class="an_request pw_box" type="password" class="form-control" name="password2" id="password2" style="border:none"
+                <input class="an_request pw_box" type="password" class="form-control" name="password2" id="password2" 
                     value="{{ form.password2.value|default_if_none:'' }}"maxlength=15>
             </div>
 
-            <div class = "un_border">
+            <div class = "un_border pw_error">
                 <div class = "an_error_txt ">
-                    {{ error_pw2_no }}
+                    {{ errMsg.error_pw2_no }}
                 </div>
-            </div>
-            <div class = "un_border">
                 <div class = "an_success_txt ">
-                    {{ error_pw2_ok }}
+                    {{ errMsg.error_pw2_ok }}
                 </div>
             </div>
 

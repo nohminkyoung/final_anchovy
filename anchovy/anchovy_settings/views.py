@@ -9,14 +9,20 @@ def settings(request):
 
 def nickname(request):
     log_user = Custom_User.objects.get(username=request.user)
-    
     data = request.POST.get('newnickname')
-    print(data)
+    errMsg = {}
+
+    if data != None:
+        if data == '':
+            errMsg['error'] = '닉네임을 입력해주세요'
+        elif ' ' in data:
+            errMsg['error'] = '닉네임은 공백을 포함할 수 없습니다'
+        else:
+            log_user.nickname = data
+            log_user.save()
     
-    log_user.nickname = data
-    log_user.save()
+    return render(request, 'anchovy_settings/nickname.html',{'errMsg':errMsg})
     
-    return render(request, 'anchovy_settings/nickname.html')
     
 def people(request):
     return render(request, 'anchovy_settings/people.html')

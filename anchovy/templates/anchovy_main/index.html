@@ -11,7 +11,8 @@
     <p class="an_title_400">
       {% if user.is_authenticated %}
       <strong>{{ log_user.nickname }} </strong>님은<br>
-      <strong>{{ log_status.protein}} 프로틴</strong>으로 <strong>멸치</strong>입니다.
+      <strong>{{ log_status.protein}} 프로틴</strong>으로 <strong>{{log_dic.name}}</strong>입니다.
+      
       {% endif %}
     </p>
     <div class="setting_img_area">
@@ -22,8 +23,8 @@
   <div>
     <a href="/anchovy_main/view">
       <ul class="main_record_area">
-        <li class="recode">20/11/28  스쿼트 27점 달성</li>
-        <li><img src="/static/image/next.png"/></li>      
+        <li class="recode">{{log_recent.date}} {{log_recent.exercise}} {{log_recent.count}}점 달성</li>
+        <li><img src="/static/image/next.png"/></li> 
       </ul>
     </a>
     </div>
@@ -31,7 +32,7 @@
   <!--캐릭터 영역-->
   <div class="main_char_area">
     <div class="main_char">
-      <img src="/static/image/shark_1.png"/>
+      
     </div>
     <div class="char_info" onclick="openNav()">
         <img src="/static/image/info.png"/>
@@ -40,14 +41,20 @@
  
   <!--목표점수 영역-->
   <div class="main_status_area">
-    <p class="">목표 점수</p>
+    <p class="">목표 점수 : {{log_dic.goal}}</p>
     <div class="progress_area">
-      <div class="an_sm_txt">72</div>
-      <div class="an_sm_txt">120</div>
+      <div class="an_sm_txt user_progress">
+        {% if user.is_authenticated %}
+        {{log_train.train_accurate_count__sum}} <!-- 정확하게 실행했던 횟수 합계-->
+        {% else %}
+        0 <!--로그인을 하지 않았을 경우 0 값으로 제공-->
+        {% endif %}
+      </div>
+      <div class="an_sm_txt goal_progress"></div>
     </div>
     <div class="coupon">
       <img src="/static/image/coupon.png"/>
-      <span>x 2</span>
+      <span>x {{log_status.coupon}}</span>
     </div>
   </div>
   
@@ -262,9 +269,125 @@
         document.getElementById("myNav").style.width = "0%";
       }
 
-   
-    // 알림 페이지 적용
-    //$('#top_menu .prev').css('display', 'none');
-    //$('#top_menu .logo').css('display', 'block');
+    // django의 변수 불러오기
+    var a = "{{log_dic.percent}}";
+    var b = 100;
+    var protein = "{{ log_status.protein}}";
+    
+    // 화면이 실행 되었을 때 진행
+    $(document).ready(function(){
+      goal_progress();
+      change_img(protein);
+      
+    });
+
+    // 자동 게이지 진행
+    function goal_progress(){
+      if (a == 0){ // 0%일 경우 none
+        $('.user_progress').css('display', 'none');
+        $('.goal_progress').css('width', '100%');
+      }
+      else if(a <= 10){ //10% 이하일 경우 고정
+        $('.user_progress').css('width', '10%');
+        $('.goal_progress').css('width', '90%');
+      }
+      else if(a >= 100){ // 가득 찼을 경우 전부다 가득 차게 만들기
+        $('.user_progress').css('width', a + '%'); 
+        $('.goal_progress').css('display', 'none');
+      }
+      else{ // 차감된 만큼 표시하기
+        $('.user_progress').css('width', a + '%'); //정해진 값에 퍼센트로 표시
+        $('.goal_progress').css('width', b-a + '%'); //차감된 값으로 표시
+      }
+    }
+
+    // 불러온 ID 값에 따라서 이미지 변경하기
+    function change_img(protein){
+      var imgtag = '';
+      if (protein == 1){
+        // lv 1인 경우 멸치 이미지 추가
+        imgtag+= "<img src='/static/image/anchovy_1.png'/>"
+      }
+      else if (protein >= 2 && protein < 4){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/anchovy_2.png'/>"
+      }
+      else if (protein >= 4 && protein < 5){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/anchovy_3.png'/>"
+      }
+      else if (protein == 5){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/swordfish_1.png'/>"
+      }
+      // ********** 여기서 부터 진행 ****************//
+      else if (protein >= 6 && protein < 8){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/swordfish_2.png'/>"
+      }
+      else if (protein >= 8 && protein < 10){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/swordfish_3.png'/>"
+      }
+      else if (protein >= 10 && protein < 12){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/swordfish_4.png'/>"
+      }
+      else if (protein == 12){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/mackerel_1.png'/>"
+      }
+      else if (protein >= 13 && protein < 15){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/mackerel_2.png'/>"
+      }
+      else if (protein >= 15 && protin < 17){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/mackerel_3.png'/>"
+      }
+      else if (protein >= 17 && protin < 19){
+        // lv 2인 경우 황새치 이미지 추가
+        imgtag+= "<img src='/static/image/mackerel_4.png'/>"
+      }
+      else if (protein >= 19 && protein <22){
+        // lv 3인 경우 고등어 이미지 추가
+        imgtag+= "<img src='/static/image/mackerel_5.png'/>"
+      }
+      else if (protein == 22){
+        // lv 4인 경우 상어 이미지 추가
+        imgtag+= "<img src='/static/image/shark_1.png'/>"
+      }
+      else if (protein >= 23 && protein < 25){
+        // lv 4인 경우 상어 이미지 추가
+        imgtag+= "<img src='/static/image/shark_1.png'/>"
+      }
+      else if (protein >= 25 && protein < 27){
+        // lv 4인 경우 상어 이미지 추가
+        imgtag+= "<img src='/static/image/shark_1.png'/>"
+      }
+      else if (protein >= 27 && protein < 29){
+        // lv 4인 경우 상어 이미지 추가
+        imgtag+= "<img src='/static/image/shark_1.png'/>"
+      }
+      else if (protein >= 29 && protein < 31){
+        // lv 4인 경우 상어 이미지 추가
+        imgtag+= "<img src='/static/image/shark_1.png'/>"
+      }
+      else if (protein >= 31){
+        // lv 4인 경우 상어 이미지 추가
+        imgtag+= "<img src='/static/image/shark_1.png'/>"
+      }
+      else {
+        // 나머지의 경우 뼈다귀 이미지 추가
+        imgtag+= "<img src='/static/image/bone.png'/>"
+      }
+      
+      $(".main_char").empty();
+      $(".main_char").append(imgtag);
+
+      $(".main_char").empty();
+      $(".main_char").append(imgtag);
+      
+    }
   </script>
 {% endblock %}

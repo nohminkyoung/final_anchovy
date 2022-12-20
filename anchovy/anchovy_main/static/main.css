@@ -93,12 +93,11 @@
     background-color: #000;
     border-radius: 10vw;
     color: #f0f0f0;
-    width:50%;
     text-align: right;
     padding-right: 3vw;
 }
+
 .progress_area div:nth-child(2){
-    width:50%;
     text-align: right;
     padding-right: 3vw;
 }
@@ -112,6 +111,7 @@
     width: 6vw;
 }
 
+/* 게이지 */ 
 
 /*********************************/
 /****** 풀 팝업 영역 ************/
@@ -196,3 +196,5 @@
     border-radius:4vw; 
     padding:3.5vw; margin:10px 0;
 }
+
+

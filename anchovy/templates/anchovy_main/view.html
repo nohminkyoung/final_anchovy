@@ -6,13 +6,9 @@
     
     <div class="an_container">
         <div class="calendar">
-            <div class="cal_header">
-                <div class="cal_h_year"></div>
-                <div class="cal_h_month"></div>
-            </div>
-            <div class="cal_status">
-            </div>
-            <div id="calendarForm"></div>
+            <form name="cal_value" action="." method="GET">
+                <div id="calendarForm"></div>
+            </form>
         </div>
     </div>
     <div id="cal_id">
@@ -32,7 +28,6 @@
         })();
         
         var nowDate = new Date();
-        
         function calendarMaker(target, date) {
             
             if (date == null || date == undefined) {
@@ -59,10 +54,6 @@
             var thisMonth = new Date(nowDate.getFullYear(), nowDate.getMonth(), 1);
             var thisLastDay = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0);
             
-            //console.log(test);
-            //console.log('Month:'+ ToMonth);
-            //console.log('day:'+ ToDay);
-            
             var tag = "<tr>";
             var cnt = 0;
             //빈 공백 만들어주기
@@ -80,13 +71,11 @@
                 else{
                     tag += "<td class='cal_num'>" + i;
                 }
-                tag += "<div class='exercise_check'>";
-                tag += "<div class='upper_body_circle_m'></div>";
-                tag += "<div class='lower_body_circle_m'></div>";
+                tag += "<div class='marking_area'>"
+                tag += "<div class='exercise_check' exercise_check='"+i+"'>";
                 tag += "</div>";
-                tag += "<div class='battle_check'>";
-                tag += "<div class='stolen_circle_m'></div>";
-                tag += "<div class='steal_circle_m'></div>";
+                tag += "<div class='battle_check' battle_check='"+i+"'>";
+                tag += "</div>";
                 tag += "</div>";
                 tag += "</td>";
                 cnt++;
@@ -110,10 +99,12 @@
                     "<col style='width:81px'/>" +
                     "<col style='width:81px'/>" +
                     "</colgroup>" +
-                    "<p class='cal_year'>"+ year +"년</p>"+
+                    "<p class='cal_year' value='"+ year+"'>"+ year +"년</p>"+
+                    "<input type='hidden' name='check_year' id='check_year' class='check_year' value='"+year+"' />"+
                     "<div class='cal_month_area'>"+
                     "<div class='prev_btn prev'><img src='/static/image/prev.png'/></div>"+
-                    "<div class='cal_month'><p class='an_title'>"+month+"월</p></div>"+
+                    "<div class='cal_month'><p class='an_title' name='check_month' value='"+month+"'>"+month+"월</p></div>"+
+                    "<input type='hidden' name='check_month' id='check_month' class='check_month' value='"+month+"' />"+
                     "<div class='next_btn next'><img src='/static/image/next.png'/></div>"+
                     "</div>"+
                     "<div class='cal_status'>"+
@@ -165,7 +156,7 @@
                 bottom_sheet += "<div class='bottom_sheet'>";
                 bottom_sheet += "</div>";
                 bottom_open += "<div class='bottom_open'></div>";
-
+                
                 $("#cal_id").empty();
 	            $("#cal_id").append(bottom_sheet);
 	            $("#cal_id").append(bottom_open);
@@ -174,17 +165,12 @@
             function bottom_action(){
 
                 $(".bottom_open").click(function(){
-                    console.log('배경 클릭');
                     $('.bottom_sheet').animate({'bottom':'-=100vw'}, 500);
                     $('.bottom_open').css('display', 'none');
                 });
-        
-                $(".bottom_sheet").click(function(){
-                    console.log('바텀시트 클릭');
-                });
-                
-                $(".cal_num").click(function(){
 
+                $(".cal_num").click(function(){
+                    
                     var day = $(this).text();
                     var Year = $('.cal_year').text().substr(0,4);
 
@@ -200,56 +186,225 @@
                     
                     // 클릭 시 해당 날짜에 대해 데이터 받아서 : html 에서 불러오기
                     // 데이터 베이스를 통해 연결 후 데이터 베이스 불러오기
-                    console.log('num 클릭'); 
-                    $('.bottom_sheet').animate({'bottom':'+=100vw'}, 500);
-                    $('.bottom_open').css('display', 'block');
                     
-                    bottom_contents(day, dw);
-        
-        
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'get_cal' %}",
+                        data: {"Day" : day, "Month" : Month, "Year": Year},
+                        dataType:'json',
+                        success: function (data) {
+                            if (data.T_data.length == 0 && data.B_data.length == 0){
+                                console.log('데이터가 없습니다.');
+                            }
+                            else{
+                                $('.bottom_sheet').animate({'bottom':'+=100vw'}, 500);
+                                $('.bottom_open').css('display', 'block');
+                                bottom_contents(data,day,dw);
+                            }
+                        },
+                        error: function (data) { //데이터 받아오기 실패
+                            alert('서버 연결이 실패 했습니다.');
+                        }
+                    });   
                 });
             }
             
             
-            function bottom_contents(day,dw){
+            function bottom_contents(data,day,dw){
                 var Title = "";
                 var Exercise = "";
+                var area = "";
                 var Notice = "";
                 var icon = "";
+                var empty = "";
                 icon += "<div class='icon_area'>"
                 icon += "<div class='bottom_sheet_icon'></div>";
                 icon += "<div class='bottom_sheet_icon'></div>";
                 icon += "</div>"
                 Title += "<div class='bottom_title_area'><p class='an_title'>"+day+"."+dw+"</p></div>";
-                Exercise += "<div class='bottom_exercise_area'><p class='ex_title'>운동 내역</p>";
-                Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
-                Exercise += "<p>스쿼트</p>";
-                Exercise += "<p>5세트 15회</p>";
-                Exercise += "<p>45점</p></div>";
-                Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
-                Exercise += "<p>스쿼트</p>";
-                Exercise += "<p>5세트 15회</p>";
-                Exercise += "<p>45점</p></div>";
-                Exercise += "</div>";
-                Notice += "<div class='bottom_exercise_area'><p class='ex_title'>알림</p>";
-                Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
-                Notice += "<p>친구 1님에게 1프로틴을 뺏겼습니다.</p></div>";
-                Notice += "</div>";
-                $(".bottom_sheet").empty();
-	            $(".bottom_sheet").append(icon);
-	            $(".bottom_sheet").append(Title);
-	            $(".bottom_sheet").append(Exercise);
-	            $(".bottom_sheet").append(Notice);
-                
+                area += "<div class='bottom_contents'></div>"  
+                if (data.T_data.length >= 1){
+                    Exercise += "<div class='bottom_exercise_area'><p class='ex_title'>운동 내역</p>";
+                    for (i=0; i < data.T_data.length; i++){
+                        if (data.T_data[i].train_kind == 1){
+                            Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
+                            Exercise += "<p>스쿼트</p>";
+                            Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p>";
+                            Exercise += "<p>"+data.T_data[i].train_accurate_count+"점</p>";
+                            Exercise += "</div>";
+                        }
+                        else if (data.T_data[i].train_kind == 2){
+                            Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
+                            Exercise += "<p>스쿼트</p>";
+                            Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p>";
+                            Exercise += "<p>"+data.T_data[i].train_accurate_count+"점</p>";
+                            Exercise += "</div>";
+                        }
+                    }
+                    Exercise += "</div>";
+                }
+                if (data.B_data.length >= 1){
+                    Notice += "<div class='bottom_battle_area'><p class='ex_title'>알림</p>";
+                    for (i=0; i < data.B_data.length; i++){
+                        //빼앗겼을 경우
+                        if (data.B_data[i].username == data.B_data[i].lose_username){
+                            Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
+                            Notice += "<p>"+data.B_data[i].earn_nickname+"님 🤬";
+                            Notice += "<span class='an_sm_txt'>(프로틴 -1)</span> </p></div>";
+                        }
+                        // 빼앗을 경우
+                        else if (data.B_data[i].username == data.B_data[i].earn_username){
+                            Notice += "<div class='exercise_text_area'><div class='steal_circle_m'></div>";
+                            Notice += "<p>"+data.B_data[i].earn_nickname+"님 🥳"
+                            Notice += "<span class='an_sm_txt'>(프로틴 +1)</span> </p></div>";
+                        }
+                    }
+                    Notice += "</div>";
+                }
+                    empty += "<div class='empty_area'></div>"
+                    $(".bottom_sheet").empty();
+                    $(".bottom_sheet").append(icon);
+                    $(".bottom_sheet").append(Title);
+                    $(".bottom_sheet").append(area);
+                    $(".bottom_contents").append(Exercise);
+                    $(".bottom_contents").append(Notice);
+                    $(".bottom_contents").append(empty);
             }
-        
+
+            function get_value(){
+                let form = document.createElement('form');
+                var Year = $('input[name=check_year]').eq('0').val();
+                var Month = $('input[name=check_month]').eq('0').val();
+                
+                //Train_Data 가져오기
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'view' %}",
+                    data: {"Year" : Year, "Month" : Month},
+                    dataType:'json',
+                    success: function (data) { // 데이터 받아오기 성공
+                        console.log(data);
+                        // [exercise_check, battle_check] 외부 , 
+                            for (i=0; i < data.T_data.length; i++){
+                                var outer_exercise_upper = "";
+                                var outer_exercise_lower = "";
+                                mark_date = data.T_data[i].train_date.substr(8,10);
+
+                                // 가져온 데이터가 01 형식으로 되어 있을 경우 제거
+                                if (mark_date[0] == '0'){
+                                    mark_date = mark_date[1];
+                                }
+                                
+                                exercise_area = $("[exercise_check="+parseInt(mark_date)+"]"); //outer_exercise_area
+                                cheking_upper = $("div[value='upper"+parseInt(mark_date)+"']");
+                                cheking_lower = $("div[value='lower"+parseInt(mark_date)+"']");
+                                // 가져온 데이터가 상체 운동이 였을 경우
+                                if (data.T_data[i].train_kind == 1){
+                                    if (cheking_upper[0]){
+                                       console.log('outline 상체 중복 체크');
+                                    }
+                                    else{
+                                        outer_exercise_upper += "<div value='upper"+parseInt(mark_date)+"' class='upper_body_circle_m'></div>";
+                                        exercise_area.append(outer_exercise_upper);
+                                    }
+                                    
+                                }
+                                // 가져온 데이터가 하체 운동이였을 경우
+                                else if (data.T_data[i].train_kind == 2){
+                                    if (cheking_lower[0]){
+                                        console.log('outline 하체 중복 체크');
+                                    }
+                                    else{
+                                        outer_exercise_lower += "<div value='lower"+parseInt(mark_date)+"' class='lower_body_circle_m'></div>";
+                                        exercise_area.append(outer_exercise_lower);
+                                    }
+                                }
+                                
+                            };
+                            
+                            for (i=0; i < data.B_data.length; i++){
+                                var outer_battle_win = "";
+                                var outer_battle_lose = "";
+
+                                mark_date = data.B_data[i].lose_date.substr(8,10);
+                                
+                                // 가져온 데이터가 01 형식으로 되어 있을 경우 제거
+                                if (mark_date[0] == '0'){
+                                    mark_date = mark_date[1];
+                                }
+
+                                battle_area = $("[battle_check="+parseInt(mark_date)+"]"); //outer_exercise_area
+                                cheking_win = $("div[value='win"+parseInt(mark_date)+"']");
+                                cheking_lose = $("div[value='lose"+parseInt(mark_date)+"']");
+
+                                // 가져온 데이터가 승리한 데이터 였을 경우 (승리한 닉네임과 로그인한 데이터가 같은 경우)
+                                if (data.B_data[i].earn_username == data.B_data[i].username){
+                                    if (cheking_win[0]){
+                                        console.log('승리');
+                                    }
+                                    else{
+                                        outer_battle_win += "<div value='win"+parseInt(mark_date)+"' class='steal_circle_m'></div>";
+                                        battle_area.append(outer_battle_win);
+                                    }
+                                    
+                                }
+                                // 가져온 데이터가 패배한 데이터가 있는 경우 (패배한 닉네임과 로그인한 데이터가 같은 경우)
+                                else if (data.B_data[i].lose_username == data.B_data[i].username){
+                                    if (cheking_lose[0]){
+                                        console.log('패배');
+                                    }
+                                    else{
+                                        outer_battle_lose += "<div value='lose"+parseInt(mark_date)+"' class='stolen_circle_m'></div>";
+                                        battle_area.append(outer_battle_lose);
+                                    }
+                                    
+                                }
+
+                            };
+                        
+                    },
+                    error: function (data) { //데이터 받아오기 실패
+                        alert('서버 연결이 실패 했습니다.');
+                    }
+                });
+
+            };
+            
+
+            get_value();
             bottom_create();
             bottom_action();
-            
+
+                
         }
 
-        
-        
-        
+
+    
+
+    // django의 변수 불러오기
+
+    // 기록하기
+    /*
+    tag += "<div class='upper_body_circle_m'></div>";
+    tag += "<div class='lower_body_circle_m'></div>";
+
+    tag += "<div class='stolen_circle_m'></div>";
+    tag += "<div class='steal_circle_m'></div>";
+
+
+    Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
+    Exercise += "<p>스쿼트</p>";
+    Exercise += "<p>5세트 15회</p>";
+    Exercise += "<p>45점</p></div>";
+    Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
+    Exercise += "<p>스쿼트</p>";
+    Exercise += "<p>5세트 15회</p>";
+    Exercise += "<p>45점</p></div>;
+
+
+    Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
+    Notice += "<p>친구 1님에게 1프로틴을 뺏겼습니다.</p></div>";
+    */ 
+
     </script>
 {% endblock %}

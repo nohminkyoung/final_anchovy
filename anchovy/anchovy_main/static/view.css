@@ -43,19 +43,26 @@ margin-right:2vw;
 thead.cal_week{
     height:10vw;
     text-align: center;
+    
+}
+
+thead.cal_week th{
+    height: 10vw;
+}
+.marking_area{
+    height:13vw;
 }
 #custom_set_date tr td{
     height: 10vw;
     font-size:3.4vw;
-    padding-top:3vw;
-    padding-bottom: 4vw;
     text-align: center;
 }
+
 /*원 만들기*/
 .upper_body_circle{
     margin: 0 auto;
     width: 3vw;
-    height: 3vw;
+    height: 4vw;
     background-color: #F12D2D;
     border-radius: 50%;
 }
@@ -154,6 +161,13 @@ thead.cal_week{
 
 
 /*바텀 시트*/
+.bottom_contents{
+    overflow:scroll;
+    height:100%;
+}
+.empty_area{
+    height: 30vw;
+}
 
 .bottom_open{
     display: none;
@@ -196,6 +210,10 @@ thead.cal_week{
 }
 
 .bottom_exercise_area{
+    width: 82%; margin:30px auto 0 auto;
+}
+
+.bottom_battle_area{
     width: 82%; margin:30px auto 0 auto;
 }
 

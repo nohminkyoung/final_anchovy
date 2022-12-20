@@ -9,16 +9,16 @@
 <!-- ****** 본문 ****** -->
 <div class="fd_info an_container">
   <div class="fd_info_box">
-    <p class="fd_nick an_title">{{ view_user.nickname }}</p>
-    <p class="fd_id">{{ view_user.username }}</p>
+    <p class="fd_nick an_title">{{ user.nickname }}</p>
+    <p class="fd_id">{{ user.username }}</p>
 
     <div class="fd_char">{% include 'ch_img/ch_img.html' %}</div>
 
-    <p class="protein">{{ view_user.protein }}프로틴 </p>
+    <p class="protein">{{ user.protein }}프로틴 </p>
   </div>
 
-  {%if target_user.username != view_user.username%}
-  <button type="submit" class="full_btn">공격하기</button>
+  {%if target_user.username != user.username%}
+    <button type="submit" class="full_btn">공격하기</button>
   {% endif %}
 </div>
 

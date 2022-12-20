@@ -5,7 +5,6 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="{% static 'train_result.css' %}">
 
-
 <div class="an_container train_result">
   <p class="an_title">결과 확인</p>
 
@@ -15,12 +14,11 @@
       <span class="center">{{persent}}%</span>
     </div>
     <div class="train_type">
-    {% if kind == 1%} <!--kind가 1이면 스쿼트-->
-      <p><img src="/static/image/black_squat.png" >하체운동</p>
-      <p class="an_title_lg_700">스쿼트</p>
-      {% endif %}
-      {% if kind == 2%} <!--kind가 2이면 푸쉬업-->
-      <p><img src="/static/image/black_squat.png" 상체운동</p>
+      {% if kind == 1%} <!--kind가 1이면 스쿼트-->
+        <p><img src="/static/image/black_squat.png" >하체운동</p>
+        <p class="an_title_lg_700">스쿼트</p>
+      {% else %}
+        <p><img src="/static/image/black_squat.png" > 상체운동</p>
         <p class="an_title_lg_700">푸쉬업</p>
       {% endif %}
     </div>
@@ -29,13 +27,12 @@
   <!-- 세트별 결과 -->
   {% for set_1 in data_list %}
     <ul class="result_list">
-        <li>
+      <li>
         <p class="set_txt">{{set_1.set}}세트</p>
         <p class="success_count">{{set_1.train_all_count}}회 중 <strong>{{set_1.train_accurate_count}}회</strong> 성공</p>
-        </li>
+      </li>
     </ul>
   {% endfor%}
-
 
   <!-- 총 점수 -->
   <p class="total_score">총 {{all_score}}점 중 <strong>{{accurate_score}}점</strong> 달성!</p>
@@ -43,8 +40,6 @@
   <!-- 버튼 -->
   <button type="submit" class="full_btn add_btn" onclick="location.href='../../../../anchovy_main/main/'">메인으로</button>
 </div>
-
-
 
 {% endblock %}
 

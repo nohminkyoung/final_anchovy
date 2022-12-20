@@ -35,11 +35,11 @@ def index(request):
 
 
 def detail(request, user_id): #user_id값을 같이 받아오기
-    view_user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기
+    user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기
     
     target_user = Custom_User.objects.get(username=request.user) #로그인된 정보
     
-    return render(request, 'anchovy_user/friend_detail.html', {'view_user':view_user, 'target_user':target_user})
+    return render(request, 'anchovy_user/friend_detail.html', {'user':user, 'target_user':target_user})
 
 
 

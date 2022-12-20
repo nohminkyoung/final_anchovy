@@ -7,7 +7,7 @@ urlpatterns = [
     path('settings/',views.settings),
     path('nickname/', views.nickname),
     path('people/', views.people),
-    path('logout/', views.logout),
+    path('logout/', views.make_logout, name='logout'),
     path('quit/', views.quit),
 ]
 

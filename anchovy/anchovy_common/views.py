@@ -32,10 +32,6 @@ def make_login(request): #auth의 login과 혼동이 안되게 이름 지정
     return render(request, 'anchovy_common/login3.html', errMsg) # 에레메세지와 같이 불러오기
 
 
-def logout(request):
-    auth.logout(request)
-    return redirect('login')
-
 
 
 

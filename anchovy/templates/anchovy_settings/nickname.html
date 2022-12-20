@@ -11,10 +11,11 @@
     새로운 닉네임을<br>
     입력해주세요.
   </p>
-  <input type="text" class="nick_id " placeholder="공백 없이 입력해주세요." 
-    name="username" value="" />
-
-  <button type="submit" class="full_btn add_btn">변경하기</button>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" class="nick_id " placeholder="공백 없이 입력해주세요." name="newnickname" />
+    <button type="submit" class="full_btn add_btn" >변경하기</button>
+  </form>
 </div>
 
 <!-- 팝업 시작 -->

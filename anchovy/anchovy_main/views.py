@@ -30,7 +30,6 @@ def index(request):
         status_dic['lv'] = 2
         status_dic['name'] = '황새치'
     elif target_status.character_lv == 3:
-        status_dic['goal'] = 180
         status_dic['lv'] = 3
         status_dic['name'] = '고등어'
     elif target_status.character_lv == 4:
@@ -151,20 +150,25 @@ def main_record(request):
         
         ## 게이지 값 계산
         progress_data = []
-        status_dic = {'percent':0}
+        status_dic = {'percent':0, 'goal':0}
         
         user_value = target_training['train_accurate_count__sum']
                 
         if target_user_lv == '0':
             max_value = 0
+            status_dic['goal'] = max_value
         elif target_user_lv == '1':
             max_value = 120
+            status_dic['goal'] = max_value
         elif target_user_lv == '2':
             max_value = 150
+            status_dic['goal'] = max_value
         elif target_user_lv == '3':
             max_value = 180
+            status_dic['goal'] = max_value
         elif target_user_lv == '4':
             max_value = 210
+            status_dic['goal'] = max_value
         
         status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
 

@@ -23,7 +23,7 @@
   <div>
     <a href="/anchovy_main/view">
       <ul class="main_record_area">
-        <li class="recode">{{log_recent.date}} {{log_recent.exercise}} {{log_recent.count}}점 달성</li>
+        <li class="recode"></li>
         <li><img src="/static/image/next.png"/></li> 
       </ul>
     </a>
@@ -41,7 +41,7 @@
  
   <!--목표점수 영역-->
   <div class="main_status_area">
-    <p class="">목표 점수 : {{log_dic.goal}}</p>
+    <p class="goal_score"></p>
     <div class="progress_area">
       <div class="an_sm_txt user_progress">
         {% if user.is_authenticated %}
@@ -285,7 +285,23 @@
         dataType:'json',
         success: function (data) {
             percent = data.progress_data[0].percent
+
+            var recode_value = "";
+            var goal_value ="";
+
             goal_progress(percent);
+            
+            recode_value += ""+data.recent_data[0].date+" "+data.recent_data[0].exercise+" "+data.recent_data[0].count+"점 달성";
+            goal_value += "목표 점수 : "+data.progress_data[0].goal+""
+
+            $(".recode").empty();
+            $(".recode").append(recode_value);
+
+            $(".goal_score").empty();
+            $(".goal_score").append(goal_value);
+
+
+
         },
         error: function (data) { //데이터 받아오기 실패
             alert('서버 연결이 실패 했습니다.');

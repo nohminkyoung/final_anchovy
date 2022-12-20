@@ -5,7 +5,9 @@ from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponse 
-from datetime import datetime, date
+import time
+from django.http import StreamingHttpResponse
+
 
 # index : Custom_User, User_status 참조 // 중앙 이미지 변경
 def index(request):
@@ -42,7 +44,6 @@ def index(request):
 
 @csrf_exempt
 def cal(request):
-    
     if request.POST:
         login_user = request.user
         T_data = []
@@ -153,26 +154,71 @@ def main_record(request):
         status_dic = {'percent':0, 'goal':0}
         
         user_value = target_training['train_accurate_count__sum']
-                
+
         if target_user_lv == '0':
             max_value = 0
             status_dic['goal'] = max_value
+            status_dic['percent'] = 0
         elif target_user_lv == '1':
             max_value = 120
             status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         elif target_user_lv == '2':
             max_value = 150
             status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         elif target_user_lv == '3':
             max_value = 180
             status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         elif target_user_lv == '4':
             max_value = 210
             status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         
-        status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-
         recent_data.append(recent_record)
         progress_data.append(status_dic)
     
     return HttpResponse(json.dumps({'recent_data':recent_data, 'progress_data':progress_data}))
+
+def coupon_active(request):
+    if request.GET:
+        login_user = request.user
+        target_coupons = request.GET.get('coupons')
+
+        # 쿠폰 사용
+        if int(target_coupons) > 0:
+            coupon_error = 0
+            target_status = User_status.objects.get(username=login_user)
+            target_status.coupon -= 1
+            target_status.protein += 1
+            target_status.save()
+        else:
+            coupon_error = 1
+            
+    return HttpResponse(json.dumps({'coupon_error': coupon_error }))
+
+
+
+def stream(request):
+    def event_stream():
+        tmp_user = request.user
+        tmp = User_status.objects.get(username=tmp_user) #처음 
+        while True:
+            # 정상 실행
+            time.sleep(10)
+            login_user = request.user
+            if tmp_user == login_user:
+                target_status = User_status.objects.get(username=login_user)
+                # 중간에 프로틴이 변경이 되었다면
+                if target_status.protein != tmp.protein:
+                    ssm_status = '1'
+                # 이상이 없는 경우
+                else:
+                    ssm_status = '0'
+                yield 'data: %s\n\n' % ssm_status
+            # 처음 들어왔을 때 등록되어 있는 로그인 유저와 다른 경우 상태값 2를 출력
+            else:        
+                ssm_status = '2'
+                yield 'data: %s\n\n' % ssm_status
+    return StreamingHttpResponse(event_stream(), content_type='text/event-stream')

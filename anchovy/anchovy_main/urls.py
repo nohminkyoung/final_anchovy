@@ -8,5 +8,7 @@ urlpatterns = [
     path('main_record/', views.main_record, name='main_record'),
     path('view/', views.cal, name='view'),
     path('get_cal/', views.get_cal, name='get_cal'),
+    path('coupon_active/', views.coupon_active, name='coupon_active'),
+    path('stream/', views.stream, name='stream')
     
 ]

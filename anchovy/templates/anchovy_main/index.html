@@ -5,6 +5,12 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'main.css'%}">
 
+<div id="sse_area">
+  <div class="sse_test">
+    <p class="an_sm_txt">프로틴에 변화가 있어요!</p>
+  </div>
+</div>
+
 <div class="an_container">
   <!--상단 텍스트 영역-->
   <div class="main_title_area">
@@ -67,14 +73,14 @@
   <!-- 팝업 시작 -->
   <div class="popup_box">
     <div class="add_success popup">
-      <p class="pop_txt">사용 가능한 티켓이 없습니다.</p>
+      <p class="pop_txt"></p>
       <button type="button" class="pop_btn">확인</button>
     </div>
   </div>
   <!-- 팝업 끝 -->
 
+  <!-- 팝업 끝 -->
 </div>
-
 <!-- 풀팝업 시작 -->
 <div id="myNav" class="overlay">
   <div class="an_container">
@@ -230,36 +236,74 @@
 
 {% block script %}
   <script type='text/javascript'>
-    // 멸치 로고 노출
-    //$('#top_menu .logo').css('display', 'block');
-    
-    // 캘린더 페이지 적용
-    //$('#top_menu .re_icon').css('display', 'block');
-    
-    // 친구 상세페이지 적용
-    $('#top_menu .friend_status').css('display', 'block');
-    
-    // 친구 상세페이지 적용 (친구 추가 및 친구 해제)
-    $(".friend_status img").click(function(){
-      if($(this).hasClass("clicked")){
-        $(this).siblings().addClass("clicked");
-        $(this).removeClass("on clicked");
-      }else{
-        $(this).addClass("clicked");
-        $(this).siblings().removeClass("clicked");
-      }
-    });
+
+     // SSE 기능
+    if(typeof(EventSource) !== "undefined") {
+      var source = new EventSource("{% url 'stream' %}");
+      source.onmessage = function(event) {
+        if (event.data == '1'){
+          msg_position = $('#sse_area').css('top');
+          re = msg_position.substr(0,1)
+          console.log(re);
+          if (re == '0'){
+            $("#sse_area").click(function(){
+              location.reload();
+            });
+          }
+          else{
+            $('#sse_area').animate({'top':'+=10vw'}, 500);
+          }
+        }
+        else if (event.data == '2'){
+          alert('로그인이 변경되었습니다.');
+          location.reload();
+        }
+      };
+    }
 
      // 성장하기팝업 노출
-     $(".add_btn").click(function(){
-      $('.popup_box').addClass('open');  
-      $('body').addClass('pop');
-    });
-    $(".pop_btn").click(function(){
-      $('.popup_box').removeClass('open');
-      $('body').removeClass('pop');
-    });
+     var coupons = "{{ log_status.coupon}}";
 
+     $(".add_btn").click(function(){
+      $.ajax({
+        type: "GET",
+        url: "{% url 'coupon_active' %}",
+        data: {"coupons" : coupons},
+        dataType:'json',
+        success: function (data) {
+          // 쿠폰 사용에 성공 했으면
+          if (data.coupon_error == 0){
+            var coupon_msg = "근육이 상승했습니다!";
+            $(".pop_txt").empty();
+            $(".pop_txt").append(coupon_msg);
+            $('.popup_box').addClass('open');  
+            $('body').addClass('pop');
+            $(".pop_btn").click(function(){
+              $('.popup_box').removeClass('open');
+              $('body').removeClass('pop');
+              location.reload();
+            });
+          }
+          // 쿠폰 사용에 실패 했을 경우
+          else{
+            var coupon_msg = "사용 가능한 쿠폰이 없습니다.";
+            $(".pop_txt").empty();
+            $(".pop_txt").append(coupon_msg);
+            $('.popup_box').addClass('open');  
+            $('body').addClass('pop');
+            $(".pop_btn").click(function(){
+              $('.popup_box').removeClass('open');
+              $('body').removeClass('pop');
+              location.reload();
+            });
+          }
+        },
+        error: function (data) { //데이터 받아오기 실패
+          console.log('쿠폰 서버 연결 실패');
+        }
+      });   
+    });
+    
       // 풀팝업 노출
       function openNav() {
         document.getElementById("myNav").style.width = "100%";
@@ -275,8 +319,6 @@
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
     var lv = "{{log_status.character_lv}}";
-
-    console.log(lv);
 
     // 화면이 실행 되었을 때 진행
     $(document).ready(function(){
@@ -328,7 +370,6 @@
     });   
       
       goal_progress();
-
       change_img(protein);
     });
 
@@ -351,6 +392,8 @@
         $('.goal_progress').css('width', b-a + '%'); //차감된 값으로 표시
       }
     }
+
+  
 
     // 불러온 ID 값에 따라서 이미지 변경하기
     function change_img(protein){
@@ -395,7 +438,7 @@
       }
       else if (protein >= 15 && protein < 17){
         // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/mackerel_2.png'/>"
+        imgtag+= "<img src='/static/image/mackerel_3.png'/>"
       }
       else if (protein >= 17 && protein < 19){
         // lv 2인 경우 황새치 이미지 추가
@@ -437,6 +480,7 @@
       $(".main_char").empty();
       $(".main_char").append(imgtag);
 
+    
     }
   </script>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate,login
 from django.shortcuts import render, redirect
 from anchovy_common.forms import UserForm
+import re 
 
 
 def make_login(request): #auth의 login과 혼동이 안되게 이름 지정
@@ -47,7 +48,7 @@ def signup(request):
         password1 = request.POST.get('password1',None)
         password2 = request.POST.get('password2',None)        
         errMsg={}
-        
+        # find_korean = re.compile('[ㄱ-ㅣ가-힣]')
         
         if  form.is_valid(): # 회원가입 폼
             form.save()
@@ -70,6 +71,8 @@ def signup(request):
             errMsg['error_id'] ='* 아이디에는 공백을 추가 할 수 없습니다.'
         elif not username :
             errMsg['error_id'] ='* 아이디는 필수사항 입니다.'
+        # elif len(find_korean.findall(username)) != 0:
+        #     errMsg['error_id'] ='* 아이디는 한글을 빼야헤'
         
         
         #pw1만의 에러

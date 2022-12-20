@@ -12,33 +12,40 @@
   <!-- 그래프 및 운동 종류 -->
   <div class="result_top">
     <div class="graph doughnut1">
-      <span class="center">{{persent}}%</span>
+      <span class="center">80%</span>
     </div>
     <div class="train_type">
-    {% if kind == 1%} <!--kind가 1이면 스쿼트-->
       <p><img src="/static/image/black_squat.png" >하체운동</p>
       <p class="an_title_lg_700">스쿼트</p>
-      {% endif %}
-      {% if kind == 2%} <!--kind가 2이면 푸쉬업-->
-      <p><img src="/static/image/black_squat.png" 상체운동</p>
-        <p class="an_title_lg_700">푸쉬업</p>
-      {% endif %}
     </div>
   </div>
 
   <!-- 세트별 결과 -->
-  {% for set_1 in data_list %}
-    <ul class="result_list">
-        <li>
-        <p class="set_txt">{{set_1.set}}세트</p>
-        <p class="success_count">{{set_1.train_all_count}}회 중 <strong>{{set_1.train_accurate_count}}회</strong> 성공</p>
-        </li>
-    </ul>
-  {% endfor%}
-
+  <ul class="result_list">
+    <li>
+      <p class="set_txt">1세트</p>
+      <p class="success_count">15회 중 <strong>9회</strong> 성공</p>
+    </li>
+    <li>
+      <p class="set_txt">2세트</p>
+      <p class="success_count">15회 중 <strong>9회</strong> 성공</p>
+    </li>
+    <li>
+      <p class="set_txt">3세트</p>
+      <p class="success_count">15회 중 <strong>9회</strong> 성공</p>
+    </li>
+    <li>
+      <p class="set_txt">4세트</p>
+      <p class="success_count">15회 중 <strong>9회</strong> 성공</p>
+    </li>
+    <li>
+      <p class="set_txt">5세트</p>
+      <p class="success_count">15회 중 <strong>9회</strong> 성공</p>
+    </li>
+  </ul>
 
   <!-- 총 점수 -->
-  <p class="total_score">총 {{all_score}}점 중 <strong>{{accurate_score}}점</strong> 달성!</p>
+  <p class="total_score">총 75점 중 <strong>45점</strong> 달성!</p>
   
   <!-- 버튼 -->
   <button type="submit" class="full_btn add_btn" onclick="location.href='../../../../anchovy_main/main/'">메인으로</button>
@@ -56,7 +63,6 @@
 
 
   // 그래프
-  var per = "{{persent}}"
   const chart1 = document.querySelector('.doughnut1');
 
   const makeChart = (percent, classname, color) => {
@@ -75,8 +81,8 @@
     classname.style.border = "1.5px solid #000";
   }
   const replay = () => {
-    makeChart(per, chart1, '#000');
+    makeChart(80, chart1, '#000');
   }
-  makeChart(per, chart1, '#000');
+  makeChart(80, chart1, '#000');
 </script>
 {% endblock %}

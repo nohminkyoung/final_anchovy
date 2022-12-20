@@ -1,0 +1,61 @@
+{% if friend.friend_protein == 0%}
+    <img src = "/static/image/bone.png" />
+{% endif%}
+<!--멸치-->
+{% if friend.friend_protein == 1%}  
+    <img src = "/static/image/anchovy_1.png" />
+{% endif%}
+{% if friend.friend_protein == 2 or friend.friend_protein == 3%}
+    <img src = "/static/image/anchovy_2.png" />
+{% endif%}
+{% if friend.friend_protein == 4%} 
+    <img src = "/static/image/anchovy_3.png" />
+{% endif%}
+<!--황새치-->
+{% if friend.friend_protein == 5%} 
+    <img src = "/static/image/swordfish_1.png" />
+{% endif%}
+{% if friend.friend_protein == 6 or friend.friend_protein == 7%}  
+    <img src = "/static/image/swordfish_2.png" />
+{% endif%}
+{% if friend.friend_protein == 8 or friend.friend_protein == 9 %} 
+    <img src = "/static/image/swordfish_3.png" />
+{% endif%}
+{% if friend.friend_protein == 10 or friend.friend_protein == 11%} 
+    <img src = "/static/image/swordfish_4.png" />
+{% endif%}
+<!--고등어-->
+{% if friend.friend_protein == 12%} 
+    <img src = "/static/image/mackerel_1.png" />
+{% endif%}
+{% if friend.friend_protein == 13 or friend.friend_protein == 14%} 
+    <img src = "/static/image/mackerel_2.png" />
+{% endif%}
+{% if friend.friend_protein == 15 or friend.friend_protein == 16 %} 
+    <img src = "/static/image/mackerel_3.png" />
+{% endif%}
+{% if friend.friend_protein == 17 or friend.friend_protein == 18%} 
+    <img src = "/static/image/mackerel_4.png" />
+{% endif%}
+{% if friend.friend_protein == 19 or friend.friend_protein == 20 or friend.friend_protein == 21%} 
+    <img src = "/static/image/mackerel_4.png" />
+{% endif%}
+<!--상어-->
+{% if friend.friend_protein == 22%} 
+    <img src = "/static/image/shark_1.png" />
+{% endif%}
+{% if friend.friend_protein == 23 or friend.friend_protein == 24%} 
+    <img src = "/static/image/shark_2.png" />
+{% endif%}
+{% if friend.friend_protein == 25 or friend.friend_protein == 26 %} 
+    <img src = "/static/image/shark_3.png" />
+{% endif%}
+{% if friend.friend_protein == 27 or friend.friend_protein == 28%} 
+    <img src = "/static/image/shark_4.png" />
+{% endif%}
+{% if friend.friend_protein == 29 or friend.friend_protein == 30 %} 
+    <img src = "/static/image/shark_5.png" />
+{% endif%}
+{% if friend.friend_protein >= 31 %} 
+        <img src = "/static/image/shark_6.png" />
+{% endif%}

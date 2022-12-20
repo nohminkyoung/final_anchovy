@@ -14,11 +14,10 @@
   <form method="POST">
     {% csrf_token %}
     <input type="text" class="nick_id " placeholder="공백 없이 입력해주세요." name="newnickname" />
-    <p class = 'an_error_txt error_box'>{{errMsg.error}}</p>
+    {% comment %} <p class = 'an_error_txt error_box'>{{errMsg.error}}</p> {% endcomment %}
     <button type="submit" class="full_btn add_btn" >변경하기</button>
   </form>
 </div>
-
 
 <!-- 팝업 시작 -->
   <div class="popup_box">
@@ -28,7 +27,6 @@
     </div>
   </div>
 <!-- 팝업 끝 -->
-
 
 {% endblock %}
 

@@ -10,8 +10,8 @@ def settings(request):
 def nickname(request):
     log_user = Custom_User.objects.get(username=request.user)
     data = request.POST.get('newnickname')
-    errMsg = {'error':''}
-    
+    errMsg = {'error_before':''}
+    check ={}
     if data != None:
         if data == '':
             errMsg['error'] = '닉네임을 입력해주세요'
@@ -20,8 +20,8 @@ def nickname(request):
         else:
             log_user.nickname = data
             log_user.save()
-    print('akashjkasdhflakjsdhflkashdflkashdlkshlkfha')
-    print(errMsg)
+            return render(request, 'anchovy_main/index.html')
+    
     return render(request, 'anchovy_settings/nickname.html',{'errMsg':errMsg})
     
     

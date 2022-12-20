@@ -14,8 +14,8 @@
   <form method="POST">
     {% csrf_token %}
     <input type="text" class="nick_id " placeholder="공백 없이 입력해주세요." name="newnickname" />
-    {% comment %} <p class = 'an_error_txt error_box'>{{errMsg.error}}</p> {% endcomment %}
-    <button type="submit" class="full_btn add_btn" >변경하기</button>
+    <p class = 'an_error_txt error_box'>{{errMsg.error}}</p>
+    <button type="submit" class="full_btn add_btn">변경하기</button>
   </form>
 </div>
 
@@ -30,6 +30,7 @@
 
 {% endblock %}
 
+
 {% block script %}
 <script type='text/javascript'>
   // 멸치 로고 노출
@@ -38,16 +39,29 @@
   // 연결된 주소 변경
   $('#top_menu .prev a').attr("href", "../settings") 
 
-  // 팝업 노출
+
+  // 팝업 열때
+  var sp =  /\s+/g;
   $(".add_btn").click(function(){
-    $('.popup_box').addClass('open');  
-    $('body').addClass('pop');  
-    $(this).css('z-index', '-1');
+    if(sp.exec($('.nick_id').val())){
+      $('.popup_box').removeClass('open');
+      $('body').removeClass('pop');
+
+    }else if($('.nick_id').val() != '' ){
+        $('.popup_box').addClass('open');  
+        $('body').addClass('pop');  
+        $(this).css('z-index', '-1');  
+    }else{
+      $('.popup_box').removeClass('open');
+      $('body').removeClass('pop');
+    }
+
   });
+
+  // 팝업 닫을때
   $(".pop_btn").click(function(){
     $('.popup_box').removeClass('open');
     $('body').removeClass('pop');
   });
-
 </script>
 {% endblock %}

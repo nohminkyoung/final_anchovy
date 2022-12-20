@@ -1,5 +1,6 @@
 from django.db import models
 from anchovy_common.models import Custom_User
+
 # Create your models here.
 
 class Notice(models.Model):

@@ -271,6 +271,7 @@
 
     // django의 변수 불러오기
     var b = 100;
+
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
     var lv = "{{log_status.character_lv}}";
@@ -285,14 +286,19 @@
         dataType:'json',
         success: function (data) {
             percent = data.progress_data[0].percent
+            recent_date = data.recent_data[0].date
+            recent_exercise = data.recent_data[0].exercise
+            recent_count = data.recent_data[0].count
+
 
             var recode_value = "";
             var goal_value ="";
 
-            goal_progress(percent);
-            
-            recode_value += ""+data.recent_data[0].date+" "+data.recent_data[0].exercise+" "+data.recent_data[0].count+"점 달성";
+            recode_value += ""+recent_date+" "+recent_exercise+" "+recent_count+"점 달성";
             goal_value += "목표 점수 : "+data.progress_data[0].goal+""
+            
+            
+            goal_progress(percent);
 
             $(".recode").empty();
             $(".recode").append(recode_value);
@@ -300,17 +306,27 @@
             $(".goal_score").empty();
             $(".goal_score").append(goal_value);
 
-
-
         },
         error: function (data) { //데이터 받아오기 실패
-            alert('서버 연결이 실패 했습니다.');
+
+          percent = 0;
+          var recode_value = "기록 된 결과값 없어요!";
+          var goal_value = "목표 점수 : 0";
+          
+          goal_progress(percent);
+
+          $(".recode").empty();
+          $(".recode").append(recode_value);
+
+          $(".goal_score").empty();
+          $(".goal_score").append(goal_value);
+
         }
     });   
       
       goal_progress();
+
       change_img(protein);
-      
     });
 
     // 자동 게이지 진행
@@ -336,6 +352,7 @@
     // 불러온 ID 값에 따라서 이미지 변경하기
     function change_img(protein){
       var imgtag = '';
+
       if (protein == 1){
         // lv 1인 경우 멸치 이미지 추가
         imgtag+= "<img src='/static/image/anchovy_1.png'/>"
@@ -373,11 +390,11 @@
         // lv 2인 경우 황새치 이미지 추가
         imgtag+= "<img src='/static/image/mackerel_2.png'/>"
       }
-      else if (protein >= 15 && protin < 17){
+      else if (protein >= 15 && protein < 17){
         // lv 2인 경우 황새치 이미지 추가
         imgtag+= "<img src='/static/image/mackerel_3.png'/>"
       }
-      else if (protein >= 17 && protin < 19){
+      else if (protein >= 17 && protein < 19){
         // lv 2인 경우 황새치 이미지 추가
         imgtag+= "<img src='/static/image/mackerel_4.png'/>"
       }
@@ -391,35 +408,32 @@
       }
       else if (protein >= 23 && protein < 25){
         // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_1.png'/>"
+        imgtag+= "<img src='/static/image/shark_2.png'/>"
       }
       else if (protein >= 25 && protein < 27){
         // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_1.png'/>"
+        imgtag+= "<img src='/static/image/shark_3.png'/>"
       }
       else if (protein >= 27 && protein < 29){
         // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_1.png'/>"
+        imgtag+= "<img src='/static/image/shark_4.png'/>"
       }
       else if (protein >= 29 && protein < 31){
         // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_1.png'/>"
+        imgtag+= "<img src='/static/image/shark_5.png'/>"
       }
       else if (protein >= 31){
         // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_1.png'/>"
+        imgtag+= "<img src='/static/image/shark_6.png'/>"
       }
       else {
         // 나머지의 경우 뼈다귀 이미지 추가
         imgtag+= "<img src='/static/image/bone.png'/>"
-      }
+      };
       
       $(".main_char").empty();
       $(".main_char").append(imgtag);
 
-      $(".main_char").empty();
-      $(".main_char").append(imgtag);
-      
     }
   </script>
 {% endblock %}

@@ -50,11 +50,7 @@
     <p class="goal_score"></p>
     <div class="progress_area">
       <div class="an_sm_txt user_progress">
-        {% if user.is_authenticated %}
-        {{log_train.train_accurate_count__sum}} <!-- 정확하게 실행했던 횟수 합계-->
-        {% else %}
-        0 <!--로그인을 하지 않았을 경우 0 값으로 제공-->
-        {% endif %}
+        
       </div>
       <div class="an_sm_txt goal_progress"></div>
     </div>
@@ -319,6 +315,7 @@
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
     var lv = "{{log_status.character_lv}}";
+    
 
     // 화면이 실행 되었을 때 진행
     $(document).ready(function(){
@@ -338,12 +335,25 @@
 
             var recode_value = "";
             var goal_value ="";
+            var ing_value ="";
+
+           
 
             recode_value += ""+recent_date+" "+recent_exercise+" "+recent_count+"점 달성";
-            goal_value += "목표 점수 : "+data.progress_data[0].goal+""
+
+            if (lv != 0) {
+              goal_value += "목표 점수 : "+data.progress_data[0].goal+""
+            }
+            else{
+              goal_value += "목표 : "+data.progress_data[0].goal+""
+            }
             
+            ing_value += ""+data.progress_data[0].ing+""
             
             goal_progress(percent);
+
+            $(".user_progress").empty();
+            $(".user_progress").append(ing_value);
 
             $(".recode").empty();
             $(".recode").append(recode_value);
@@ -353,6 +363,7 @@
 
         },
         error: function (data) { //데이터 받아오기 실패
+
           // git upload 용 
           percent = 0;
           var recode_value = "기록 된 결과값 없어요!";
@@ -369,7 +380,6 @@
         }
     });   
       
-      goal_progress();
       change_img(protein);
     });
 

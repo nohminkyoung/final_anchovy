@@ -130,7 +130,7 @@ def main_record(request):
         # --> 정확한 운동 점수 합산 (일주일 단위 추가해야 함)
         # --> training 값은 단일 값이 아니기 때문에 filter 사용
         target_training = Train.objects.filter(username=target_user).aggregate(Sum('train_accurate_count'))
-        
+        target_weektrain = User_status.objects.get(username=target_user)
         # --> 마지막 운동 기록
         target_recent = Train.objects.filter(username=target_user).last() 
 
@@ -151,29 +151,35 @@ def main_record(request):
         
         ## 게이지 값 계산
         progress_data = []
-        status_dic = {'percent':0, 'goal':0}
+        status_dic = {'percent':0, 'goal':0, 'ing':0, 'week':0}
         
         user_value = target_training['train_accurate_count__sum']
-
+        
+        
         if target_user_lv == '0':
-            max_value = 0
+            max_value = '일주일 이내 3번 운동'
             status_dic['goal'] = max_value
-            status_dic['percent'] = 0
+            status_dic['ing'] = target_weektrain.week_train_count
+            status_dic['percent'] = target_weektrain.week_train_count*33.3333333333333333
         elif target_user_lv == '1':
             max_value = 120
             status_dic['goal'] = max_value
+            status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         elif target_user_lv == '2':
             max_value = 150
             status_dic['goal'] = max_value
+            status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         elif target_user_lv == '3':
             max_value = 180
             status_dic['goal'] = max_value
+            status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         elif target_user_lv == '4':
             max_value = 210
             status_dic['goal'] = max_value
+            status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
         
         recent_data.append(recent_record)

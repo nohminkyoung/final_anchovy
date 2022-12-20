@@ -20,86 +20,79 @@
 
 
 <!-- 알림 -->
-<div class="an_container notice_box">
-  <div class="day">
-    <p class="date">2022.10.04</p>
-    <ul>
-      <li>
-        <div class="left">
-          <p class="no_status">⬆️ 프로틴 상승!! </p>
-          <span class="no_txt">참치나와님의 프로틴을 뺏었어요!</span>
-        </div>
-        <span class="no_time">3시간 전</span>
-      </li>
-      <li>
-        <div class="left">
-          <p class="no_status">⬇️ 프로틴 손실!! </p>
-          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
-        </div>
-        <span class="no_time">22시간 전</span>
-      </li>
-    </ul>
-  </div>
-  <div class="day">
-    <p class="date">2022.09.20</p>
-    <ul>
-      <li>
-        <div class="left">
-          <p class="no_status">⚠️ 근손실 위험!!  </p>
-          <span class="no_txt">운동을 안한지 오래 됐어요!</span>
-        </div>
-        <span class="no_time"></span>
-      </li>
-      <li>
-        <div class="left">
-          <p class="no_status">⬇️ 프로틴 손실!! </p>
-          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
-        </div>
-        <span class="no_time"></span>
-      </li>
-    </ul>
-  </div>
-  <div class="day">
-    <p class="date">2022.09.20</p>
-    <ul>
-      <li>
-        <div class="left">
-          <p class="no_status">⚠️ 근손실 위험!!  </p>
-          <span class="no_txt">운동을 안한지 오래 됐어요!</span>
-        </div>
-        <span class="no_time"></span>
-      </li>
-      <li>
-        <div class="left">
-          <p class="no_status">⬇️ 프로틴 손실!! </p>
-          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
-        </div>
-        <span class="no_time"></span>
-      </li>
-    </ul>
-  </div>
-  <div class="day">
-    <p class="date">2022.09.20</p>
-    <ul>
-      <li>
-        <div class="left">
-          <p class="no_status">⚠️ 근손실 위험!!  </p>
-          <span class="no_txt">운동을 안한지 오래 됐어요!</span>
-        </div>
-        <span class="no_time"></span>
-      </li>
-      <li>
-        <div class="left">
-          <p class="no_status">⬇️ 프로틴 손실!! </p>
-          <span class="no_txt">참치나와님이 근육을 뺏어갔어요!</span>
-        </div>
-        <span class="no_time"></span>
-      </li>
-    </ul>
-  </div>
-  
-</div>
+  <div class="an_container notice_box">
+  {% for i in Notice %}
+    <div class="day">
+      {% if i.check == 1%}
+      <p class="date">{{i.notice_date}}</p>
+      {% endif %}
+      <ul>
+        <li>
+          <!-- 하루 지난 것들 -->
+          {% if dic.today != i.notice_date%}
+            {% if i.notice_status == 1 %}
+            <div class="left">
+              <p class="no_status">⚠️ 근손실 위험!! </p>
+              <span class="no_txt">운동을 안한지 오래 됐어요!</span>
+            </div>
+            {% endif %}
 
+            {% if i.notice_status == 2 %}
+            <div class="left">
+              <p class="no_status">⬆️ 프로틴 상승!!  </p>
+              <span class="no_txt">{{i.battle_user}}님의 근육을 빼앗았어요!</span>
+            </div>
+            {% endif %}
+
+            {% if i.notice_status == 3 %}
+            <div class="left">
+              <p class="no_status">⬇️ 프로틴 하강!!  </p>
+              <span class="no_txt">{{i.battle_user}}님이 근육을 뺏어갔어요!</span>
+            </div>
+            {% endif %}
+          {% endif %}
+
+            {% if dic.today == i.notice_date%}
+              {% if i.notice_status == 1 %}
+              <div class="left">
+                <p class="no_status">⚠️ 근손실 위험!! </p>
+                <span class="no_txt">운동을 안한지 오래 됐어요!</span>
+              </div>
+                {% if i.no_time != 0 %}
+                <span class="no_time">{{i.no_time}}시간 전</span>
+                {% else %}
+                <span class="no_time">{{i.no_min}}분 전</span>
+                {% endif %}
+              {% endif %}
+
+              {% if i.notice_status == 2 %}
+              <div class="left">
+                <p class="no_status">⬆️ 프로틴 상승!!  </p>
+                <span class="no_txt">{{i.battle_user}}님의 근육을 빼앗았어요!</span>
+              </div>
+                {% if i.no_time != 0 %}
+                <span class="no_time">{{i.no_time}}시간 전</span>
+                {% else %}
+                <span class="no_time">{{i.no_min}}분 전</span>
+                {% endif %}
+              {% endif %}
+
+              {% if i.notice_status == 3 %}
+              <div class="left">
+                <p class="no_status"> ⬇️ 프로틴 하강!!   </p>
+                <span class="no_txt">{{i.battle_user}}님이 근육을 뺏어갔어요!</span>
+              </div>
+                {% if i.no_time != 0 %}
+                <span class="no_time">{{i.no_time}}시간 전</span>
+                {% else %}
+                <span class="no_time">{{i.no_min}}분 전</span>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+        </li>
+    </div>
+  {% endfor %}
+  </div>
 
 
 {% include 'navbar.html' %}

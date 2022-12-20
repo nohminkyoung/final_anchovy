@@ -20,6 +20,7 @@ class User_status(models.Model):
 
 class battle(models.Model):
     author = models.ForeignKey(Custom_User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=150, verbose_name = '유저 아아디')
     lose_username = models.CharField(max_length=150, verbose_name = '뺏긴사람 아이디')
     lose_nickname = models.CharField(max_length=150, verbose_name = '뺏긴사람 닉네임')
     earn_username = models.CharField(max_length=150, verbose_name = '뺏은사람 아이디')

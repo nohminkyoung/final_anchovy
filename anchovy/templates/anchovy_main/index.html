@@ -270,19 +270,35 @@
       }
 
     // django의 변수 불러오기
-    var a = "{{log_dic.percent}}";
     var b = 100;
     var protein = "{{ log_status.protein}}";
-    
+    var user = "{{log_user.username}}";
+    var lv = "{{log_status.character_lv}}";
+
     // 화면이 실행 되었을 때 진행
     $(document).ready(function(){
+
+      $.ajax({
+        type: "POST",
+        url: "{% url 'main_record' %}",
+        data: {"user" : user, "lv": lv},
+        dataType:'json',
+        success: function (data) {
+            percent = data.progress_data[0].percent
+            goal_progress(percent);
+        },
+        error: function (data) { //데이터 받아오기 실패
+            alert('서버 연결이 실패 했습니다.');
+        }
+    });   
+      
       goal_progress();
       change_img(protein);
       
     });
 
     // 자동 게이지 진행
-    function goal_progress(){
+    function goal_progress(a){
       if (a == 0){ // 0%일 경우 none
         $('.user_progress').css('display', 'none');
         $('.goal_progress').css('width', '100%');

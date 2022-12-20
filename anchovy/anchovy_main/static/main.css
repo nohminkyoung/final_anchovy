@@ -1,3 +1,22 @@
+#sse_area{
+    background-color: #5F9DF7;
+    width:100%;
+    height: 10vw;
+    position:fixed;
+    top:-10vw;
+}
+
+.sse_test{
+    width: 82%;
+    height: 100%;
+    margin: auto;
+
+}
+.sse_test p{
+    line-height: 10vw;
+    color:#fff;
+}
+
 .main_img{
     border : solid;
     margin-top: 4vw;

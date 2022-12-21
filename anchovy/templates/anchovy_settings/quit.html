@@ -23,7 +23,9 @@
       <button type="submit" class="return_btn">돌아가기</button>
     </a>
   </div>
+  
   <button type="submit" class="quit_btn">그래도 탈퇴하기</button>
+  </form>
   
   <span class="tears"></span>
 </div>
@@ -31,13 +33,14 @@
 
 
 <!-- 팝업 시작 -->
+
 <div class="popup_box">
   <div class="quit_success popup">
-    <p class="pop_txt">정말정말정말 <br> 탈퇴하시겠습니까?</p>
-    <div class="btn_box">
-      <button type="button" class="pop_btn" onclick="location.href='/anchovy_common/login'">확인</button>
-      <button type="button" class="pop_btn">취소</button>
-    </div>
+      <p class="pop_txt">정말정말정말 <br> 탈퇴하시겠습니까?</p>
+      <div class="btn_box">
+        <button type="button" class="pop_btn" onclick="location.href='{% url 'delete' %}'">확인</button>
+        <button type="button" class="pop_btn">취소</button>
+      </div>
   </div>
 </div>
 

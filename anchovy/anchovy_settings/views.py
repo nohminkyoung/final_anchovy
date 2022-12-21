@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
-from anchovy_common.models import Custom_User
+from anchovy_common.models import Custom_User, User_status
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
 def settings(request):
@@ -34,3 +36,10 @@ def quit(request):
 def make_logout(request):
     logout(request)
     return redirect('login')
+
+
+def delete(request):
+    user_info = Custom_User.objects.get(username = request.user)
+    logout(request) 
+    user_info.delete()
+    return render(request, 'anchovy_common/login3.html')

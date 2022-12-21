@@ -121,7 +121,7 @@ def main_record(request):
     
     if request.POST:
         target_user = request.POST.get('user')
-        target_user_lv = request.POST.get('lv')
+        target_user_protein = request.POST.get('protein')
         
         ## 최근 운동 기록 
         
@@ -156,27 +156,27 @@ def main_record(request):
         user_value = target_training['train_accurate_count__sum']
         
         
-        if target_user_lv == '0':
-            max_value = '일주일 이내 3번 운동'
+        if target_user_protein == '0':
+            max_value = '일주일 이내 3번 운동하기'
             status_dic['goal'] = max_value
             status_dic['ing'] = target_weektrain.week_train_count
             status_dic['percent'] = target_weektrain.week_train_count*33.3333333333333333
-        elif target_user_lv == '1':
+        elif target_user_protein >= '1' and target_user_protein <= '4':
             max_value = 120
             status_dic['goal'] = max_value
             status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-        elif target_user_lv == '2':
+        elif target_user_protein >= '5' and target_user_protein <= '11':
             max_value = 150
             status_dic['goal'] = max_value
             status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-        elif target_user_lv == '3':
+        elif target_user_protein >= '12' and target_user_protein <= '21':
             max_value = 180
             status_dic['goal'] = max_value
             status_dic['ing'] = user_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-        elif target_user_lv == '4':
+        elif target_user_protein >= '22':
             max_value = 210
             status_dic['goal'] = max_value
             status_dic['ing'] = user_value
@@ -205,14 +205,13 @@ def coupon_active(request):
     return HttpResponse(json.dumps({'coupon_error': coupon_error }))
 
 
-
 def stream(request):
     def event_stream():
         tmp_user = request.user
         tmp = User_status.objects.get(username=tmp_user) #처음 
         while True:
             # 정상 실행
-            time.sleep(10)
+            time.sleep(5)
             login_user = request.user
             if tmp_user == login_user:
                 target_status = User_status.objects.get(username=login_user)

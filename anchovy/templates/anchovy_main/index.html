@@ -311,7 +311,7 @@
 
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
-    var lv = "{{log_status.character_lv}}";
+    var lv = "{{log_dic.lv}}";
 
     // 화면이 실행 되었을 때 진행
     $(document).ready(function(){
@@ -319,10 +319,10 @@
       $.ajax({
         type: "POST",
         url: "{% url 'main_record' %}",
-        data: {"user" : user, "lv": lv},
+        data: {"user" : user, "protein": protein},
         dataType:'json',
         success: function (data) {
-
+            
             percent = data.progress_data[0].percent
             recent_date = data.recent_data[0].date
             recent_exercise = data.recent_data[0].exercise
@@ -336,7 +336,7 @@
            
 
             recode_value += ""+recent_date+" "+recent_exercise+" "+recent_count+"점 달성";
-
+            
             if (lv != 0) {
               goal_value += "목표 점수 : "+data.progress_data[0].goal+""
             }
@@ -359,11 +359,18 @@
 
         },
         error: function (data) { //데이터 받아오기 실패
+          console.log('운동 기록 불러오기 실패');
 
+          var goal_value ="";
           // git upload 용 
           percent = 0;
           var recode_value = "기록 된 결과값 없어요!";
-          var goal_value = "목표 점수 : 0";
+          if (lv != 0) {
+              goal_value += "목표 점수 : 0"
+          }
+          else{
+              goal_value += "목표 : 일주일 이내 3번 운동하기"
+          }
           
           goal_progress(percent);
 

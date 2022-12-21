@@ -26,8 +26,8 @@
                     value="{{ form.nickname.value|default_if_none:'' }}" placeholder="공백없이 입력해주세요.">
             </div>
 
-            <div class = "un_border">
-                <div class = "an_error_txt ">
+            <div class = "un_border nic_msg_box">
+                <div class = "an_error_txt">
                     {{ errMsg.error_nick }}
                 </div>
             </div>
@@ -40,12 +40,13 @@
                     <input class="an_request id_box" type="text" class="form-control" name="username" id="username" 
                     value="{{ form.username.value|default_if_none:'' }}" placeholder="공백없이 입력해주세요." >
                     <!--중복확인버튼-->
-                    <button type="button" id='duplication' class='an_sm_txt'>중복확인</button>  
+                    <button type="button" id='duplication' class='an_sm_txt'>중복확인</button> 
+                    <input type="hidden" class="duplication_check" name="duplication_check" id="duplication_check" value="{{errMsg.duplication_check}}"></input>
                 </div>
             </div>
 
-            <div class = "un_border">
-                <div class = "an_error_txt duplication_area">
+            <div class = "un_border id_msg_box">
+                <div class = "an_error_txt">
                     {{ errMsg.error_id }}
                 </div>
             </div>
@@ -53,11 +54,11 @@
             <!--비밀번호-->
             <div class="form-group">
                 <label class="an_input" for="password1">비밀번호</label>
-                <input class="an_request pw_box" type="password" class="form-control" name="password1" id="password1" 
+                <input class="an_request pw_box check_pw1" type="password" class="form-control" name="password1" id="password1" 
                     value="{{ form.password1.value|default_if_none:'' }}" placeholder="8~15 이내로 입력해주세요." maxlength=15>
             </div>
 
-            <div class = "un_border">
+            <div class = "un_border pw1_msg_box">
                 <div class = "an_error_txt ">
                     {{ errMsg.error_pw1 }}
                 </div>
@@ -66,15 +67,15 @@
             <!--비밀번호 확인-->
             <div class="form-group">
                 <label class="an_input" for="password2">비밀번호 확인</label> 
-                <input class="an_request pw_box" type="password" class="form-control" name="password2" id="password2" 
+                <input class="an_request pw_box check_pw2" type="password" class="form-control" name="password2" id="password2" 
                     value="{{ form.password2.value|default_if_none:'' }}"maxlength=15>
             </div>
 
-            <div class = "un_border pw_error">
+            <div class = "un_border pw_error pw2_msg_box">
                 <div class = "an_error_txt ">
                     {{ errMsg.error_pw2_no }}
                 </div>
-                <div class = "an_success_txt ">
+                <div class = "an_success_txt">
                     {{ errMsg.error_pw2_ok }}
                 </div>
             </div>
@@ -97,7 +98,7 @@
 
     $("#duplication").click(function(){
         var id_values = $('.id_box').val();
-
+        var dup_button_status = $(".duplication_check").attr("value");
         $.ajax({
             type: "POST",
             url: "{% url 'duplication' %}",
@@ -107,21 +108,39 @@
 
                 // 이미 존재하는 경우
                 if (data.duplication == '0'){
-
+                    $('input[name="duplication_check"]').val('0');
                     var duplication_text = ""
-                    duplication_text+='* 중복된 아이디입니다. '
+                    duplication_text+="<div class = 'an_error_txt'>* 중복된 아이디입니다. </div>"
 
-                    $('.duplication_area').empty();
-                    $('.duplication_area').append(duplication_text);
+                    $('.id_msg_box').empty();
+                    $('.id_msg_box').append(duplication_text);
                 }
-                
+                // 입력을 하지 않았을 경우
+                else if (data.duplication == '2'){
+                    $('input[name="duplication_check"]').val('0');
+                    var duplication_text = ""
+                    duplication_text+="<div class = 'an_error_txt'>* 아이디를 입력해주세요. </div>"
+
+                    $('.id_msg_box').empty();
+                    $('.id_msg_box').append(duplication_text);
+                }
+                else if (data.duplication == '3'){
+                    $('input[name="duplication_check"]').val('0');
+                    var duplication_text = ""
+                    duplication_text+="<div class = 'an_error_txt'>* 아이디는 영문으로만 진행됩니다. </div>"
+
+                    $('.id_msg_box').empty();
+                    $('.id_msg_box').append(duplication_text);
+                }
                 // 존재하지 않은 경우
                 else{
-                    var duplication_text = ""
-                    duplication_text+='* 사용 가능한 아이디입니다. '
+                    $('input[name="duplication_check"]').val('1');
 
-                    $('.duplication_area').empty();
-                    $('.duplication_area').append(duplication_text);
+                    var duplication_text = ""
+                    duplication_text+="<div class = 'an_success_txt'>* 사용 가능한 아이디입니다. </div>";
+
+                    $('.id_msg_box').empty();
+                    $('.id_msg_box').append(duplication_text);
                 }
 
             },
@@ -131,6 +150,77 @@
         });   
 
     });
+    var id_values = $('.id_box').val();
+
+
+    // 다시 입력 포거스가 되었을 경우 오류 메세지 없애기
+    $('.nic_box').focus(function(){
+        $('.nic_msg_box').empty();
+        //$('.nic_msg_box').append(nic_msg_test);
+    });
+
+    $('.id_box').focus(function(){
+        $('.id_msg_box').empty();
+
+        // 중복체크 진행 시 클릭 했을 때 이전 값과 달라졌을 경우 다시 중복 체크 할 수 있도록
+        var prev_id = $('.id_box').val()
+        $('.id_box').focusout(function(){
+            if  ($('.id_box').val() != prev_id){
+                $('input[name="duplication_check"]').val('0');
+            }  
+        });
+        
+    });
+    
+    $('.check_pw1').focus(function(){
+        $('.pw1_msg_box').empty();
+        //$('.pw1_msg_box').append(pw1_msg_test);
+    });
+    
+    $('.check_pw2').focus(function(){
+        $('.pw2_msg_box').empty();
+        //$('.pw2_msg_box').append(pw2_msg_test);
+    });
+    
+    
+
+    // 비밀번호 포커스에서 벗어났을 경우 비밀번호가 같은지 체크
+    $('.check_pw1').focusout(function(){
+        var pw1 = $('.check_pw1').val(); // 첫번째 비밀번호
+        var pw2 = $('.check_pw2').val(); // 두번째 비밀번호
+
+        if (pw1 == pw2 && pw1 != "" && pw2 != ""){
+            success_msg = ""
+            success_msg+= "<div class = 'an_success_txt'>* 사용가능한 비밀번호입니다</div>";
+            $('.pw2_msg_box').empty();
+            $('.pw2_msg_box').append(success_msg);
+        }
+        else if (pw1 != pw2){
+            error_msg = ""
+            error_msg+= "<div class = 'an_error_txt'>* 비밀번호를 다시 확인해주세요</div>";
+            $('.pw2_msg_box').empty();
+            $('.pw2_msg_box').append(error_msg);
+        }
+    });
+
+    $('.check_pw2').focusout(function(){
+        var pw1 = $('.check_pw1').val(); // 첫번째 비밀번호
+        var pw2 = $('.check_pw2').val(); // 두번째 비밀번호
+
+        if (pw1 == pw2 && pw1 != "" && pw2 != ""){
+            success_msg = ""
+            success_msg+= "<div class = 'an_success_txt'>* 사용가능한 비밀번호입니다</div>";
+            $('.pw2_msg_box').empty();
+            $('.pw2_msg_box').append(success_msg);
+        }
+        else if (pw1 != pw2){
+            error_msg = ""
+            error_msg+= "<div class = 'an_error_txt'>* 비밀번호를 다시 확인해주세요</div>";
+            $('.pw2_msg_box').empty();
+            $('.pw2_msg_box').append(error_msg);
+        }
+    });
+    
   </script>
 {% endblock %}
 

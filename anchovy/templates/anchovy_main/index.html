@@ -233,20 +233,17 @@
 {% block script %}
   <script type='text/javascript'>
 
+    msg_position = $('#sse_area').css('top');
+    $("#sse_area").click(function(){
+      location.reload();
+    });
      // SSE 기능
     if(typeof(EventSource) !== "undefined") {
       var source = new EventSource("{% url 'stream' %}");
       source.onmessage = function(event) {
         if (event.data == '1'){
-          msg_position = $('#sse_area').css('top');
-          re = msg_position.substr(0,1)
-          console.log(re);
-          if (re == '0'){
-            $("#sse_area").click(function(){
-              location.reload();
-            });
-          }
-          else{
+          re_position = $('#sse_area').css('top');
+          if (re_position == msg_position){
             $('#sse_area').animate({'top':'+=10vw'}, 500);
           }
         }
@@ -315,7 +312,8 @@
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
     var lv = "{{log_status.character_lv}}";
-    
+
+    console.log(lv);
 
     // 화면이 실행 되었을 때 진행
     $(document).ready(function(){
@@ -380,6 +378,8 @@
         }
     });   
       
+      goal_progress();
+
       change_img(protein);
     });
 

@@ -58,7 +58,7 @@ def fd_add(request):
     
     else:
         try:
-            Friend.objects.get(friend_name = data)
+            Friend.objects.get(username=request.user,friend_name = data)
         
         # 친구 추가 할 수 있음
         except Friend.DoesNotExist:

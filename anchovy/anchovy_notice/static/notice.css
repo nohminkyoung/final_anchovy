@@ -1,5 +1,5 @@
 /* 알림이 없을때 */
-.emty_notice {display:none; text-align: center; margin-top: 55%;}
+.emty_notice {text-align: center; margin-top: 55%;}
 .emty_notice div p {font-weight:bold}
 .emty_notice div img {width:25vw}
 

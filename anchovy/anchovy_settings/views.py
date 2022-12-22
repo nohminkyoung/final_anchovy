@@ -22,6 +22,7 @@ def nickname(request):
         else:
             log_user.nickname = data
             log_user.save()
+            return redirect('main')
     
     return render(request, 'anchovy_settings/nickname.html',{'errMsg':errMsg})
     

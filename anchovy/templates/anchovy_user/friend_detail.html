@@ -111,5 +111,37 @@ $(".pop_btn").click(function(){
   $('.popup_box').removeClass('open');
   $('body').removeClass('pop');
 });
+
+// 친구 추가 아이콘 
+$(".friend_status img").click(function(){
+
+  // 상태값에 맞는 팝업 띄우기
+  var user_id = '{{user.author_id}}'
+
+  $.ajax({
+    type: "POST",
+    url: "{% url 'new_steal' %}",
+    data: {"user_id" : user_id},
+    dataType:'json',
+    success: function (data) {
+      
+    },
+    error: function (data) { 
+      console.log('서버 연결 실패')
+    }
+  });
+}); 
+
+
+  if($(this).hasClass("clicked")){
+    $(this).siblings().addClass("clicked");
+    $(this).removeClass("on clicked");
+  }else{
+    $(this).addClass("clicked");
+    $(this).siblings().removeClass("clicked");
+  }
+});
+
+
 </script>
 {% endblock %}

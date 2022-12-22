@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index),
     path('friend_add/', views.add),
     path('fd_add/', views.fd_add, name='fd_add'),
-    path('friend_detail/<int:user_id>/', views.detail),
+    path('friend_detail/<int:user_id>/', views.detail, name ='detail'),
+    path('new_steal', views.new_steal, name='new_steal')
 ]

@@ -82,13 +82,17 @@ def add(request):
 def new_steal(request):
     if request.POST:
         user_id = request.POST.get('user_id')
+        print(user_id)
         
         user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기(친구)
     
         target_user = User_status.objects.get(username=request.user) #로그인된 정보(나)
         
         
-        if user.protein == 0 : # 상대의 프로틴이 0일 때 
+        if target_user.coupon < 1: # 쿠폰이 없을 때
+            check = 2
+        
+        elif user.protein == 0 : # 상대의 프로틴이 0일 때 
             check =3
             
         elif target_user.coupon >= 1: # 쿠폰이 있을 때
@@ -123,10 +127,6 @@ def new_steal(request):
             status_data_lose.save()
             check = 1
             
-        elif target_user.coupon < 1: # 쿠폰이 없을 때
-            check = 2
-            
-        
 
     print(user.protein)
 

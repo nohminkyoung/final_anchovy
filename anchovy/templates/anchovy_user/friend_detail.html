@@ -24,7 +24,29 @@
 
 
 <!-- 팝업 시작 -->
+<!-- 존재 하지 않는 정보 (0) -->
+<div class="popup_box success">
+  <div class="popup">
+    <p class="pop_txt">공격을 성공하였습니다. </p>
+    <button type="button" class="pop_btn" onclick="location.href='../../friend_detail/{{user.author_id}}'">확인</button>
+  </div>
+</div>
 
+<!-- 친구 목록에 있는 경우 (1) -->
+<div class="popup_box fail">
+  <div class="popup">
+    <p class="pop_txt">사용가능한 쿠폰이 없습니다.</p>
+    <button type="button" class="pop_btn">확인</button>
+  </div>
+</div>
+
+<!-- 추가 성공 (2) -->
+<div class="popup_box no_protein">
+  <div class="popup">
+    <p class="pop_txt">상대방이 너무 연약해요...<br> 한번만 봐주세요😢</p>
+    <button type="button" class="pop_btn">확인</button>
+  </div>
+</div>
 <!-- 팝업 끝 -->
 
 {% endblock %}
@@ -34,6 +56,8 @@
 <script type='text/javascript'>
   // 친구 상세페이지 적용
   $('#top_menu .friend_status').css('display', 'block');
+  // 연결된 주소 변경
+  $('#top_menu .prev a').attr("href", "../../")
     
   // 친구 상세페이지 적용 (친구 추가 및 친구 해제)
   $(".friend_status img").click(function(){
@@ -45,5 +69,47 @@
       $(this).siblings().removeClass("clicked");
     }
   });
+
+
+  // 팝업창 띄우기
+  $(".full_btn").click(function(){
+
+    // 상태값에 맞는 팝업 띄우기
+    var user_id = '{{user.author_id}}'
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'new_steal' %}",
+      data: {"user_id" : user_id},
+      dataType:'json',
+      success: function (data) {
+        console.log('aksdjalskdjlaksjdlk')
+        if(data.check == '1'){
+          console.log('1')
+          $('.success').addClass('open');  
+          $('body').addClass('pop');  
+          $(this).css('z-index', '-1');
+        }else if(data.check == '2'){
+          console.log('2')
+          $('.fail').addClass('open');  
+          $('body').addClass('pop');  
+          $(this).css('z-index', '-1');
+        }else if(data.check == '3'){
+          console.log('3')
+          $('.no_protein').addClass('open');  
+          $('body').addClass('pop');  
+          $(this).css('z-index', '-1');
+        }
+      },
+      error: function (data) { 
+        console.log('서버 연결 실패')
+      }
+    });
+});
+
+$(".pop_btn").click(function(){
+  $('.popup_box').removeClass('open');
+  $('body').removeClass('pop');
+});
 </script>
 {% endblock %}

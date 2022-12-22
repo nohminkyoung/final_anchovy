@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Notice
 from anchovy_common.models import battle
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 def index(request):
@@ -53,3 +53,12 @@ def index(request):
 
 
     return render(request, 'anchovy_notice/notice.html',{'Notice':Notice_data, 'dic':dic})
+
+
+# def make_notice(request):
+#     now = datetime.now() # 현재 
+#     make_time = now - timedelta(weeks=3) # 3주 후
+    
+#     check_data = Notice.objects.filter(username=request.user).filter(notice_status=1)
+    
+    

@@ -44,6 +44,14 @@
     <button type="button" class="pop_btn">확인</button>
   </div>
 </div>
+
+<!-- 내 아이디 입력 (3) -->
+<div class="popup_box my_id">
+  <div class="popup">
+    <p class="pop_txt">스스로는 친구가 될 수 없습니다. </p>
+    <button type="button" class="pop_btn">확인</button>
+  </div>
+</div>
 <!-- ////////////팝업 끝//////////////// -->
 
 {% endblock %}
@@ -90,8 +98,12 @@
               $('.status_already').addClass('open');  
               $('body').addClass('pop');  
               $(this).css('z-index', '-1');
-            }else{
+            }else if(data.status == '2'){
               $('.status_success').addClass('open');  
+              $('body').addClass('pop');  
+              $(this).css('z-index', '-1');
+            }else {
+              $('.my_id').addClass('open');  
               $('body').addClass('pop');  
               $(this).css('z-index', '-1');
             }

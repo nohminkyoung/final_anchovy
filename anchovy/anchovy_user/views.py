@@ -13,7 +13,7 @@ def index(request):
 
     # 랭킹 데이터 불러오기
     data_rank = User_status.objects.all().values() 
-    sort_data = data_rank.order_by('-protein') #protein컬럼을 사용해서 내림차순 정렬
+    sort_data = data_rank.order_by('-protein','-character_lv') #protein컬럼을 사용해서 내림차순 정렬
     
     # 공동순위를 위한 작업
     prev = sort_data[0]['protein']
@@ -38,41 +38,59 @@ def index(request):
 
 
 def detail(request, user_id): #user_id값을 같이 받아오기
-    user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기
+    user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기 (친구)
     
-    target_user = Custom_User.objects.get(username=request.user) #로그인된 정보
+    target_user = Custom_User.objects.get(username=request.user) #로그인된 정보 (나)
     
-    return render(request, 'anchovy_user/friend_detail.html', {'user':user, 'target_user':target_user})
+    
+    my_friend = Friend.objects.filter(username = request.user) # 내친구들
+    
+    if len(list(my_friend.filter(friend_name = user.username))) == 0 :
+        icon = 0 # 흰색(친구가 아닐때)
+    else :
+        icon = 1 # 검정(친구일때)
+
+    
+    return render(request, 'anchovy_user/friend_detail.html', {'user':user, 'target_user':target_user, 'icon':icon})
 
 
 @csrf_exempt 
 def fd_add(request):
-    user = User_status.objects.get(username =request.user)
-    try:
-        data = request.POST.get('id_values')
-        Custom_User.objects.get(username = data)
-
-    except Custom_User.DoesNotExist:
-        status = 0
-        return HttpResponse(json.dumps({'status':status}))
+    user = User_status.objects.get(username = request.user) 
+    data = request.POST.get('id_values')
     
-    else:
-        try:
-            Friend.objects.get(username=request.user,friend_name = data)
-        
-        # 친구 추가 할 수 있음
-        except Friend.DoesNotExist:
-            print('ddfdfs')
-            fd_id = User_status.objects.get(username = data)
-            status = 2
-            status_data = Friend(username=user.username, friend_name=fd_id.username, 
-                                friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id)
-            status_data.save()
+    user = User_status.objects.get(username = request.user) # 나
+    my_friend = Friend.objects.filter(username = data) # 내친구들
+    data = request.POST.get('friend_name') # 추가할 친구 아이디
+    
+    if str(request.user) != data :
+        try: # 사용자 중 아이디가 존재하는지
+            Custom_User.objects.get(username = data)
+
+        except Custom_User.DoesNotExist: # 존재하지 않음
+            status = 0
             return HttpResponse(json.dumps({'status':status}))
         
-        else:
-            status = 1
-            return HttpResponse(json.dumps({'status':status}))
+        else: # 존재 함
+            try: # 내 친구목록에 없는지 확인
+                Friend.objects.get(username=request.user,friend_name = data)
+            
+            # 친구 추가 할 수 있음
+            except Friend.DoesNotExist: # 내친구에 그 아이디가 없을 때 
+                fd_id = User_status.objects.get(username = data)
+                status = 2
+                status_data = Friend(username=user.username, friend_name=fd_id.username, 
+                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id)
+                status_data.save()
+                return HttpResponse(json.dumps({'status':status}))
+            
+            else: # 내 친구에 그 아이디가 있을 때
+                status = 1
+                return HttpResponse(json.dumps({'status':status}))
+    else : 
+        status = 3
+        return HttpResponse(json.dumps({'status':status}))
+        
         
 def add(request):
     return render(request, 'anchovy_user/friend_add.html')
@@ -131,3 +149,31 @@ def new_steal(request):
     print(user.protein)
 
     return HttpResponse(json.dumps({'check':check}))
+
+
+@csrf_exempt 
+def btn_add(request):
+    user = User_status.objects.get(username = request.user) # 나
+    data = request.POST.get('friend_name') # 추가할 친구 아이디
+    my_friend = Friend.objects.filter(username = request.user) # 내친구들
+    fd = User_status.objects.get(username = data) # 친구가 될 사람의 정보
+    print('ajshdfkahsdlkfhalskdfhalsdkfh',data)
+    
+    if data != None : 
+        if len(list(my_friend.filter(friend_name = data))) == 0 : # 친구가 아니라 추가하기 
+            
+            icon_status = 0 # 친구가 없는 사람이라서 추가함 / 흰색 -> 검정
+            
+            status_data = Friend(username=user.username, friend_name=data, 
+                                    friend_nickname = fd.nickname, friend_protein=fd.protein, author_id = user.author_id)
+            status_data.save()
+            
+        else :
+            del_data = Friend.objects.filter(username = request.user, friend_name = data)
+            del_data.delete()
+            
+            icon_status = 1 # 삭제를 함 / 검정 -> 흰색
+            
+    return HttpResponse(json.dumps({'icon_status':icon_status}))
+        
+    

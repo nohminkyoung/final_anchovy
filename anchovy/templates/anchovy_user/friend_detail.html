@@ -54,8 +54,56 @@
 
 {% block script %}
 <script type='text/javascript'>
-  // 친구 상세페이지 적용
+  // 친구 상세페이지 적용 (기본 아이콘 설정)
+  var me = '{{request.user}}'
+  var friend = '{{user.username}}'
+  var icon = '{{icon}}'
+  
+  // 기본으로 흰/검 둘다 보이게 
   $('#top_menu .friend_status').css('display', 'block');
+  $('#top_menu .friend_status .fd_on').css('display', 'block');
+  $('#top_menu .friend_status .fd_off').css('display', 'block');
+
+  // 친구 추가 아이콘(기본 상태)
+  if(me != friend){ //내가 아닐 때
+      if (icon == 0){ //흰색
+        $('#top_menu .friend_status .fd_on').css('display', 'none');
+      }else{
+        $('#top_menu .friend_status .fd_off').css('display', 'none');
+        }
+  }else{
+    $('#top_menu .friend_status .fd_on').css('display', 'none');
+    $('#top_menu .friend_status .fd_off').css('display', 'none');
+  }
+
+  // 친구추가아이콘 활성화(친구 추가/삭제 기능)
+  $(".friend_status img").click(function(){
+
+    var friend_name = '{{user.username}}'
+    $.ajax({
+      type: "POST",
+      url: "{% url 'btn_add' %}",
+      data: {"friend_name" : friend_name},
+      dataType:'json',
+      success: function (data) {
+        console.log(data.icon_status)
+        if(data.icon_status == '0' ){ // 친구가 추가 / 흰색 -> 검정
+          $('#top_menu .friend_status .fd_on').css('display', 'block');
+          $('#top_menu .friend_status .fd_off').css('display', 'none');
+        }else{ // 친구가 삭제 / 검정 -> 흰색
+          $('#top_menu .friend_status .fd_on').css('display', 'none');
+          $('#top_menu .friend_status .fd_off').css('display', 'block');
+        }
+      },
+      error: function (data) { 
+        console.log(friend_name)
+        console.log('서버 연결 실패')
+      }
+    });
+  
+
+  });
+
   // 연결된 주소 변경
   $('#top_menu .prev a').attr("href", "../../")
     
@@ -105,43 +153,13 @@
         console.log('서버 연결 실패')
       }
     });
-});
-
-$(".pop_btn").click(function(){
-  $('.popup_box').removeClass('open');
-  $('body').removeClass('pop');
-});
-
-// 친구 추가 아이콘 
-$(".friend_status img").click(function(){
-
-  // 상태값에 맞는 팝업 띄우기
-  var user_id = '{{user.author_id}}'
-
-  $.ajax({
-    type: "POST",
-    url: "{% url 'new_steal' %}",
-    data: {"user_id" : user_id},
-    dataType:'json',
-    success: function (data) {
-      
-    },
-    error: function (data) { 
-      console.log('서버 연결 실패')
-    }
   });
-}); 
 
-
-  if($(this).hasClass("clicked")){
-    $(this).siblings().addClass("clicked");
-    $(this).removeClass("on clicked");
-  }else{
-    $(this).addClass("clicked");
-    $(this).siblings().removeClass("clicked");
-  }
-});
-
+  // 팝업 닫을 때 
+  $(".pop_btn").click(function(){
+    $('.popup_box').removeClass('open');
+    $('body').removeClass('pop');
+  });
 
 </script>
 {% endblock %}

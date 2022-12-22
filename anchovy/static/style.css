@@ -100,7 +100,7 @@ body.pop::before{
 #top_menu img.on {display:block}
 #top_menu img.logo {height:15vw}
 #top_menu .top_center img {display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)}
-#top_menu .friend_status {display:none}
+#top_menu .friend_status {display:none;}
 #top_menu .friend_status img {display:none; position:absolute; top:0; right:0;}
 #top_menu .friend_status img.clicked {display:block;}
 

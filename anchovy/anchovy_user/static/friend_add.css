@@ -15,4 +15,6 @@ input.fd_id::placeholder {
 }
 input.fd_id:focus {outline: none;}
 
-/* 버튼 */
+/* 팝업 */
+.space, .empty {display:none;}
+

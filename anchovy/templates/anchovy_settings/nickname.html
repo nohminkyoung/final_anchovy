@@ -18,16 +18,6 @@
     <button type="submit" class="full_btn add_btn">변경하기</button>
   </form>
 </div>
-
-<!-- 팝업 시작 -->
-  <div class="popup_box">
-    <div class="add_success popup">
-      <p class="pop_txt">성공적으로 변경 되었습니다.</p>
-      <button type="button" class="pop_btn" onclick="location.href='/anchovy_settings/settings/'">확인</button>
-    </div>
-  </div>
-<!-- 팝업 끝 -->
-
 {% endblock %}
 
 
@@ -35,33 +25,9 @@
 <script type='text/javascript'>
   // 멸치 로고 노출
   $('#top_menu .logo').css('display', 'block');
-
+  
   // 연결된 주소 변경
-  $('#top_menu .prev a').attr("href", "../settings") 
+  $('#top_menu .prev a').attr("href", "../settings");
 
-
-  // 팝업 열때
-  var sp =  /\s+/g;
-  $(".add_btn").click(function(){
-    if(sp.exec($('.nick_id').val())){
-      $('.popup_box').removeClass('open');
-      $('body').removeClass('pop');
-
-    }else if($('.nick_id').val() != '' ){
-        $('.popup_box').addClass('open');  
-        $('body').addClass('pop');  
-        $(this).css('z-index', '-1');  
-    }else{
-      $('.popup_box').removeClass('open');
-      $('body').removeClass('pop');
-    }
-
-  });
-
-  // 팝업 닫을때
-  $(".pop_btn").click(function(){
-    $('.popup_box').removeClass('open');
-    $('body').removeClass('pop');
-  });
 </script>
 {% endblock %}

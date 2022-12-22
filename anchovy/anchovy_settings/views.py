@@ -13,9 +13,21 @@ def nickname(request):
     data = request.POST.get('newnickname')
     print(data)
     
-    log_user.nickname = data
-    log_user.save()
+    errMsg = {}
     
+    if data != None:
+        if data == '':
+            errMsg['error'] = '닉네임을 입력해주세요'
+            return render(request, 'anchovy_settings/nickname.html',{'errMsg':errMsg})
+        elif ' ' in data:
+            errMsg['error'] = '닉네임은 공백을 포함할 수 없습니다'
+            return render(request, 'anchovy_settings/nickname.html',{'errMsg':errMsg})
+        else:
+            log_user.nickname = data
+            log_user.save()
+            return redirect('main')
+    
+
     return render(request, 'anchovy_settings/nickname.html')
     
 def people(request):

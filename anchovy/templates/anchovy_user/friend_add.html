@@ -12,19 +12,39 @@
     불러봐요.
   </p>
   <span class="">아이디를 입력해주세요.</span>
-  <input type="text" class="fd_id" placeholder="공백 없이 입력해주세요." 
-    name="username" id="" value="">
-  <button type="submit" class="full_btn add_btn">추가하기</button>
+  <input type="text" class="fd_id" placeholder="공백 없이 입력해주세요." name="addUser" id="" value="">
+  <div class="an_error_txt ">
+    <p class="space">아이디는 공백을 포함할 수 없습니다</p>
+    <p class="empty">아이디를 입력해주세요</p>
+  </div>
+  <button type="button" class="full_btn add_btn">추가하기</button>
 </div>
 
-<!-- 팝업 시작 -->
-<div class="popup_box">
-  <div class="add_success popup">
+<!-- ///////// 팝업 시작 ///////////// -->
+<!-- 존재 하지 않는 정보 (0) -->
+<div class="popup_box status_none">
+  <div class="popup">
+    <p class="pop_txt">존재하지 않은 아이디 입니다.</p>
+    <button type="button" class="pop_btn">확인</button>
+  </div>
+</div>
+
+<!-- 친구 목록에 있는 경우 (1) -->
+<div class="popup_box status_already">
+  <div class="popup">
+    <p class="pop_txt">이미 추가 되어있습니다.</p>
+    <button type="button" class="pop_btn">확인</button>
+  </div>
+</div>
+
+<!-- 추가 성공 (2) -->
+<div class="popup_box status_success">
+  <div class="popup">
     <p class="pop_txt">친구가 추가 되었습니다.</p>
     <button type="button" class="pop_btn">확인</button>
   </div>
 </div>
-<!-- 팝업 끝 -->
+<!-- ////////////팝업 끝//////////////// -->
 
 {% endblock %}
 
@@ -34,12 +54,56 @@
   // 멸치 로고 노출
   $('#top_menu .logo').css('display', 'block');
 
-  // 팝업 노출
+  // 팝업창 띄우기
   $(".add_btn").click(function(){
-      $('.popup_box').addClass('open');  
-      $('body').addClass('pop');  
-      $(this).css('z-index', '-1');
+
+    // 공백 및 빈 값 오류 확인 후
+    var sp =  /\s+/g;
+      if(sp.exec($('.fd_id').val())){
+        $('.space').css('display','block');
+        $('.empty').css('display','none');
+        $('.popup_box').removeClass('open');
+        $('body').removeClass('pop');
+      }else if($('.fd_id').val() == '' ){
+        $('.empty').css('display','block');
+        $('.space').css('display','none'); 
+        $('.popup_box').removeClass('open');
+        $('body').removeClass('pop');
+      }else{
+
+        // 상태값에 맞는 팝업 띄우기
+        var id_values = $('.fd_id').val();
+        $.ajax({
+          type: "POST",
+          url: "{% url 'fd_add' %}",
+          data: {"id_values" : id_values},
+          dataType:'json',
+          success: function (data) {
+            console.log(data.status)
+            $('.space').css('display','none');
+            $('.empty').css('display','none');
+            if(data.status == '0'){
+              $('.status_none').addClass('open');  
+              $('body').addClass('pop');  
+              $(this).css('z-index', '-1');
+            }else if(data.status == '1'){
+              $('.status_already').addClass('open');  
+              $('body').addClass('pop');  
+              $(this).css('z-index', '-1');
+            }else{
+              $('.status_success').addClass('open');  
+              $('body').addClass('pop');  
+              $(this).css('z-index', '-1');
+            }
+          },
+          error: function (data) { 
+            console.log('서버 연결 실패')
+          }
+        });
+      }
   });
+
+  // 팝업 닫기
   $(".pop_btn").click(function(){
     $('.popup_box').removeClass('open');
     $('body').removeClass('pop');

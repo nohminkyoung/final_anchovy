@@ -2,6 +2,8 @@ from django.contrib import auth
 from django.contrib.auth import authenticate,login
 from django.shortcuts import render, redirect
 from anchovy_common.forms import UserForm
+from anchovy_common.models import User_status, Custom_User
+from datetime import datetime, date, time
 import re 
 
 
@@ -44,6 +46,7 @@ def signup(request):
         password1 = request.POST.get('password1',None)
         password2 = request.POST.get('password2',None)        
         errMsg={}
+        now = datetime.now()
         # find_korean = re.compile('[ㄱ-ㅣ가-힣]')
         
         if  form.is_valid(): # 회원가입 폼
@@ -52,6 +55,21 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
             login(request, user)  # 로그인
+            
+            # user_status에 테이블 자동 생성################################
+            log_user = Custom_User.objects.get(username=request.user)
+        
+            create_date = date(now.year, now.month, now.day)
+            create_time = time(now.hour, now.minute, 0)
+
+            # User_status(모델에 생성한 class이름 사용)의 각 컬럼에 들어갈 데이터 들을 지정해줌(컬럼명=데이터)
+            status_data = User_status(author_id = log_user.id, username=log_user.username, nickname=log_user.nickname, 
+                                    protein=0, coupon = 0, recent_date = create_date, recent_time=create_time, 
+                                    character_lv=0, week_train_count=0)
+
+            # 반드시 save를 해줘야 데이터가 저장됨
+            status_data.save()
+            
             return redirect('tutorial')
             
         # 에러시작
@@ -78,7 +96,7 @@ def signup(request):
         elif password1.isdigit() :
             errMsg['error_pw1'] = '* 비밀번호가 전부 숫자로만 되어 있습니다. '
         
-         #pw1+pw2의 에러
+        #pw1+pw2의 에러
         else:  
             if password1 != password2:
                 errMsg['error_pw2_no'] = '* 비밀번호를 다시 확인해주세요'

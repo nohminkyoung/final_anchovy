@@ -125,11 +125,16 @@ def new_steal(request):
             create_date = date(now.year, now.month, now.day)
             create_time = time(now.hour, now.minute, 0)
             # 베틀 데이터 추가
-            status_data = battle(username = target_user.username, lose_username=user.username,lose_nickname=user.nickname,
+            status_data1 = battle(username = target_user.username, lose_username=user.username,lose_nickname=user.nickname,
                                 earn_username=target_user.username, earn_nickname=target_user.nickname,
                                 lose_date=create_date, lose_time=create_time,
                                 author_id = target_user.author_id)
-            status_data.save()
+            status_data1.save()
+            status_data2 = battle(username = user.username, lose_username=target_user.username,lose_nickname= target_user.nickname,
+                                earn_username=user.username, earn_nickname=user.nickname,
+                                lose_date=create_date, lose_time=create_time,
+                                author_id =user.author_id)
+            status_data2.save()
 
             # 알림 데이터 추가
             # status : 1-운동안한지 오래됨, 2-뺏음, 3- 뺏김

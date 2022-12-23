@@ -32,7 +32,7 @@
 
         {% for friend in sort_fiend%}
           <li>
-            <a href="/anchovy_user/friend_detail/{{friend.author_id}}/">
+            <a href="/anchovy_user/friend_detail/{{friend.friend_name}}/">
               {% include 'ch_img/ch_img3.html'%}
               <span class="an_sm_txt">{{friend.friend_nickname}}</span>
             </a>
@@ -44,31 +44,30 @@
 
     <!-- 랭킹 -->
     <div> 
-      <ul class="rank_list_box">
-        {%for dd in sort_data %}
-          <li class="rk_list">
-            <a href="/anchovy_user/friend_detail/{{dd.author_id}}/">
+      {%for dd in sort_data %}
+        <ul class="rk_list">
+          <li>
+            <a href="/anchovy_user/friend_detail/{{dd.username}}/">
               <ul class="rk_info">
-              <li>{{ dd.rank }}등</li>
-              <li>{{ dd.nickname }}</li>
-              <li>{{ dd.protein }}프로틴</li>
-              <li>{% include 'ch_img/ch_img2.html'%}</li> 
+                <li>{{ dd.rank }}등</li>
+                <li>{{ dd.nickname }}</li>
+                <li>{{ dd.protein }}프로틴</li>
+                <li>{% include 'ch_img/ch_img2.html'%}</li> 
               </ul>
             </a>
           </li> 
-          {%if dd.username == user.username%} 
-            <div class ="my_rk">
+        </ul>
+        {%if dd.username == user.username%} 
+          <div class ="my_rk">
               <ul class="rk_info">
-                <li>{{dd.rank}}등</li>
-                <li>{{ user.nickname }}</li>
-                <li>{{ user.protein }}프로틴</li> 
-                <li>{%include 'ch_img/ch_img.html'%}</li> 
+                  <li>{{dd.rank}}등</li>
+                  <li>{{ user.nickname }}</li>
+                  <li>{{ user.protein }}프로틴</li> 
+                  <li>{%include 'ch_img/ch_img.html'%}</li> 
               </ul>
-            </div>
-          {% endif %}
-        {% endfor %}
-        <li></li> <!-- 삭제 x -->
-      </ul>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
     <!-- 랭킹 끝 -->
   </div>

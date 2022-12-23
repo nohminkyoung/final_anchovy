@@ -37,8 +37,8 @@ def index(request):
     return render(request, 'anchovy_user/user.html', {'sort_data':sort_data, 'sort_fiend':sort_fiend,'user':user} )
 
 
-def detail(request, user_id): #user_id값을 같이 받아오기
-    user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기 (친구)
+def detail(request, user_name): #user_id값을 같이 받아오기
+    user = User_status.objects.get(username=user_name) # 고유한 id 값이 user_id와 같은 값만 불러오기 (친구)
     
     target_user = Custom_User.objects.get(username=request.user) #로그인된 정보 (나)
     
@@ -80,7 +80,7 @@ def fd_add(request):
                 fd_id = User_status.objects.get(username = data)
                 status = 2
                 status_data = Friend(username=user.username, friend_name=fd_id.username, 
-                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id)
+                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id) # friend_lv 추가하기 friend_lv=fd_id.character_lv
                 status_data.save()
                 return HttpResponse(json.dumps({'status':status}))
             
@@ -130,10 +130,11 @@ def new_steal(request):
                                 lose_date=create_date, lose_time=create_time,
                                 author_id = target_user.author_id)
             status_data1.save()
-            status_data2 = battle(username = user.username, lose_username=target_user.username,lose_nickname= target_user.nickname,
+            
+            status_data2 = battle(username = user.username, lose_username=target_user.username,lose_nickname=target_user.nickname,
                                 earn_username=user.username, earn_nickname=user.nickname,
                                 lose_date=create_date, lose_time=create_time,
-                                author_id =user.author_id)
+                                author_id = user.author_id)
             status_data2.save()
 
             # 알림 데이터 추가

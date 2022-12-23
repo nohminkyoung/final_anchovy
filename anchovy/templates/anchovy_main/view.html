@@ -109,13 +109,13 @@
                     "</div>"+
                     "<div class='cal_status'>"+
                     "<ul class='status'>"+
-                    "<li class='status_img'><div class='upper_body_circle'></div></li>"+
+                    "<li class='status_img'><div class='upper_body_circle circle'></div></li>"+
                     "<li class='status_text an_sm_txt'>상체</li>"+
-                    "<li class='status_img'><div class='lower_body_circle'></div></li>"+
+                    "<li class='status_img'><div class='lower_body_circle circle'></div></li>"+
                     "<li class='status_text an_sm_txt'>하체</li>"+
-                    "<li class='status_img'><div class='stolen_circle'></div></li>"+
+                    "<li class='status_img'><div class='stolen_circle circle'></div></li>"+
                     "<li class='status_text an_sm_txt'>뺏김</li>"+
-                    "<li class='status_img'><div class='steal_circle'></div></li>"+
+                    "<li class='status_img'><div class='steal_circle circle'></div></li>"+
                     "<li class='status_text an_sm_txt'>뺏음</li>"+
                     "</ul>"+
                     "</div>"+
@@ -227,17 +227,17 @@
                     Exercise += "<div class='bottom_exercise_area'><p class='ex_title'>운동 내역</p>";
                     for (i=0; i < data.T_data.length; i++){
                         if (data.T_data[i].train_kind == 1){
-                            Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
+                            Exercise += "<div class='exercise_text_area'><div class='left_arr'><div class='upper_body_circle_m'></div>";
                             Exercise += "<p>스쿼트</p>";
-                            Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p>";
-                            Exercise += "<p>"+data.T_data[i].train_accurate_count+"점</p>";
+                            Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p></div>";
+                            Exercise += "<p class='score'>"+data.T_data[i].train_accurate_count+"점</p>";
                             Exercise += "</div>";
                         }
                         else if (data.T_data[i].train_kind == 2){
-                            Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
+                            Exercise += "<div class='exercise_text_area'><div class='left_arr'><div class='lower_body_circle_m'></div>";
                             Exercise += "<p>스쿼트</p>";
-                            Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p>";
-                            Exercise += "<p>"+data.T_data[i].train_accurate_count+"점</p>";
+                            Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p></div>";
+                            Exercise += "<p class='score'>"+data.T_data[i].train_accurate_count+"점</p>";
                             Exercise += "</div>";
                         }
                     }
@@ -248,13 +248,13 @@
                     for (i=0; i < data.B_data.length; i++){
                         //빼앗겼을 경우
                         if (data.B_data[i].username == data.B_data[i].lose_username){
-                            Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
+                            Notice += "<div class='exercise_text_area notice_data'><div class='stolen_circle_m'></div>";
                             Notice += "<p>"+data.B_data[i].earn_nickname+"님 🤬";
                             Notice += "<span class='an_sm_txt'>(프로틴 -1)</span> </p></div>";
                         }
                         // 빼앗을 경우
                         else if (data.B_data[i].username == data.B_data[i].earn_username){
-                            Notice += "<div class='exercise_text_area'><div class='steal_circle_m'></div>";
+                            Notice += "<div class='exercise_text_area notice_data'><div class='steal_circle_m'></div>";
                             Notice += "<p>"+data.B_data[i].earn_nickname+"님 🥳"
                             Notice += "<span class='an_sm_txt'>(프로틴 +1)</span> </p></div>";
                         }

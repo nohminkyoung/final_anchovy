@@ -15,10 +15,12 @@
 
 .prev_btn img{
     width: 6vw;
+    vertical-align:middle;
 }
 
 .next_btn img{
     width: 6vw;
+    vertical-align:middle;
 }
 
 .status{
@@ -59,36 +61,26 @@ thead.cal_week th{
 }
 
 /*원 만들기*/
-.upper_body_circle{
-    margin: 0 auto;
+.circle {
     width: 3vw;
-    height: 4vw;
-    background-color: #F12D2D;
+    height: 3vw;
     border-radius: 50%;
+}
+
+.upper_body_circle{
+    background-color: #F12D2D;
 }
 
 .lower_body_circle{
-    margin: 0 auto;
-    width: 3vw;
-    height: 3vw;
     background-color: #118DF0;
-    border-radius: 50%;
 }
 
 .stolen_circle{
-    margin: 0 auto;
-    width: 3vw;
-    height: 3vw;
     background-color: #1FB57B;
-    border-radius: 50%;
 }
 
 .steal_circle{
-    margin: 0 auto;
-    width: 3vw;
-    height: 3vw;
     background-color: #9C1DE7;
-    border-radius: 50%;
 }
 
 
@@ -225,7 +217,7 @@ thead.cal_week th{
 .exercise_text_area{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content:space-between;
     margin-top:4vw;
 }
 
@@ -239,3 +231,12 @@ thead.cal_week th{
 .exercise_text_area :nth-child(4){
     padding-left: 23vw;
 }
+
+/* 캘린더 내부 왼쪽 정렬 - 아이콘, 운동 종류, 세트 횟수 (점수 제외) */
+.left_arr { 
+    display: flex;
+    align-items: center;
+}
+.score {padding:0;}
+
+.notice_data {justify-content: flex-start;}

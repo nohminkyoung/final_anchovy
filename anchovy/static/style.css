@@ -14,7 +14,7 @@ body.pop::before{
     backdrop-filter: blur(2px);     */
 }
 .an_container{width: 82%; margin:30px auto 0 auto; } 
-
+button {font-size:4.2vw}
 
 /********** title **********/
 /* 기본 (bold) */
@@ -42,17 +42,17 @@ body.pop::before{
 .btn_box button {
     text-align: center;  width: 47%;
     border-radius: 2vw; padding:3vw 10.2vw;   
-    background:#000; color:#fff
+    background:#000; color:#fff;
 }
 
 /* full 버튼 */
 .full_btn {
-    width:inherit; padding:3.5vw 0;
+    width:82%; padding:3.5vw 0;
     position:fixed; left:50%; bottom:8vw; 
     transform:translateX(-50%);
     background:#000; color:#fff;
     border-radius: 2vw;
-    font-weight:300
+    font-weight:300;
 }
 
 
@@ -75,7 +75,8 @@ body.pop::before{
 .popup_box .pop_btn{
     background: #000;
     color: #fff;
-    padding: 3.5vw 12vw; margin-top: 8vw;
+    padding: 3vw 12vw 3.5vw; 
+    margin-top: 8vw;
     border-radius: 2vw;
 }
 

@@ -18,3 +18,5 @@ input.fd_id:focus {outline: none;}
 /* 팝업 */
 .space, .empty {display:none;}
 
+/* 에러 메세지 */
+.error_box p {text-align: unset; margin-top:2.8vw}

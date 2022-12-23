@@ -5,8 +5,8 @@
 
 /* 알림 */
 .notice_box {height: 125vw; overflow: auto; padding-right:0.2vw}
-.notice_box .day {margin-top:8vw}
-.notice_box .date {font-weight:700;}
+.notice_box .day:first-child .date {margin-top:0;}
+.notice_box .date {font-weight:700; margin-top:6vw}
 .notice_box ul li {
   padding:3.5vw 5vw;
   border:2px solid #000; border-radius: 3vw;
@@ -15,7 +15,7 @@
   display: flex; 
   justify-content: space-between; 
   align-items: center;
-  margin-top:4vw
+  margin-top:3.5vw
 }
 .notice_box ul li .no_status {font-size:4.2vw; font-weight:500}
 .notice_box ul li .no_txt {font-size:3.7vw; font-weight: 300;}

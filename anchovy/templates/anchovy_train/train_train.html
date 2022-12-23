@@ -1,13 +1,11 @@
-{% extends "detail_base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="{% static 'train_choice.css' %}">
 
-<div class ='full_btn'>
-    <button type="button" onclick="location.href='train_result'">다음@!!!!!</button>
-</div>
+<button type="button" class ='full_btn' onclick="location.href='train_result'">중단하기</button>
 
 <video  id="myVideo" width="100%" height="100%" style="border: 1px solid #ddd;"></video>
 <input type=button value="운동 시작" onclick="{getVideo()}">

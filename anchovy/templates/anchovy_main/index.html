@@ -14,10 +14,10 @@
 <div class="an_container">
   <!--상단 텍스트 영역-->
   <div class="main_title_area">
-    <p class="an_title_400">
+    <p class="an_title_400 user_status">
       {% if user.is_authenticated %}
       <strong>{{ log_user.nickname }} </strong>님은<br>
-      <strong>{{ log_status.protein}} 프로틴</strong>으로 <strong>{{log_dic.name}}</strong>입니다.
+      <strong>{{ log_status.protein}}프로틴</strong>으로 <strong>{{log_dic.name}}</strong>입니다.
       
       {% endif %}
     </p>

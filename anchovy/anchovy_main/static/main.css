@@ -1,3 +1,8 @@
+.user_status {
+    line-height: 1.5;
+}
+
+
 #sse_area{
     background-color: #5F9DF7;
     width:100%;
@@ -71,7 +76,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    margin-top: 8vw;
+    margin-top: 4vw;
   }
   
   /* 캐릭터 */

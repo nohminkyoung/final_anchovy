@@ -43,8 +43,9 @@
 
 
 /************* 랭킹 **************/
-.tab_cont .rk_list {margin-top:3vw}
-.tab_cont .rk_list > li {padding:2vw 0; border-bottom:1px solid #ececec}
+.tab_cont .rk_list {padding:2.5vw 0; border-bottom:1px solid #ececec}
+.tab_cont .rank_list_box {margin-top:3vw}
+.tab_cont .rank_list_box > li:last-child {height:17vh}
 
 /* 공통 */
 .tab_cont .rk_info {

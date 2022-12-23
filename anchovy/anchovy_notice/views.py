@@ -59,10 +59,7 @@ def make_notice(request):
     
     check_data = Notice.objects.filter(username=request.user).filter(notice_status=1).values()
     
-    print(len(list(check_data)))
-    print(now)
-    print(login_user.recent_date)
-    print(check_time)
+    
     if len(list(check_data)) == 0:
         if check_time <= now:
             # status : 1-운동안한지 오래됨, 2-뺏음, 3- 뺏김

@@ -78,7 +78,7 @@ def fd_add(request):
                 fd_id = User_status.objects.get(username = data)
                 status = 2
                 status_data = Friend(username=user.username, friend_name=fd_id.username, 
-                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id) # friend_lv 추가하기 friend_lv=fd_id.character_lv
+                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id, friend_lv=fd_id.character_lv,fd_id = fd_id.author_id) # friend_lv 추가하기 
                 status_data.save()
                 return HttpResponse(json.dumps({'status':status}))
             
@@ -168,7 +168,7 @@ def btn_add(request):
             icon_status = 0 # 친구가 없는 사람이라서 추가함 / 흰색 -> 검정
             
             status_data = Friend(username=user.username, friend_name=data, 
-                                    friend_nickname = fd.nickname, friend_protein=fd.protein, author_id = user.author_id)
+                                    friend_nickname = fd.nickname, friend_protein=fd.protein, author_id = user.author_id, friend_lv=fd.character_lv, fd_id = fd.author_id)
             status_data.save()
             
         else :

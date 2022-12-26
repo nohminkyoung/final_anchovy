@@ -45,3 +45,60 @@
 .btn_box li {width:47%}
 .btn_box button {width:100%}
 
+/* 비디오 영역 지정*/
+
+ /* 이미지에 캔버스를 겹쳐서 그리기 위함 */
+ /* 이미지에 캔버스를 겹쳐서 그리기 위함 */
+ #canvas {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -99;
+}
+
+.container{
+  width:100%;
+  height: 100%;
+}
+
+.video_area{
+  background: #000;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -99;
+}
+.guide_msg{
+  position:fixed;
+  bottom:24vw; 
+  z-index:999;
+  width:100%;
+  text-align:center;
+  color:#fff;
+}
+
+.camera_title{
+  position:fixed;
+  z-index:10;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10vw;
+  padding-left: 8vw;
+  padding-right: 8vw;
+  color:#fff;
+  background: linear-gradient(
+            to top,
+            rgba(20, 20, 20, 0) 10%,
+            rgba(20, 20, 20, 0.25) 25%,
+            rgba(20, 20, 20, 0.5) 50%,
+            rgba(20, 20, 20, 0.75) 75%,
+            rgba(20, 20, 20, 1) 100%
+          );
+
+  background-size: cover;
+
+}
+
+.ex-ing{
+  margin-top:2vw;
+}
+

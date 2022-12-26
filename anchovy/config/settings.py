@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'anchovy_train.apps.AnchovyTrainConfig',
     'anchovy_user.apps.AnchovyUserConfig',
     'django_extensions',
+    'sslserver',
 ]
 
 MIDDLEWARE = [

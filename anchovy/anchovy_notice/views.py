@@ -5,10 +5,6 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 def index(request):
-    return render(request, 'anchovy_notice/notice.html')
-
-
-def index(request):
     now = datetime.now() # 현재 
     time = now - relativedelta(months=1) # 한달 전
     dic = {'today': now.date()}
@@ -38,14 +34,20 @@ def index(request):
             prev = notice 
         
         for notice in Notice_data:
+            # 프로틴 상승
             if notice['notice_status'] == 2:
                 for battle_value in battle_data:
-                    if battle_value['username'] == battle_value['earn_username']:
-                        notice['battle_user'] = battle_value['lose_nickname']
+                    if notice['notice_time'] == battle_value['lose_time'] and notice['notice_date'] == battle_value['lose_date']:
+                        if battle_value['username'] == battle_value['earn_username']:
+                            notice['battle_user'] = battle_value['lose_nickname']
+                        
+            # 프로틴 하강
             elif notice['notice_status'] == 3:
                 for battle_value in battle_data:
-                    if battle_value['username'] == battle_value['lose_username']:
-                        notice['battle_user'] = battle_value['earn_nickname']
+                    if notice['notice_time'] == battle_value['lose_time'] and notice['notice_date'] == battle_value['lose_date']:
+                        if battle_value['username'] == battle_value['lose_username']:
+                            notice['battle_user'] = battle_value['earn_nickname']
+                            
             
     return render(request, 'anchovy_notice/notice.html',{'Notice':Notice_data, 'dic':dic,'check':check})
 

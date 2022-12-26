@@ -2,8 +2,6 @@ from django.shortcuts import render
 from anchovy_train.models import Train
 from datetime import datetime
 
-from django.db.models import Sum
-
 def index(request):
     return render(request, 'anchovy_train/train.html')
 
@@ -47,3 +45,4 @@ def train_train(request):
 
 def train_practice(request):
     return render(request, 'anchovy_train/train_practice.html')
+

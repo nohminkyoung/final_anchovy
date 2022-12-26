@@ -58,10 +58,8 @@ def detail(request, user_name): #user_id값을 같이 받아오기
 def fd_add(request):
     user = User_status.objects.get(username = request.user) 
     data = request.POST.get('id_values')
-    
-    user = User_status.objects.get(username = request.user) # 나
-    my_friend = Friend.objects.filter(username = data) # 내친구들
-    data = request.POST.get('friend_name') # 추가할 친구 아이디
+        
+    print(data, str(request.user))
     
     if str(request.user) != data :
         try: # 사용자 중 아이디가 존재하는지
@@ -131,8 +129,8 @@ def new_steal(request):
                                 author_id = target_user.author_id)
             status_data1.save()
             
-            status_data2 = battle(username = user.username, lose_username=target_user.username,lose_nickname=target_user.nickname,
-                                earn_username=user.username, earn_nickname=user.nickname,
+            status_data2 = battle(username = user.username, lose_username=user.username,lose_nickname=user.nickname,
+                                earn_username=target_user.username, earn_nickname=target_user.nickname,
                                 lose_date=create_date, lose_time=create_time,
                                 author_id = user.author_id)
             status_data2.save()
@@ -163,7 +161,6 @@ def btn_add(request):
     data = request.POST.get('friend_name') # 추가할 친구 아이디
     my_friend = Friend.objects.filter(username = request.user) # 내친구들
     fd = User_status.objects.get(username = data) # 친구가 될 사람의 정보
-    print('ajshdfkahsdlkfhalskdfhalsdkfh',data)
     
     if data != None : 
         if len(list(my_friend.filter(friend_name = data))) == 0 : # 친구가 아니라 추가하기 

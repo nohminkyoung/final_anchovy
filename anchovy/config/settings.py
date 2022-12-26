@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        "NAME" : "anchovy_restore",
+        "NAME" : "final_anchovy",
         "USER" : 'develop',
         "PASSWORD" : 'anchovy1!',
         'HOST' : 'database-dev.cclpxl5ttlgd.ap-northeast-2.rds.amazonaws.com',

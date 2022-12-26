@@ -78,7 +78,7 @@ def fd_add(request):
                 fd_id = User_status.objects.get(username = data)
                 status = 2
                 status_data = Friend(username=user.username, friend_name=fd_id.username, 
-                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, author_id = user.author_id) # friend_lv 추가하기 friend_lv=fd_id.character_lv
+                                    friend_nickname = fd_id.nickname, friend_protein=fd_id.protein, friend_lv=fd_id.character_lv , author_id = user.author_id) # friend_lv 추가하기 friend_lv=fd_id.character_lv
                 status_data.save()
                 return HttpResponse(json.dumps({'status':status}))
             

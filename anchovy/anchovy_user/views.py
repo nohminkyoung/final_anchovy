@@ -59,10 +59,6 @@ def fd_add(request):
     user = User_status.objects.get(username = request.user) 
     data = request.POST.get('id_values')
     
-    user = User_status.objects.get(username = request.user) # 나
-    my_friend = Friend.objects.filter(username = data) # 내친구들
-    data = request.POST.get('friend_name') # 추가할 친구 아이디
-    
     if str(request.user) != data :
         try: # 사용자 중 아이디가 존재하는지
             Custom_User.objects.get(username = data)
@@ -131,8 +127,8 @@ def new_steal(request):
                                 author_id = target_user.author_id)
             status_data1.save()
             
-            status_data2 = battle(username = user.username, lose_username=target_user.username,lose_nickname=target_user.nickname,
-                                earn_username=user.username, earn_nickname=user.nickname,
+            status_data2 = battle(username = user.username, lose_username=user.username,lose_nickname=user.nickname,
+                                earn_username=target_user.username, earn_nickname=target_user.nickname,
                                 lose_date=create_date, lose_time=create_time,
                                 author_id = user.author_id)
             status_data2.save()

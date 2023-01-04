@@ -8,9 +8,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'test.css' %}">
 
-    <video id="video" style="display:none" autoplay playsinline></video>
-    <canvas class="output_canvas" width="360" height="680"><a></a></canvas>
+    <video id="video" style="display:none" autoplay playsinline></video> 
+    <div id="canvas_style">
+      <canvas class="output_canvas"></canvas> <!--화면 크기 변경 // 화면 크기에 맞게 변경 화면이 줄어든다 (찌글어짐).-->
+    </div>
     <div class="landmark-grid-container" style="display:none"></div>
 
 
@@ -19,11 +22,22 @@
 {% block script %}
 
 <script type='text/javascript'>
+
+  var dh = window.innerHeight;
+  var dw = window.innerWidth;
+
+  const canvasElement = document.getElementsByClassName('output_canvas')[0]; // 비디오 출력을 위한 캔버스
+  canvasElement.width = dw;
+  canvasElement.height = dh;
+
     const userMedia = navigator.mediaDevices.getUserMedia({
         audio: false,
         video: {
-            width: 360,
-            height: 680,
+          // 해상도 설정  // 변경 시 그에 맞게 픽셀 수 크기가 작거나 커진다
+          // (크기가 커질 경우 픽셀 크기가 작아져서 화면이 작게 보이고)  // 기존에 표현하지 못했던 부분도 명확히 표현
+          // (크기가 작아지는 경우 픽셀 크기가 커져서 화면이 크기 보인다) // 기존에 표현되었던 부분이 뭉게져서 표현되기 때문에 잘린것 처럼 보이게 됨
+            width: 640,
+            height: 360,
             facingMode: 'environment'
         }
     });
@@ -77,13 +91,26 @@
     
       canvasCtx.globalCompositeOperation = 'source-over';
       drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
-                     {color: '#00FF00', lineWidth: 4});
+                     {color: '#FF0000', lineWidth: 4});
       drawLandmarks(canvasCtx, results.poseLandmarks,
-                    {color: '#FF0000', lineWidth: 2});
+                    {color: '#00FFFF', lineWidth: 2});
       canvasCtx.restore();
     
       // javascript에서 가져온 값을 stream 형태로 지속적으로 받아온다.
       console.log(grid.landmarks[11]);
+      $.ajax({
+        type: "GET",
+        url: "{% url 'angle_cal' %}",
+        data: grid.landmarks[11],
+        dataType:'json',
+        success: function (data) {
+          // 쿠폰 사용에 성공 했으면
+          console.log('앵글 성공')
+        },
+        error: function (data) { //데이터 받아오기 실패
+          console.log('앵글 연결 실패');
+        }
+    });
         
     
       grid.updateLandmarks(results.poseWorldLandmarks);
@@ -113,8 +140,6 @@
         onFrame: async () => {
         await pose.send({image: videoEl});
         },
-        width: 360,
-        height: 680
     });
     
     camera.start();

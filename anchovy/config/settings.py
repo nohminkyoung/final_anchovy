@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'anchovy_user.apps.AnchovyUserConfig',
     'django_extensions',
     'sslserver',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +99,6 @@ DATABASES = {
         'PORT' : '3306'
     }
 }
-
 
 
 # Password validation
@@ -153,3 +153,12 @@ STATICFILES_DIRS = [
     
 ]
 
+
+# 웹소캣 관련 추가
+ASGI_APPLICATION = 'anchovy_train.asgi.application'	# mysite 는 django 프로젝트 이름
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

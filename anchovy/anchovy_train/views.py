@@ -2,13 +2,17 @@ from django.shortcuts import render
 from anchovy_train.models import Train
 from datetime import datetime
 
+# 각도 계산을 위해 import
+from django.http import HttpResponse 
+from django.http import StreamingHttpResponse
+import json
+
+
 def index(request):
     return render(request, 'anchovy_train/train.html')
 
 def choice(request):
     return render(request, 'anchovy_train/train_choice.html')
-
-
 
 def train_result(request):
     login_user = request.user # 로그인 유저
@@ -36,9 +40,7 @@ def train_result(request):
     
     return render(request, 'anchovy_train/train_result.html',
                   {'data_list':data_list,'all_score':all_score,'accurate_score':accurate_score,'persent':persent,'kind':kind})
-
-
-
+    
 
 def train_train(request):
     return render(request, 'anchovy_train/train_train.html')
@@ -46,3 +48,13 @@ def train_train(request):
 def train_practice(request):
     return render(request, 'anchovy_train/train_practice.html')
 
+def test(request):
+    return render(request, 'anchovy_train/test.html')
+
+def angle_cal(request):
+    
+    x = request.GET.get('x')
+    y = request.GET.get('y')
+    z = request.GET.get('z')
+    
+        

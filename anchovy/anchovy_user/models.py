@@ -11,3 +11,4 @@ class Friend(models.Model):
     friend_nickname = models.CharField(max_length=150, verbose_name = '유저 친구 닉네임',default = '')
     friend_protein = models.IntegerField(verbose_name = '유저 친구 프로틴레벨')
     friend_lv = models.IntegerField(verbose_name = '유저 친구 캐릭터') # 친구 캐릭레벨 추가하기 (add friend 에 추가 )
+    

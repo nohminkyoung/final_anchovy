@@ -115,7 +115,7 @@ def signup(request):
                 
                 # user_status에 테이블 자동 생성################################
                 log_user = Custom_User.objects.get(username=request.user)
-            
+                print(log_user)
                 create_date = date(now.year, now.month, now.day)
                 create_time = time(now.hour, now.minute, 0)
 

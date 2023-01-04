@@ -2,166 +2,121 @@
 {% load static %}
 
 {% block content %}
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="{% static 'train_choice.css' %}">
+<!-- mediapipe install -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
 
-<!--
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
--->
-<div class='container'>
-    <div class="camera_title">
-      <div>
-        <p class="ex-kind an_title_lg_700">스쿼트</p>
-        <p class="ex-ing">진행 중입니다.</p>
-      </div> <!--운동 종류 및 진행 상황 -->
-      <div>
-        <p class="ex-set">5세트</p>
-        <p class="ex-count an_title_lg_700">15회</p>
-      </div> <!--세트 및 횟수 -->
-    </div>
-    <div>
-      <video id="video-output" class="video_area" autoplay playsinline></video> <!--비디오가 들어갑니다.-->
-      <canvas id="canvas"></canvas>
-      <p class="guide_msg">안내 메세지 영역 입니다.</p> <!--안내 메세지 적용-->
-      <div id="errorMsg"></div> <!--에러 메세지 적용-->
-      <button type="button" class ='full_btn' onclick="location.href='train_result'">중단하기</button>
-    </div>
-</div>
+    <video id="video" style="display:none" autoplay playsinline></video>
+    <canvas class="output_canvas" width="360" height="680"><a></a></canvas>
+    <div class="landmark-grid-container" style="display:none"></div>
 
 
 {% endblock %}
 
 {% block script %}
 
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<!--Load tensorflow-->
-<script src="https://unpkg.com/@tensorflow/tfjs"></script>
-<!--Load Posenet-->
-<script src="https://unpkg.com/@tensorflow-models/posenet"></script>
-
-
 <script type='text/javascript'>
-
-// 디바이스화면의 스크린 크기 받아오기
-vedio_width_size = window.outerWidth;
-vedio_height_size = window.outerHeight;
-
-//let checkTest = documnet.querySelector('.video_area');
-//checkTest.setAttribute('width', vedio_height_size);
-//checkTest.setAttribute('width', vedio_width_size);
-
-// 디바이스 화면크기 별로 css 사이즈 조정하기
-$('.video_area').css('width',vedio_width_size);
-$('.video_area').css('height',vedio_height_size);
-
-// 카메라로부터 입력 받아오기 (MediaDevide.getUserMedia 매서드 이용) 이를 호출하면 사용자에게 입력 장치의 사용 권한을 요청
-const constraints = { audio: false, video: { 
-  // 세로로 카메라를 보는 것을 기준으로 했기때문에 크기를 반대로 적용
-  width:vedio_height_size,
-  height:vedio_width_size,
-  facingMode: "environment" } } // environment : 후면 카메라, user : 전면 카메라 
-
-// html의 vedio 태그와 연결하기
-const videoOutput = document.getElementById("video-output");
-
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
+    const userMedia = navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+            width: 360,
+            height: 680,
+            facingMode: 'environment'
+        }
+    });
+     
+    userMedia.then(function (stream) {
+        const videoEl = document.getElementById('video');
+     
+        const videoTracks = stream.getVideoTracks()[0];
+        console.log('카메라 이름 : ' + videoTracks.label);
+     
+        videoEl.srcObject = stream;
+     
+    }).catch(function (error) {
+        console.error(error.message);
+    });
 
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream){
-  
-  // MediaStream을 HTMLvideoElement의 srouce로 설정
-  videoOutput.srcObject = mediaStream;
-})
+</script>
+<script type="module">
+    const canvasElement = document.getElementsByClassName('output_canvas')[0]; // 비디오 출력을 위한 캔버스
 
-//then 안쪽이 function(model){} 이렇게 쓰는거랑 같다 (인자가 하나라 중괄호가 없는 것)
-posenet.load().then((model) => {
-  // 이곳의 model과 아래 predict의 model은 같아야 한다.
-  videoOutput.onloadeddata = (e) => {
-      //비디오가 load된 다음에 predict하도록. (안하면 콘솔에 에러뜸)
-      predict();
-  };
+    const canvasCtx = canvasElement.getContext('2d'); // 2d 형태 캔버스 만들기 (그래프를 그려주는 것)
+    const landmarkContainer = document.getElementsByClassName('landmark-grid-container')[0]; // 3d 좌표를 만들기 위한 container
+    const grid = new LandmarkGrid(landmarkContainer);  // 3d 좌표에서 Value 값 받아오기
+    
 
-  function predict() {
-      //frame이 들어올 때마다 estimate를 해야하니 함수화 시킴
-      model.estimateSinglePose(videoOutput).then((pose) => {
-          canvas.width = vedio_width_size; //캔버스와 비디오의 크기를 일치시킴
-          canvas.height = vedio_height_size;
-
-          drawKeypoints(pose.keypoints, 0.6, context); //정확도 
-          drawSkeleton(pose.keypoints, 0.6, context);
-      });
-      requestAnimationFrame(predict); //frame이 들어올 때마다 재귀호출
-  }
-});
-
-/* PoseNet을 쓰면서 사용하는 함수들 코드 - 그냥 복사해서 쓰기*/
-
-//tensorflow에서 제공하는 js 파트
-const color = "aqua";
-const boundingBoxColor = "red";
-const lineWidth = 2;
-
-function toTuple({y, x}) {
-  return [y, x];
-}
-
-function drawPoint(ctx, y, x, r, color) {
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, 2 * Math.PI);
-  ctx.fillStyle = color;
-  ctx.fill();
-}
-
-function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
-  ctx.beginPath();
-  ctx.moveTo(ax * scale, ay * scale);
-  ctx.lineTo(bx * scale, by * scale);
-  ctx.lineWidth = lineWidth;
-  ctx.strokeStyle = color;
-  ctx.stroke();
-}
-
-function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
-  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
-
-  adjacentKeyPoints.forEach((keypoints) => {
-      drawSegment(toTuple(keypoints[0].position), toTuple(keypoints[1].position), color, scale, ctx);
-  });
-}
-
-function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
-  for (let i = 0; i < keypoints.length; i++) {
-      const keypoint = keypoints[i];
-
-      if (keypoint.score < minConfidence) {
-          continue;
+    // Canvas에 나오는 선 효과 주기
+    function onResults(results) {
+        
+      if (!results.poseLandmarks) {
+        grid.updateLandmarks([]);
+        return;
       }
+    
+      //console.log(grid);
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.segmentationMask, 0, 0,
+                          canvasElement.width, canvasElement.height);
 
-      const {y, x} = keypoint.position;
-      drawPoint(ctx, y * scale, x * scale, 3, color);
-  }
-}
+      // Only overwrite existing pixels.
+      canvasCtx.globalCompositeOperation = 'source-in';
+      canvasCtx.fillStyle = 'transparent'; //transparent 투명 상태로 지정
+      canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
+    
 
-function drawBoundingBox(keypoints, ctx) {
-  const boundingBox = posenet.getBoundingBox(keypoints);
+      // Only overwrite missing pixels.
+      canvasCtx.globalCompositeOperation = 'destination-atop';
+      canvasCtx.drawImage(
+          results.image, 0, 0, canvasElement.width, canvasElement.height);
+    
+      canvasCtx.globalCompositeOperation = 'source-over';
+      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                     {color: '#00FF00', lineWidth: 4});
+      drawLandmarks(canvasCtx, results.poseLandmarks,
+                    {color: '#FF0000', lineWidth: 2});
+      canvasCtx.restore();
+    
+      // javascript에서 가져온 값을 stream 형태로 지속적으로 받아온다.
+      console.log(grid.landmarks[11]);
+        
+    
+      grid.updateLandmarks(results.poseWorldLandmarks);
+    }
+    
+    // 모델을 가져온다
+    const pose = new Pose({locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+      }});
 
-  ctx.rect(
-      boundingBox.minX,
-      boundingBox.minY,
-      boundingBox.maxX - boundingBox.minX,
-      boundingBox.maxY - boundingBox.minY
-  );
+    // Pose의 옵션 값 설정
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      enableSegmentation: true,
+      smoothSegmentation: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
 
-  ctx.strokeStyle = boundingBoxColor;
-  ctx.stroke();
-}
-
-
+    pose.onResults(onResults);
+    console.log(pose);
+    
+    const videoEl = document.getElementById('video');
+    // 카메라 실행 코드
+    const camera = new Camera(videoEl, {
+        onFrame: async () => {
+        await pose.send({image: videoEl});
+        },
+        width: 360,
+        height: 680
+    });
+    
+    camera.start();
 </script>
 {% endblock %}

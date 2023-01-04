@@ -57,4 +57,8 @@ def angle_cal(request):
     y = request.GET.get('y')
     z = request.GET.get('z')
     
+    print(x)
+    print(y)
+    print(z)
+    
         

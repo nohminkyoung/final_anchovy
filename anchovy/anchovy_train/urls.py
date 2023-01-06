@@ -9,6 +9,6 @@ urlpatterns = [
     path('train_choice/train_train/', views.train_train, name='train_train'),
     path('train_choice/train_practice/', views.train_practice, name='train_practice'),
     path('train_choice/train_train/train_result/', views.train_result, name='train_result'),
-    path('angle_cal', views.angle_cal, name='angle_cal'),
-    path('test', views.test, name='test'),
+    path('push_up', views.push_up, name='push_up'),
+
 ]

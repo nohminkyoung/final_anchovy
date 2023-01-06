@@ -97,11 +97,14 @@
       canvasCtx.restore();
     
       // javascript에서 가져온 값을 stream 형태로 지속적으로 받아온다.
-      console.log(grid.landmarks[11]);
+      console.log(results.poseLandmarks);
+
+      var land = JSON.stringify(results.poseLandmarks);
+    
       $.ajax({
-        type: "GET",
+        type: "POST",
         url: "{% url 'angle_cal' %}",
-        data: grid.landmarks[11],
+        data: {'landmark':land},
         dataType:'json',
         success: function (data) {
           // 쿠폰 사용에 성공 했으면

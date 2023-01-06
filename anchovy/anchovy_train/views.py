@@ -178,7 +178,7 @@ def push_up(request):
                     result['excellent_count'] += 1
                     result['full_count'] += 1 
                 else:
-                    result['excellent_count'] += 1
+                    result['full_count'] += 1
     
 
 

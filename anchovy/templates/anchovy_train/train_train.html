@@ -97,15 +97,21 @@
       canvasCtx.restore();
     
       // javascript에서 가져온 값을 stream 형태로 지속적으로 받아온다.
-      console.log(grid.landmarks[11]);
+
+      var land = JSON.stringify(results.poseLandmarks);
+    
       $.ajax({
-        type: "GET",
-        url: "{% url 'angle_cal' %}",
-        data: grid.landmarks[11],
+        type: "POST",
+        url: "{% url 'push_up' %}",
+        data: {'landmark':land},
         dataType:'json',
         success: function (data) {
           // 쿠폰 사용에 성공 했으면
-          console.log('앵글 성공')
+          if(data.result.full_count == 5){
+            alert('운동완료')
+          }
+          console.log('전체 : ' + data.result.full_count)
+          console.log('정확한:' + data.result.excellent_count)
         },
         error: function (data) { //데이터 받아오기 실패
           console.log('앵글 연결 실패');

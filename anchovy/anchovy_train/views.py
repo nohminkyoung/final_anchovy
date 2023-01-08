@@ -55,11 +55,31 @@ def train_result(request):
       /* 28 : right_ankle  /  29 : left_heel  /  30 right_heel  /  31 : left_foot_index */
       /* 32 : right_foot_index  */
 '''
+def train_train(request):
+    return render(request, 'anchovy_train/train_train.html')
+
+
+def train_practice(request):
+    return render(request, 'anchovy_train/train_practice.html')
+
+def test(request):
+    return render(request, 'anchovy_train/test.html')
 
 @csrf_exempt
 def push_up(request):
     lis_landmarks = request.POST.get('landmark')
     landmarks = literal_eval(lis_landmarks[1:-1])
+    
+    check_status = request.POST.get('check_status') # 맨 처음 과정 
+    check_pushup = request.POST.get('check_pushup') # 앉아 있는 목 y값
+    check_stand = request.POST.get('check_stand') # 일어나 있는 목 y값
+    
+    fullcount = request.POST.get('full_count') # 전체 진행 횟수
+    excellentcount = request.POST.get('excellent_count') # 정확하게 진행한 횟수
+    
+    # 기본 값
+    result = {'full_count': '0', 'excellent_count': '0', 'check_status': check_status, 'check_stand': check_stand}
+        
     
     # 함수시작 #####################
     # 각도 구하기
@@ -107,14 +127,7 @@ def push_up(request):
         return width
     
     ##########################
-    
-    # 변수 받아오기 
-    first_y = {}
-    if first_y == {}:
-        first_y = landmarks[0]['y']
-    else:
-        pass
-    
+    # 변수 받아오기 --> 10초 후 구현이 필요하네    
     l_elbow = landmarks[13]
     r_elbow = landmarks[14]
     l_shoulder = landmarks[11]
@@ -132,69 +145,52 @@ def push_up(request):
     r_wrist = landmarks[16]
     
     #########################################
-    # 점수 만들기 
-    score = 0
-    result = {'full_count': 0, 'excellent_count': 0}
-    # down
-    # print(first_y - nose['y'])
-    print(first_y)
-    print(nose['y'])
-    print(calculate_angle(l_shoulder, l_elbow, l_wrist))
-    if (first_y - nose['y'] >=0.2) and (calculate_angle(l_shoulder, l_elbow, l_wrist)<100) : 
-        print('내려가기~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        if (60<calculate_angle(l_shoulder, l_elbow, l_wrist))and(calculate_angle(l_shoulder, l_elbow, l_wrist)<90): # 팔꿈치
-            score += 1
-        if (0<calculate_angle( l_elbow, l_shoulder, l_hip))and(calculate_angle( l_elbow, l_shoulder, l_hip)<20): # 겨드랑이
-            score += 1
-        if (160<rev_calculate_angle(l_shoulder, l_hip, l_knee))and(rev_calculate_angle(l_shoulder, l_hip, l_knee)<180): # 엉덩이
-            score += 1
-        if (140<calculate_angle(l_hip, l_knee, l_ankle))and(calculate_angle(l_hip, l_knee, l_ankle)<170): # 무릎
-            score += 1
-        if (75<calculate_angle(l_eye, nose, l_shoulder))and(calculate_angle(l_eye, nose, l_shoulder)<95): # 목
-            score += 1
-        if (calculate_width(l_shoulder,r_shoulder)*1.2 < calculate_width(l_wrist,r_wrist)) \
-            and (calculate_width(l_shoulder,r_shoulder)*1.5 > calculate_width(l_wrist,r_wrist)) : # 팔 너비
-            score += 1
-            
-        # up
-        if (first_y - nose['y'] <0.2) and (calculate_angle(l_shoulder, l_elbow, l_wrist)>100) : 
-            print('올라가기~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-            if (165<calculate_angle(l_shoulder, l_elbow, l_wrist))and(calculate_angle(l_shoulder, l_elbow, l_wrist)<180): # 팔꿈치
-                score += 1
-            if (35<calculate_angle( l_elbow, l_shoulder, l_hip))and(calculate_angle( l_elbow, l_shoulder, l_hip)<60): # 겨드랑이
-                score += 1
-            if (160<rev_calculate_angle(l_shoulder, l_hip, l_knee))and(rev_calculate_angle(l_shoulder, l_hip, l_knee)<180): # 엉덩이
-                score += 1
-            if (140<calculate_angle(l_hip, l_knee, l_ankle))and(calculate_angle(l_hip, l_knee, l_ankle)<170): # 무릎
-                score += 1
-            if (75<calculate_angle(l_eye, nose, l_shoulder))and(calculate_angle(l_eye, nose, l_shoulder)<95): # 목
-                score += 1
+    
+    # 대기 시간 (코 y좌표 위치 지정) 
+    if result['check_status'] == '1':
+        
+        result['check_stand'] = landmarks[0]['y'] # 처음 시작 시 목의 y값을 지정 
+        result['check_status'] = '2' # 푸쉬업 내림 완료 단계 변경
+        return HttpResponse(json.dumps({'result':result})) 
+    
+    # 푸쉬업 내림 시작
+    elif result['check_status'] == '2':
+        print(float(check_stand) - nose['y'])
+        if (nose['y'] - float(check_stand) >=0.2) and (calculate_angle(l_shoulder, l_elbow, l_wrist)<100) :
+            # 팔꿈치 각도 59 ~ 89
+            if (60<calculate_angle(l_shoulder, l_elbow, l_wrist))and(calculate_angle(l_shoulder, l_elbow, l_wrist)<90):
+                pass
+            # 겨드랑이 각도 1 ~ 19
+            if (0<calculate_angle( l_elbow, l_shoulder, l_hip))and(calculate_angle( l_elbow, l_shoulder, l_hip)<20): 
+                pass
+            # 엉덩이 각도 160 ~ 180 #테스트 실패
+            if (160<rev_calculate_angle(l_shoulder, l_hip, l_knee))and(rev_calculate_angle(l_shoulder, l_hip, l_knee)<180):
+                pass
+            # 목 각도 75 ~ 95
+            if (75<calculate_angle(l_eye, nose, l_shoulder))and(calculate_angle(l_eye, nose, l_shoulder)<95): 
+                pass
+            # 팔 너비와 팔 너비 비교 완료
             if (calculate_width(l_shoulder,r_shoulder)*1.2 < calculate_width(l_wrist,r_wrist)) \
-                and (calculate_width(l_shoulder,r_shoulder)*1.5 > calculate_width(l_wrist,r_wrist)) : # 팔 너비
-                score += 1
-
-                # 점수 계산
-                if score == 10: 
-                    result['excellent_count'] += 1
-                    result['full_count'] += 1 
-                else:
-                    result['full_count'] += 1
+                and (calculate_width(l_shoulder,r_shoulder)*1.5 > calculate_width(l_wrist,r_wrist)) : 
+                pass
+            result['check_status'] = '3' # 푸쉬업 내림 완료 단계 변경
+        return HttpResponse(json.dumps({'result':result})) 
     
-
-
+    # 푸쉬업 내림 완료
+    elif result['check_status'] == '3':
+       
+        result['check_stand'] = landmarks[0]['y'] # 처음 시작 시 목의 y값을 지정
+        result['check_status'] = '4' #푸쉬업 내림 시작 단계 변경 
+        
+        return HttpResponse(json.dumps({'result':result})) 
     
     
-
-    return HttpResponse(json.dumps({'result':result})) 
-
-
-
-def train_train(request):
-    return render(request, 'anchovy_train/train_train.html')
+    # 푸쉬업 오름 시작
+    elif result['check_status'] == '4':
+       
+        return HttpResponse(json.dumps({'result':result})) 
 
 
-def train_practice(request):
-    return render(request, 'anchovy_train/train_practice.html')
 
-def test(request):
-    return render(request, 'anchovy_train/test.html')
+
+

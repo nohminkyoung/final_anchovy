@@ -59,7 +59,6 @@ def train_result(request):
       /* 32 : right_foot_index  */
 '''
 def train_train(request):
-    
     return render(request, 'anchovy_train/train_train.html')
 
 
@@ -85,13 +84,18 @@ def push_up(request):
     
     
     
-    result = {'full_count': int(full_count), 'excellent_count': int(excellent_count), 'check_status': check_status,'prev':prev, 'check_stand': check_stand, 'score': int(score)}
+    result = {'full_count': int(full_count), 'excellent_count': int(excellent_count), 'check_status': check_status,'prev':prev, 'check_stand': check_stand, 'score': int(score),
+              'rest':False}
+    
+    # 휴식 중일 경우 이전 값 갱신 없이 그대로 보낸다
+    if result['rest'] == True:
+        print('아직 휴식중입니다.')
+        return HttpResponse(json.dumps({'result':result})) 
         
-        
+    # 휴식시간 문구 알림
     if full_count == max_count:
-        print('휴식시간 중')
-        time.sleep(int(sleep))
-        
+        result['rest'] = True
+        return HttpResponse(json.dumps({'result':result})) # 초 진행 후 
     
     # 프레임별 같은 화면 일 때는 계산을 진행하지 않고 이전 값 그대로 바로 넘겨라
     if check_status == prev:

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from anchovy_train.models import Train
 from datetime import datetime
 from ast import literal_eval
@@ -6,13 +6,42 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponse
 import numpy as np
-
-def index(request):
+from datetime import datetime, date, time
+from anchovy_common.models import Custom_User
+def index(request):    
     return render(request, 'anchovy_train/train.html')
+
+
+def choice_squat(request):
+    login_user = Custom_User.objects.get(username=request.user)
+  
+    now = datetime.now()
+    create_date = date(now.year, now.month, now.day)
+    create_time = time(now.hour, now.minute, 0)
+    
+    train_data = Train(author_id = login_user.id, username=login_user.username, train_date=create_date, 
+                       train_time = create_time, train_kind = 1)
+    train_data.save()
+    
+    return redirect('choice')
+
+def choice_push_up(request):
+    login_user = Custom_User.objects.get(username=request.user)
+  
+    now = datetime.now()
+    create_date = date(now.year, now.month, now.day)
+    create_time = time(now.hour, now.minute, 0)
+    
+    train_data = Train(author_id = login_user.id, username=login_user.username, train_date=create_date, 
+                       train_time = create_time, train_kind = 2)
+    train_data.save()
+    
+    return redirect('choice')
+    
+    
 
 def choice(request):
     return render(request, 'anchovy_train/train_choice.html')
-
 
 
 def train_result(request):
@@ -207,6 +236,9 @@ def squat(request):
     # 기본 값
     result = {'full_count': int(fullcount), 'excellent_count': int(excellentcount), 'check_status': check_status, 'check_stand': check_stand, 'score': int(score), 'prev' : prev ,'check_ankle':check_ankle}    
     
+    # 프레임별 같은 화면 일 때는 계산을 진행하지 않고 이전 값 그대로 바로 넘겨라
+    if check_status == prev:
+        return HttpResponse(json.dumps({'result':result}))
     
     # 함수시작 #####################
     # 각도 구하기

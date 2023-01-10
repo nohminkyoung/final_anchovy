@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from anchovy_train.models import Train
 from datetime import datetime
 from ast import literal_eval
@@ -64,6 +64,15 @@ def train_train(request):
 
 def train_practice(request):
     return render(request, 'anchovy_train/train_practice.html')
+
+def stop(request): 
+    train_data = Train.objects.filter(username=request.user).order_by('-train_date','-train_time')[0]
+    
+    for _ in train_data.train_set:
+        del_data = Train.objects.filter(username=request.user).order_by('-train_date','-train_time')[0]
+        del_data.delete()
+        
+    return redirect('main')
 
 
 @csrf_exempt
@@ -457,5 +466,9 @@ def squat(request):
 
 @csrf_exempt
 def add_database(request):
-    excellent_count = request.POST.get('excellent_count')
+    login_user = request.user # 로그인 유저
+    excellent_count = request.POST.get('excellent_count') # 정확하게 진행한 횟수
+    
+    #순차적으로 넣어야 한다. id 값을 받아와서 해당 아이디와 연결해서 진행을 한다.
+    
     print("넘어갔냐~~~~~~~~~~~~~~~~~~~?",excellent_count)

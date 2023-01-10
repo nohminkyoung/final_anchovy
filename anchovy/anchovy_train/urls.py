@@ -12,5 +12,6 @@ urlpatterns = [
     path('push_up', views.push_up, name='push_up'),
     path('squat', views.squat, name='squat'),
     path('add_database', views.add_database, name='add_database'),
+    path('stop', views.stop, name='stop')
 
 ]

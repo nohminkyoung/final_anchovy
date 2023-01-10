@@ -12,7 +12,7 @@
 
     <video id="video" style="display:none" autoplay playsinline></video>  <!-- 아이폰에서 playsinline를 넣지 않으면 재생이 되지 않는다. -->
     <audio style="display:none" playsinline id="myAudio">
-      <source src="/static/sound/countdown.wav"/>
+      <source src="/static/sound/countdown.wav"/ >
     </audio>
     <div id="canvas_style">
       
@@ -36,8 +36,10 @@
     </div>
     <div class="landmark-grid-container" style="display:none"></div>
     <p class="notice_text train_text_color">라인 안쪽으로 들어와 주세요</p>
-    <button type="button" class ='full_btn' onclick="location.href='train_result'">중단하기</button>
-
+    
+    <div class="button_area">
+      <button type="button" class ='full_btn'>시작하기</button>
+    </div>
 
 {% endblock %}
 
@@ -81,12 +83,23 @@
     let score = 0; // 종합 점수
     let rest = '0';
     
-
-    // n초 후 측정 시작
-    setTimeout(function() {
-      check_status = 1;
-    }, 10000);
-
+    // n초 후 측정 시작 (클릭 이벤트 추가)
+    $('.full_btn').click(function(){
+      $('.button_area').empty();
+      var buttontag = ""
+      buttontag += "<button type='button' class ='full_btn'" // 삭제하는 코드로 이동
+      buttontag += "onclick="
+      buttontag += "location.href='/anchovy_train/stop'"
+      buttontag += ">중단하기</button>"
+      $('.button_area').append(buttontag);
+      setTimeout(function() {
+        check_status = 1;
+      }, 10000)
+    });
+    
+  
+    
+    
     ////////////////////////////
     // Canvas에 나오는 선 효과 주기
     function onResults(results) {
@@ -182,7 +195,7 @@
       if (rest == '1'){
         send_data.done(function(){ // 데이터를 받아오는 것을 성공했을 때 실행하기
 
-          add_database(excellent_count); // 데이터 베이스를 추가
+          add_database(excellent_count); // 데이터 베이스를 하나씩 추가
           console.log('시간 조정 중');
         });
         
@@ -199,6 +212,7 @@
         // 초를 계산하여 음성 재생
         setTimeout(function() {
             myAudio.play();
+           //$("#myAudio").get([0]).play();
         }, (sleep * 1000)-3500);
 
         // 2로 바꾸어 휴식 시간을 유지한다.

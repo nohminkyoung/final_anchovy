@@ -48,16 +48,25 @@
       </ul>
     </li>
   </ul> 
+  
 </div>
+
 
 <!-- 버튼 -->
 
 <div class="an_container">
-  <ul class="btn_box">
-    <li><button type="button" onclick="location.href='train_practice'">연습하기</button></li>
-    <li><button type="button" onclick="location.href='train_train'">운동하기</button></li>
-  </ul> 
+    <button type="button" class="full_btn submit">운동하기</button>
 </div> 
+
+
+
+<!-- 모두 선택 안한경우 팝업 -->
+<div class="popup_box not_all">
+  <div class="popup">
+    <p class="pop_txt">모든 사항을 선택해주세요</p>
+    <button type="button" class="pop_btn">확인</button>
+  </div>
+</div>
 
 {% endblock %}
 
@@ -66,10 +75,75 @@
   // 멸치 로고 노출
   $('#top_menu .logo').css('display', 'block');
 
-  // 버튼 클릭
+  // 데이터 지우는 링트로 이동
+  $('#top_menu .prev a').attr("href", "../back_kind") 
+
+
+   // 버튼 클릭
   $(".train_choice ul li ul.btn_list li").click(function(){
-      $(this).addClass("select");
-      $(this).siblings().removeClass("select");
+    $(this).addClass("select");
+    $(this).siblings().removeClass("select");
   });
+
+
+  
+
+  $(".submit").click(function(){
+    var select = $('.train_choice ul li ul.btn_list li.select button').text();
+    var kind = '{{train_data.train_kind}}'
+
+    if(select.length==8){
+      set=select.substr(0, 1);
+      count=select.substr(3, 1);
+      rest=select.substr(5, 2);
+    }else{
+        set=select.substr(0, 1);
+        count=select.substr(3, 2);
+        rest=select.substr(6, 2);
+    }
+    console.log(set)
+    console.log(count)
+    console.log(rest)
+    $.ajax({
+        type: "POST",
+        url: "{% url 'make_set' %}",
+        data: {"set" : set, 'count':count,'rest':rest},
+        dataType:'json',
+        success: function (data) {
+          console.log('성공들어옴')
+          
+        },
+        error: function (data) { 
+          if(select.length >= 8){
+            if (kind == 1){
+              location.href='train_squat'
+            }else if(kind == 2){
+              location.href='train_pushup'
+            }
+
+          }else{
+            $('.not_all').addClass('open');  
+            $('body').addClass('pop');  
+            $(this).css('z-index', '-1');
+          }
+        }
+    })
+
+    
+
+  });
+
+
+
+  // 팝업 닫을 때 
+  $(".pop_btn").click(function(){
+    $('.popup_box').removeClass('open');
+    $('body').removeClass('pop');
+  });
+
+
 </script>
 {% endblock %}
+
+
+

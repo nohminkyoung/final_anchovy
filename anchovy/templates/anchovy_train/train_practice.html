@@ -2,144 +2,172 @@
 {% load static %}
 
 {% block content %}
-<!-- css -->
-<!-- posenet.html -->
-<html>
-    <head>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0/dist/tf.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.2/dist/posenet.min.js"></script>
+<!-- mediapipe install -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'test.css' %}">
 
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@3.11.0/dist/tf-core.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@3.11.0/dist/tf-converter.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@3.11.0/dist/tf-backend-webgl.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@0.0.6/dist/pose-detection.min.js"></script>
+    <video id="video" style="display:none" autoplay playsinline></video> 
+    <div id="canvas_style">
+      <h1 class="test"></h1>
+      <h2 class="test2"></h2>
+      <h4 class="checkstatus"></h4>
+      <h4 class="score"></h4>
+      <h4 class="success"></h4>
+      <canvas class="output_canvas"></canvas> <!--화면 크기 변경 // 화면 크기에 맞게 변경 화면이 줄어든다 (찌글어짐).-->
+    </div>
+    <div class="landmark-grid-container" style="display:none"></div>
 
-        <style>
-            /* 이미지에 캔버스를 겹쳐서 그리기 위함 */
-            canvas {
-                position: absolute;
-                transform: translate(-50%, -50%);
-                top: 50%;
-                left: 50%;
-            }
-
-            video {
-                position: absolute;
-                transform: translate(-50%, -50%);
-                top: 50%;
-                left: 50%;
-            }
-        </style>
-    </head>
-
-    <body>
-        <video id="video" width="640" height="480" autoplay muted playsinline></video>
-        <canvas id="canvas"></canvas>
-    </body>
-
-    
-</html>
-
-<button type="button" class ='full_btn' onclick="location.href='../train_train'">중단하기</button>
 
 {% endblock %}
 
-
 {% block script %}
 <script type='text/javascript'>
-// posenet.js
 
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
+  var dh = window.innerHeight;
+  var dw = window.innerWidth;
+  const canvasElement = document.getElementsByClassName('output_canvas')[0]; // 비디오 출력을 위한 캔버스
+  canvasElement.width = dw;
+  canvasElement.height = dh;
 
-//webcam을 enable하는 코드
-navigator.mediaDevices.getUserMedia({video: true, audio: false}).then(function (stream) {
-    video.srcObject = stream;
-});
+</script>
+<script type="module">
+    const canvasElement = document.getElementsByClassName('output_canvas')[0]; // 비디오 출력을 위한 캔버스
+    const canvasCtx = canvasElement.getContext('2d'); // 2d 형태 캔버스 만들기 (그래프를 그려주는 것)
+    const landmarkContainer = document.getElementsByClassName('landmark-grid-container')[0]; // 3d 좌표를 만들기 위한 container
+    const grid = new LandmarkGrid(landmarkContainer);  // 3d 좌표에서 Value 값 받아오기
+    
 
-//then 안쪽이 function(model){} 이렇게 쓰는거랑 같다 (인자가 하나라 중괄호가 없는 것)
-posenet.load().then((model) => {
-    // 이곳의 model과 아래 predict의 model은 같아야 한다.
-    video.onloadeddata = (e) => {
-        //비디오가 load된 다음에 predict하도록. (안하면 콘솔에 에러뜸)
-        predict();
-    };
+    /////////////////////////////////
+    // 카운트에 한번만 실행할 필요가 있음 ////
+    /////////////////////////////////
+    
+    // 전체 카운트
+    let full_count = 0;
+    let excellent_count = 0;
+    
+    // 상태값 체크
+    let check_status;// 1: 푸쉬업 앉기 진행 , 2: 푸쉬업 읽어서기 진행
+    let check_stand; // 푸쉬업 내려갈 때 올라갈 때 위치값 고정
+    let prev = 0;
+    let score = 0; // 종합 점수
 
-    function predict() {
-        //frame이 들어올 때마다 estimate를 해야하니 함수화 시킴
-        model.estimateSinglePose(video).then((pose) => {
-            canvas.width = video.width; //캔버스와 비디오의 크기를 일치시킴
-            canvas.height = video.height;
+    // n초 후 측정 시작
+    setTimeout(function() {
+      check_status = 1;
+    }, 10000);
 
-            drawKeypoints(pose.keypoints, 0.6, context); //정확도 
-            drawSkeleton(pose.keypoints, 0.6, context);
-        });
-        requestAnimationFrame(predict); //frame이 들어올 때마다 재귀호출
-    }
-});
+    ////////////////////////////
 
-/* PoseNet을 쓰면서 사용하는 함수들 코드 - 그냥 복사해서 쓰기*/
+    // Canvas에 나오는 선 효과 주기
+    function onResults(results) {
+      
+      if (!results.poseLandmarks) {
+        grid.updateLandmarks([]);
+        return;
+      }
+    
+      //console.log(grid);
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.segmentationMask, 0, 0,
+                          canvasElement.width, canvasElement.height);
 
-//tensorflow에서 제공하는 js 파트
-const color = "aqua";
-const boundingBoxColor = "red";
-const lineWidth = 2;
+      // Only overwrite existing pixels.
+      canvasCtx.globalCompositeOperation = 'source-in';
+      canvasCtx.fillStyle = 'transparent'; //transparent 투명 상태로 지정
+      canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
+    
 
-function toTuple({y, x}) {
-    return [y, x];
-}
+      // Only overwrite missing pixels.
+      canvasCtx.globalCompositeOperation = 'destination-atop';
+      canvasCtx.drawImage(
+          results.image, 0, 0, canvasElement.width, canvasElement.height);
+    
+      canvasCtx.globalCompositeOperation = 'source-over';
+      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                     {color: '#FF0000', lineWidth: 4});
+      drawLandmarks(canvasCtx, results.poseLandmarks,
+                    {color: '#00FFFF', lineWidth: 2});
+      canvasCtx.restore();
+    
+      // javascript에서 가져온 값을 stream 형태로 지속적으로 받아온다.
+      var land = JSON.stringify(results.poseLandmarks);
+      let check_object = {'landmark':land, 'check_status': check_status, 'check_stand':check_stand, 'score': score, 'full_count':full_count, 'excellent_count': excellent_count, 'prev': prev}
+      $.ajax({
+        type: "POST",
+        url: "{% url 'push_up' %}",
+        data: check_object,
+        dataType:'json',
+        success: function (data) {
 
-function drawPoint(ctx, y, x, r, color) {
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, 2 * Math.PI);
-    ctx.fillStyle = color;
-    ctx.fill();
-}
+            // 값을 업데이트
+            check_stand = data.result.check_stand;
+            check_status = data.result.check_status;
+            score = data.result.score;
+            prev = data.result.prev;
+            full_count = data.result.full_count;
+            excellent_count = data.result.excellent_count;
 
-function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
-    ctx.beginPath();
-    ctx.moveTo(ax * scale, ay * scale);
-    ctx.lineTo(bx * scale, by * scale);
-    ctx.lineWidth = lineWidth;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-}
+            // 테스트 문구 노출
+            $(".test").empty();
+            $(".test").append(check_stand);
+            
+            $(".test2").empty();
+            $(".test2").append(results.poseLandmarks[0].y);
 
-function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
-    const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
+            $(".checkstatus").empty();
+            $(".checkstatus").append(check_status);
 
-    adjacentKeyPoints.forEach((keypoints) => {
-        drawSegment(toTuple(keypoints[0].position), toTuple(keypoints[1].position), color, scale, ctx);
-    });
-}
+            $(".score").empty();
+            $(".score").append(full_count + '회 진행');
+            console.log("총 횟수 "+ full_count)
 
-function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
-    for (let i = 0; i < keypoints.length; i++) {
-        const keypoint = keypoints[i];
+            $(".success").empty();
+            $(".success").append(excellent_count + '정확히 진행');
+            console.log("정확한 횟수 "+ excellent_count)
+            
 
-        if (keypoint.score < minConfidence) {
-            continue;
+        },
+        error: function (data) { //데이터 받아오기 실패 (준비 시간에는 데이터를 넣지 않고 실패 형태로 진행)
+          console.log('앵글 연결 실패');
         }
-
-        const {y, x} = keypoint.position;
-        drawPoint(ctx, y * scale, x * scale, 3, color);
+    });
+        
+    
+      grid.updateLandmarks(results.poseWorldLandmarks);
     }
-}
+    
+    // 모델을 가져온다
+    const pose = new Pose({locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+      }});
 
-function drawBoundingBox(keypoints, ctx) {
-    const boundingBox = posenet.getBoundingBox(keypoints);
+    // Pose의 옵션 값 설정
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      enableSegmentation: true,
+      smoothSegmentation: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
 
-    ctx.rect(
-        boundingBox.minX,
-        boundingBox.minY,
-        boundingBox.maxX - boundingBox.minX,
-        boundingBox.maxY - boundingBox.minY
-    );
-
-    ctx.strokeStyle = boundingBoxColor;
-    ctx.stroke();
-}
-
+    pose.onResults(onResults);
+    
+    const videoEl = document.getElementById('video');
+    // 카메라 실행 코드
+    const camera = new Camera(videoEl, {
+        onFrame: async () => {
+        await pose.send({image: videoEl});
+        },
+        width: 640,
+        height: 360,
+    });
+    
+    camera.start();
 </script>
 {% endblock %}

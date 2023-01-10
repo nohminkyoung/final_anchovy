@@ -8,8 +8,9 @@ class Train(models.Model):
     train_date = models.DateField(verbose_name = '운동 날짜')
     train_time = models.TimeField(verbose_name = '운동 시간')
     train_kind =  models.IntegerField(verbose_name = '운동 종류')
-    train_set = models.IntegerField(verbose_name = '운동 세트')
-    train_all_count = models.IntegerField(verbose_name = '운동 1세트당 횟수')
-    train_accurate_count = models.IntegerField(verbose_name = '정확하게한 횟수')
+    train_set = models.IntegerField(verbose_name = '운동 세트',null=True)
+    train_all_count = models.IntegerField(verbose_name = '운동 1세트당 횟수',null=True)
+    train_accurate_count = models.IntegerField(verbose_name = '정확하게한 횟수',null=True)
+    train_rest = models.IntegerField(verbose_name = '휴식시간',null=True)
         
     

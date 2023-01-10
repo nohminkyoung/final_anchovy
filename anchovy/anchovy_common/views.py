@@ -56,6 +56,7 @@ def signup(request):
 
         reg = re.compile(r'^[A-Z|a-z|1-9]+$')
 
+        print(len(nickname))
          # 에러시작
         #닉네임 에러
         if ' ' in nickname : 
@@ -65,6 +66,10 @@ def signup(request):
         elif not nickname :
             errMsg['error_nick'] ='* 닉네임은 필수사항입니다.'
             error_check = 1
+        elif len(nickname) >= 9: 
+            errMsg['error_nick'] ='* 닉네임은 8자를 초과 할 수 없습니다.'
+            error_check = 1
+            
 
         #아이디 에러
         if ' ' in username :

@@ -250,15 +250,15 @@
           // 기존에 추가를 해야 하는 코드 
           var full_count_text = "";
           var user_set_text = "";
-
-          full_count_text+= '<p id="user_set" class="an_title train_text_color">'+ full_count + '회</p>'
-          user_set_text+='<p id="user_count" class="text_style train_text_color">'+user_set + '세트</p>'
+          
+          full_count_text+= '<p id="user_count" class="text_style train_text_color">'+user_count + '회</p>'
+          user_set_text+= '<p id="user_set" class="an_title train_text_color">'+ user_set + '세트</p>'
 
           $("#user_count").empty();
           $("#user_count").append(full_count_text);
 
           $("#user_set").empty();
-          $("#user_count").append(user_set_text);         
+          $("#user_set").append(user_set_text);         
           
         });
       }

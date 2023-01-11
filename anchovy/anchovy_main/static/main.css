@@ -1,3 +1,7 @@
+.an_title_400 {
+    font-size: 6vw;
+}
+
 .user_status {
     line-height: 1.5;
 }
@@ -31,18 +35,27 @@
 /*********************************/
 /****** 상단 텍스트 영역 **********/
 /********************************/
-.main_title_area{
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
+
+.fixed_main_title{
+    position: fixed;
 }
+
 .setting_img_area img{
     width:10vw;
+    position: fixed;
+    right: 8%;
+    top : 10vw;
 }
 
 /*********************************/
 /****** 최근 기록 영역 ************/
 /********************************/
+.fixed_main_record{
+    position: fixed;
+    top: 26vw;
+    width: 84%;
+}
+
 .main_record_area{
     display: flex; 
     justify-content: flex-start;
@@ -70,6 +83,12 @@
 /****** 메인 캐릭터 영역 **********/
 /********************************/
 
+.fixed_main_char_area{
+    position: fixed;
+    width: 84%;
+    top:35vw;
+}
+
 .main_char_area {
     position: relative;
     display: flex;
@@ -77,6 +96,7 @@
     justify-content: space-around;
     align-items: center;
     margin-top: 4vw;
+    height: 80%;
   }
   
   /* 캐릭터 */
@@ -135,7 +155,20 @@
     width: 6vw;
 }
 
+/*버튼 영역*/
+.bottom_btn_area{
+    width: 84%;
+    position: fixed;
+    left: 8%;
+    bottom: 20vw;
+}
+
 /* 게이지 */ 
+.main_status_area{
+    position: fixed;
+    width: 84%;
+    bottom: 45vw;
+}
 
 /*********************************/
 /****** 풀 팝업 영역 ************/

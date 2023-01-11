@@ -1,0 +1,96 @@
+.train_tit{
+    position:relative
+}
+
+
+.canvas_area{
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.title_fixed {
+    transform: rotate(90deg);
+    width: 171%;
+    position: fixed;
+    top: 44%;
+    right: -70%;
+    z-index: 99999;
+}
+
+.train_background{
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 888;
+    background: rgb(0,0,0);
+    background: linear-gradient(360deg, rgba(0,0,0,0.5) 0%, transparent 49%, rgba(0,0,0,0.5) 100%);
+}
+.title_area{
+    display: flex;
+    justify-content: space-between;
+    padding-left:6vw;
+    padding-right:6vw;
+}
+
+#ex-status{
+    margin-top:0.5vw;
+}
+
+.title_area > div:nth-child(2) {
+    text-align: right;
+}
+
+.text_style{
+    font-size:8.2vw; 
+    font-weight: 700;
+}
+.train_text_color{
+    color : #fff;
+    text-shadow: #000 1px 0 10px;
+}
+
+.notice_text {
+    position: fixed;
+    top: 67vw;
+    width: 100%;
+    right: -40vw;
+    text-align: center;
+    transform: rotate(90deg);
+}
+
+.button_area{
+    transform: rotate(90deg);
+}
+
+.full_btn {
+    width: 13%;
+    height: 58vw;
+    padding: 3.5vw 0;
+    position: fixed;
+    left: 34%;
+    bottom: -42vw;
+    transform: translateX(-50%);
+    background: #000;
+    color: #fff;
+    border-radius: 2vw;
+    font-weight: 300;
+    z-index:999;
+}
+
+.output_canvas{
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+
+
+/* 포즈 라인 */
+.canvas_area img{
+    position: absolute;
+    left: -29%;
+    top: 18%;
+    height: 50%;
+    transform: rotate(83deg);
+}

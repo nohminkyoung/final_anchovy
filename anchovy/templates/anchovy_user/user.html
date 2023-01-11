@@ -44,9 +44,9 @@
 
     <!-- 랭킹 -->
     <div> 
-      {%for dd in sort_data %}
-        <ul class="rk_list">
-          <li>
+      <ul class="rank_list_box">
+        {%for dd in sort_data %}
+          <li class="rk_list">
             <a href="/anchovy_user/friend_detail/{{dd.username}}/">
               <ul class="rk_info">
                 <li>{{ dd.rank }}등</li>
@@ -56,18 +56,19 @@
               </ul>
             </a>
           </li> 
-        </ul>
-        {%if dd.username == user.username%} 
+          {%if dd.username == user.username%} 
           <div class ="my_rk">
               <ul class="rk_info">
-                  <li>{{dd.rank}}등</li>
-                  <li>{{ user.nickname }}</li>
-                  <li>{{ user.protein }}프로틴</li> 
-                  <li>{%include 'ch_img/ch_img.html'%}</li> 
+                <li>{{dd.rank}}등</li>
+                <li>{{ user.nickname }}</li>
+                <li>{{ user.protein }}프로틴</li> 
+                <li>{%include 'ch_img/ch_img.html'%}</li> 
               </ul>
-          </div>
-        {% endif %}
-      {% endfor %}
+            </div>
+            {% endif %}
+          {% endfor %}
+          <li></li> <!-- 삭제 x -->
+        </ul>
     </div>
     <!-- 랭킹 끝 -->
   </div>
@@ -93,11 +94,6 @@
     })
   });
 
-
-    
- 
-
 </script>
 {% endblock %}
-
 

@@ -56,6 +56,7 @@ def signup(request):
 
         reg = re.compile(r'^[A-Z|a-z|1-9]+$')
 
+        print(len(nickname))
          # 에러시작
         #닉네임 에러
         if ' ' in nickname : 
@@ -65,6 +66,10 @@ def signup(request):
         elif not nickname :
             errMsg['error_nick'] ='* 닉네임은 필수사항입니다.'
             error_check = 1
+        elif len(nickname) >= 9: 
+            errMsg['error_nick'] ='* 닉네임은 8자를 초과 할 수 없습니다.'
+            error_check = 1
+            
 
         #아이디 에러
         if ' ' in username :
@@ -91,6 +96,10 @@ def signup(request):
         
         elif password1.isdigit() :
             errMsg['error_pw1'] = '* 비밀번호가 전부 숫자로만 되어 있습니다. '
+            error_check = 1
+            
+        elif len(password1) < 8:
+            errMsg['error_pw1'] = '* 비밀번호가 너무 짧습니다.'
             error_check = 1
         
          #pw1+pw2의 에러

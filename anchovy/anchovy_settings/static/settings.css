@@ -6,11 +6,23 @@ body{overflow: hidden;}
 p.an_title {text-align: center;}
 
 .setting_list li {
-    padding:4vw 0 4vw 5.5vw; margin-bottom: 10px;
+    margin-bottom: 10px;
     color :white; background :black; 
     font-weight:300; text-align:left;
     border-radius: 2vw; 
 } 
+
+.setting_list li a{
+  display: inline-block;
+  width: 100%;
+  padding: 4vw 0 4vw 5.5vw;
+} 
+
+.setting_list li.logout{
+  padding: 4vw 0 4vw 5.5vw;
+}
+
+
 /* 깃허브 그림 */
 .people {text-align: center; margin:6vw 0;}
 .people img {width:10vw;}

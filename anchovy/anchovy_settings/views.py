@@ -19,7 +19,8 @@ def nickname(request):
     
     data = request.POST.get('newnickname')
     errMsg = {}
-
+    print(log_user_status)
+    print("########################################",log_user.nickname)
     if data != None:
         if data == '':
             errMsg['error'] = '닉네임을 입력해주세요'

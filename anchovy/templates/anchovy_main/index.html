@@ -13,20 +13,21 @@
 
 <div class="an_container">
   <!--상단 텍스트 영역-->
-  <div class="main_title_area">
-    <p class="an_title_400 user_status">
-      {% if user.is_authenticated %}
-      <strong>{{ log_user.nickname }} </strong>님은<br>
-      <strong>{{ log_status.protein}}프로틴</strong>으로 <strong>{{log_dic.name}}</strong>입니다.
-      
-      {% endif %}
-    </p>
-    <div class="setting_img_area">
-      <a href = '../../anchovy_settings/settings/'><img src="/static/image/setting.png"/ ></a>
+  <div class="fixed_main_title">
+    <div class="main_title_area">
+      <p class="an_title_400 user_status">
+        {% if user.is_authenticated %}
+        <strong>{{ log_user.nickname }} </strong>님은<br>
+        <strong>{{ log_status.protein}}프로틴</strong>으로 <strong>{{log_dic.name}}</strong>입니다.
+        
+        {% endif %}
+      </p>
+      <div class="setting_img_area">
+        <a href = '../../anchovy_settings/settings/'><img src="/static/image/setting.png"/ ></a>
+      </div>
     </div>
   </div>
-
-  <div>
+  <div class="fixed_main_record">
     <a href="/anchovy_main/view">
       <ul class="main_record_area">
         <li class="recode"></li>
@@ -36,12 +37,14 @@
     </div>
 
   <!--캐릭터 영역-->
-  <div class="main_char_area">
-    <div class="main_char">
-      
-    </div>
-    <div class="char_info" onclick="openNav()">
-        <img src="/static/image/info.png"/>
+  <div class="fixed_main_char_area">
+    <div class="main_char_area">
+      <div class="main_char">
+        
+      </div>
+      <div class="char_info" onclick="openNav()">
+          <img src="/static/image/info.png"/>
+      </div>
     </div>
   </div>
  
@@ -61,10 +64,12 @@
   </div>
   
   <!--버튼 영역-->
-  <div class="btn_box">
-    <button class="add_btn" type="button">성장하기</button>
-    <button type="button" onclick="location.href='/anchovy_train/'">운동하기</button>
-  </div> 
+  <div class="bottom_btn_area">
+    <div class="btn_box">
+      <button class="add_btn" type="button">성장하기</button>
+      <button type="button" onclick="location.href='/anchovy_train/'">운동하기</button>
+    </div>
+  </div>
 
   <!-- 팝업 시작 -->
   <div class="popup_box">

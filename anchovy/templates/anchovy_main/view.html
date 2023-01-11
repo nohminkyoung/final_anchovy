@@ -181,8 +181,13 @@
                         var Month = $('.cal_month').text().substr(0,2);
                     }
                     
+                    var n_date = new Date(Year+'-'+Month+'-'+day)
+                    var test_date = new Date()
                     var week = ['일', '월', '화', '수', '목', '금', '토'];
-                    var dw = week[new Date(Year+'-'+Month+"-"+day).getDay()];
+                   
+                    var dw = week[new Date().getDay(Year,Month,day)];
+                    
+                    //var dw = week[new Date(Year+'-'+Month+"-"+day).getDay()];
                     
                     // 클릭 시 해당 날짜에 대해 데이터 받아서 : html 에서 불러오기
                     // 데이터 베이스를 통해 연결 후 데이터 베이스 불러오기
@@ -235,7 +240,7 @@
                         }
                         else if (data.T_data[i].train_kind == 2){
                             Exercise += "<div class='exercise_text_area'><div class='left_arr'><div class='lower_body_circle_m'></div>";
-                            Exercise += "<p>스쿼트</p>";
+                            Exercise += "<p>푸쉬업</p>";
                             Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p></div>";
                             Exercise += "<p class='score'>"+data.T_data[i].train_accurate_count+"점</p>";
                             Exercise += "</div>";

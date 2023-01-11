@@ -7,6 +7,7 @@
 .title_fixed{
     width: 100%; margin:30px auto 0 auto; 
     position:fixed;
+    z-index: 99999;
 }
 .train_background{
     position:fixed;
@@ -22,12 +23,17 @@
     padding-right:6vw;
 }
 
+.title_area > div:nth-child(2) {
+    text-align: right;
+}
+
 .text_style{
     font-size:8.2vw; 
     font-weight: 700;
 }
 .train_text_color{
     color : #fff;
+    text-shadow: #000 1px 0 10px;
 }
 
 .notice_text{
@@ -35,4 +41,10 @@
     bottom:25vw;
     width:100%;
     text-align: center;
+}
+
+.output_canvas{
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
 }

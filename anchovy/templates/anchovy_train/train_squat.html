@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- mediapipe install -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'train_squat.css' %}">
+
+    <video id="video" style="display:none" autoplay playsinline></video>  <!-- 아이폰에서 playsinline를 넣지 않으면 재생이 되지 않는다. -->
+    <audio style="display:none" playsinline id="myAudio">
+      <source src="/static/sound/countdown.wav"/ >
+    </audio>
+    <div id="canvas_style">
+      
+      <div class="title_fixed ">
+        <div class="title_area">
+          <div>
+            <p id="ex-kind" class="text_style train_text_color">스쿼트</p>
+            <p id="ex-status" class="an_title_sm_700 train_text_color">대기중..</p>
+            <h1 class ='check'></h1>
+          </div>
+          <div>
+            <p id="user_set" class="an_title train_text_color">0세트</p>
+            <p id="user_count" class="text_style train_text_color">0회</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas_area">
+        <canvas class="output_canvas" width="640" height="480"></canvas> <!--화면 크기 변경 // 화면 크기에 맞게 변경 화면이 줄어든다 (찌글어짐).-->
+      </div>
+    </div>
+    <div class="landmark-grid-container" style="display:none"></div>
+    <p class="notice_text train_text_color">라인 안쪽으로 들어와 주세요</p>
+    
+    <div class="button_area">
+      <button type="button" class ='full_btn'>시작하기</button>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+
+  var dh = window.innerHeight;
+  var dw = window.innerWidth;
+  const canvasElement = document.getElementsByClassName('output_canvas')[0]; // 비디오 출력을 위한 캔버스
+  
+  $('.canvas_area').css({"height":dh});
+
+</script>
+<script type="module">
+    const myAudio = document.getElementById("myAudio");
+    const canvasElement = document.getElementsByClassName('output_canvas')[0]; // 비디오 출력을 위한 캔버스
+    const canvasCtx = canvasElement.getContext('2d'); // 2d 형태 캔버스 만들기 (그래프를 그려주는 것)
+    const landmarkContainer = document.getElementsByClassName('landmark-grid-container')[0]; // 3d 좌표를 만들기 위한 container
+    const grid = new LandmarkGrid(landmarkContainer);  // 3d 좌표에서 Value 값 받아오기
+    
+    const link = "{% url 'train_result' %}";
+    
+    // 임시 작업 '데이터 베이스에서 불러오는 작업 필요'
+    const max_set = '{{set}}';
+    const max_count = '{{all}}';
+    const sleep = '{{rest}}';
+    
+    // ajax 함수 변수
+    var send_data = null;
+
+    // 전체 카운트
+    let full_count = 0;
+    let excellent_count = 0;
+    let user_set = 0;
+    
+    // 상태값 체크
+    let check_status;// 1: 스쿼트 앉기 진행 , 2: 스쿼트 읽어서기 진행
+    let check_stand; // 스쿼트 내려갈 때 올라갈 때 위치값 고정
+    let check_ankle // 발목 좌표 받아오기
+    let prev = 0;
+    let score = 0; // 종합 점수
+    let rest = '0';
+    
+    // n초 후 측정 시작 (클릭 이벤트 추가)
+    $('.full_btn').click(function(){
+      $('.button_area').empty();
+      var buttontag = ""
+      buttontag += "<button type='button' class ='full_btn'" // 삭제하는 코드로 이동
+      buttontag += "onclick="
+      buttontag += "location.href='/anchovy_train/stop'"
+      buttontag += ">중단하기</button>"
+      $('.button_area').append(buttontag);
+
+      setTimeout(function() {
+        check_status = 1;
+      }, 10000)
+
+      setTimeout(function() {
+        myAudio.play();
+       //$("#myAudio").get([0]).play();
+    }, 10000-3500);
+
+    });
+    
+    
+    
+    
+    ////////////////////////////
+    // Canvas에 나오는 선 효과 주기
+    function onResults(results) {
+      
+      if (!results.poseLandmarks) {
+        grid.updateLandmarks([]);
+        return;
+      }
+    
+      //console.log(grid);
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.segmentationMask, 0, 0,
+                          canvasElement.width, canvasElement.height);
+
+      // Only overwrite existing pixels.
+      canvasCtx.globalCompositeOperation = 'source-in';
+      canvasCtx.fillStyle = 'transparent'; //transparent 투명 상태로 지정
+      canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
+    
+
+      // Only overwrite missing pixels.
+      canvasCtx.globalCompositeOperation = 'destination-atop';
+      canvasCtx.drawImage(
+          results.image, 0, 0, canvasElement.width, canvasElement.height);
+    
+      canvasCtx.globalCompositeOperation = 'source-over';
+      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                     {color: '#FF0000', lineWidth: 1});
+      drawLandmarks(canvasCtx, results.poseLandmarks,
+                    {color: 'transparent', lineWidth: 1});
+      canvasCtx.restore();
+      
+    // 정확하게 한 수치 휴식 때 함수를 통해서 데이터 베이스 넣기
+      function add_database(excellent_count){
+        //if (parseInt(user_set) == max_set){
+          $.ajax({
+            type: "POST",
+            url: "{% url 'add_database' %}",
+            data: {'excellent_count': excellent_count},
+            async:false,
+            dataType:'json',
+            success: function (data) {
+              console.log('데이터 베이스 넣기 성공')
+            },
+            
+            error: function (data) { //데이터 받아오기 실패 (준비 시간에는 데이터를 넣지 않고 실패 형태로 진행)
+              console.log('데이터 베이스 넣기 실패')
+            }
+          })
+        // }
+      };
+      
+
+      // javascript에서 가져온 값을 stream 형태로 지속적으로 받아온다.
+      var land = JSON.stringify(results.poseLandmarks);
+      let check_object = {'landmark':land, 'check_status': check_status, 'check_stand':check_stand, 'score': score, 'full_count':full_count, 'excellent_count': excellent_count, 'prev': prev, 'max_set': max_set, 'max_count': max_count, 'sleep': sleep, 'rest':rest, 'user_set':user_set,'check_ankle':check_ankle}
+      
+      var send_data = $.ajax({
+          type: "POST",
+          url: "{% url 'squat' %}",
+          data: check_object,
+          async:false,
+          dataType:'json',
+          timeout:1000,
+          success: function (data) {
+            // 데이터를 받아왔다면 갱신 시켜주기
+            check_stand = data.result.check_stand;
+            check_status = data.result.check_status;
+            score = data.result.score;
+            prev = data.result.prev;
+            full_count = data.result.full_count;
+            excellent_count = data.result.excellent_count;   
+            rest = data.result.rest;
+            user_set = data.result.user_set;
+            check_ankle = data.result.check_ankle;
+            
+
+            // Status 값에 따라 갱신
+            if (check_status == '2'){
+              $("#ex-status").empty();
+              $("#ex-status").append('스쿼트 진행 중...');
+            }
+            else if (rest == '2'){
+              $("#ex-status").empty();
+              $("#ex-status").append('휴식 중...');
+            }
+          },
+          error: function (data) { //데이터 받아오기 실패 (준비 시간에는 데이터를 넣지 않고 실패 형태로 진행)
+          }
+      });
+
+    //휴식 진행하기
+      if (rest == '1'){
+        send_data.done(function(){ // 데이터를 받아오는 것을 성공했을 때 실행하기
+
+          add_database(excellent_count); // 데이터 베이스를 하나씩 추가
+          console.log('시간 조정 중');
+        });
+        
+        // 만약에 휴식 시간 중 총 세트수가 동일하다면 결과 페이지로 이동하라
+        if (parseInt(user_set) == max_set){
+          location.href = link;
+        }
+
+        // 1을 통해서 초를 계산해서 0으로 바꿔주는 것을 한 번만 실행
+        setTimeout(function() {
+          rest = '0';
+          full_count = '0'
+        }, sleep * 1000);
+        // 초를 계산하여 음성 재생
+        setTimeout(function() {
+            myAudio.play();
+           //$("#myAudio").get([0]).play();
+        }, (sleep * 1000)-3500);
+
+        // 2로 바꾸어 휴식 시간을 유지한다.
+        rest = '2' ;
+        excellent_count = 0;
+      }
+      else if (rest == '2'){
+        console.log('휴식중입니다.')
+      }
+      else{
+        send_data.done(function(){ // 데이터를 받아오는 것을 성공했을 때 실행하기
+          // 기존에 추가를 해야 하는 코드
+          var full_count_text = "";
+          var user_set_text = "";
+
+          full_count_text+= '<p id="user_set" class="an_title train_text_color">'+ full_count + '회</p>'
+          user_set_text+='<p id="user_count" class="text_style train_text_color">'+user_set + '세트</p>'
+
+          $("#user_count").empty();
+          $("#user_count").append(full_count_text);
+
+          $("#user_set").empty();
+          $("#user_count").append(user_set_text);
+          
+        });
+      }
+    
+
+      send_data.fail(function(textStatus, jqXHR){
+          console.log('실패')
+      });
+
+
+      grid.updateLandmarks(results.poseWorldLandmarks);
+    }
+    
+    // 모델을 가져온다
+    const pose = new Pose({locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+    }});
+
+    // Pose의 옵션 값 설정
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      enableSegmentation: true,
+      smoothSegmentation: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+
+    pose.onResults(onResults);
+    
+    const videoEl = document.getElementById('video');
+    // 카메라 실행 코드
+    const camera = new Camera(videoEl, {
+        onFrame: async () => {
+        await pose.send({image: videoEl});
+        },
+        width: 640,
+        height: 480,
+    });
+    
+    camera.start();
+</script>
+{% endblock %}

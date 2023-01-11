@@ -181,8 +181,13 @@
                         var Month = $('.cal_month').text().substr(0,2);
                     }
                     
+                    var n_date = new Date(Year+'-'+Month+'-'+day)
+                    var test_date = new Date()
                     var week = ['일', '월', '화', '수', '목', '금', '토'];
-                    var dw = week[new Date(Year+'-'+Month+"-"+day).getDay()];
+                   
+                    var dw = week[new Date().getDay(Year,Month,day)];
+                    
+                    //var dw = week[new Date(Year+'-'+Month+"-"+day).getDay()];
                     
                     // 클릭 시 해당 날짜에 대해 데이터 받아서 : html 에서 불러오기
                     // 데이터 베이스를 통해 연결 후 데이터 베이스 불러오기
@@ -235,7 +240,7 @@
                         }
                         else if (data.T_data[i].train_kind == 2){
                             Exercise += "<div class='exercise_text_area'><div class='left_arr'><div class='lower_body_circle_m'></div>";
-                            Exercise += "<p>스쿼트</p>";
+                            Exercise += "<p>푸쉬업</p>";
                             Exercise += "<p>"+data.T_data[i].train_set+"세트 "+data.T_data[i].train_all_count+"회</p></div>";
                             Exercise += "<p class='score'>"+data.T_data[i].train_accurate_count+"점</p>";
                             Exercise += "</div>";
@@ -255,7 +260,7 @@
                         // 빼앗을 경우
                         else if (data.B_data[i].username == data.B_data[i].earn_username){
                             Notice += "<div class='exercise_text_area notice_data'><div class='steal_circle_m'></div>";
-                            Notice += "<p>"+data.B_data[i].earn_nickname+"님 🥳"
+                            Notice += "<p>"+data.B_data[i].lose_nickname+"님 🥳"
                             Notice += "<span class='an_sm_txt'>(프로틴 +1)</span> </p></div>";
                         }
                     }
@@ -377,34 +382,6 @@
 
                 
         }
-
-
-    
-
-    // django의 변수 불러오기
-
-    // 기록하기
-    /*
-    tag += "<div class='upper_body_circle_m'></div>";
-    tag += "<div class='lower_body_circle_m'></div>";
-
-    tag += "<div class='stolen_circle_m'></div>";
-    tag += "<div class='steal_circle_m'></div>";
-
-
-    Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
-    Exercise += "<p>스쿼트</p>";
-    Exercise += "<p>5세트 15회</p>";
-    Exercise += "<p>45점</p></div>";
-    Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
-    Exercise += "<p>스쿼트</p>";
-    Exercise += "<p>5세트 15회</p>";
-    Exercise += "<p>45점</p></div>;
-
-
-    Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
-    Notice += "<p>친구 1님에게 1프로틴을 뺏겼습니다.</p></div>";
-    */ 
-
+        
     </script>
 {% endblock %}

@@ -1,0 +1,257 @@
+.an_title_400 {
+    font-size: 6vw;
+}
+
+.user_status {
+    line-height: 1.5;
+}
+
+
+#sse_area{
+    background-color: #5F9DF7;
+    width:100%;
+    height: 10vw;
+    position:fixed;
+    top:-10vw;
+}
+
+.sse_test{
+    width: 82%;
+    height: 100%;
+    margin: auto;
+
+}
+.sse_test p{
+    line-height: 10vw;
+    color:#fff;
+}
+
+.main_img{
+    border : solid;
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+}
+
+/*********************************/
+/****** 상단 텍스트 영역 **********/
+/********************************/
+
+.fixed_main_title{
+    position: fixed;
+}
+
+.setting_img_area img{
+    width:10vw;
+    position: fixed;
+    right: 8%;
+    top : 10vw;
+}
+
+/*********************************/
+/****** 최근 기록 영역 ************/
+/********************************/
+.fixed_main_record{
+    position: fixed;
+    top: 26vw;
+    width: 84%;
+}
+
+.main_record_area{
+    display: flex; 
+    justify-content: flex-start;
+    flex-direction: row; 
+    align-items: flex-end;
+}
+.main_record_area li{
+    overflow: hidden; 
+    text-overflow:ellipsis; 
+}
+.main_record_area li:nth-child(2){
+    width:5vw;
+    text-align: center;
+    padding-bottom: 0.25vw;
+}
+.main_record_area img{
+    width: 5vw;
+    vertical-align: middle;
+}
+
+.tab_cont .rk_info li:nth-child(2) {width:25vw; overflow: hidden; text-overflow:ellipsis; white-space:nowrap;}
+.tab_cont .rk_info li img {width:11vw}
+
+/*********************************/
+/****** 메인 캐릭터 영역 **********/
+/********************************/
+
+.fixed_main_char_area{
+    position: fixed;
+    width: 84%;
+    top:35vw;
+}
+
+.main_char_area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4vw;
+    height: 80%;
+  }
+  
+  /* 캐릭터 */
+  .main_char {
+    margin:4vw 0 4vw
+}
+
+
+.main_char img{
+    width:55vw;
+}
+
+.char_info{
+    position: absolute;
+    top:0vw;
+    right:10vw;
+}
+
+.char_info img{
+    width: 6vw;
+}
+
+
+/*********************************/
+/****** 목표 점수 영역 ************/
+/********************************/
+
+.progress_area{
+    display: flex;
+    border-radius: 10vw;
+    width: 100%;
+    background-color: #d9d9d9;
+    margin-top: 3vw;
+    height: 5vw;
+}
+
+.progress_area div:nth-child(1){
+    background-color: #000;
+    border-radius: 10vw;
+    color: #f0f0f0;
+    text-align: right;
+    padding-right: 3vw;
+}
+
+.progress_area div:nth-child(2){
+    text-align: right;
+    padding-right: 3vw;
+}
+.coupon{
+    margin-top: 2.3vw;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.coupon img{
+    width: 6vw;
+}
+
+/*버튼 영역*/
+.bottom_btn_area{
+    width: 84%;
+    position: fixed;
+    left: 8%;
+    bottom: 20vw;
+}
+
+/* 게이지 */ 
+.main_status_area{
+    position: fixed;
+    width: 84%;
+    bottom: 45vw;
+}
+
+/*********************************/
+/****** 풀 팝업 영역 ************/
+/********************************/
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+  
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    margin-top: 30px;
+}
+.overlay-top{
+    display: flex; 
+    justify-content: space-between;
+    flex-direction: row; 
+    align-items: center;
+}
+.overlay-top li{
+    overflow: hidden; 
+    text-overflow:ellipsis; 
+}
+
+.overlay-top li:nth-child(2){
+    width:10vw;
+    height: 8vw;
+    text-align: center;
+}
+.overlay-top img{
+    width: 5vw;
+}
+
+.overlay_info li{
+    margin-bottom:2vw;
+    color:#555;
+}
+
+/*풀팝업 캐릭터 소개*/
+.overlay-char_info{
+    margin-bottom:10vw;
+}
+.char_info_status{
+    display: flex; 
+    justify-content: flex-start;
+    flex-direction: row; 
+    align-items: center;
+    margin-top:6vw;
+    height: 10vw;
+}
+.char_info_status div{
+    margin-right:6vw;
+}
+
+.char_info_status div img{
+    transform: rotate(-90deg);
+    width:20vw;
+}
+
+.info_b {
+    font-weight: 500;
+}
+
+/*********************************/
+/******     팝업 영역 ************/
+/********************************/
+
+.recode {margin-top:10px;}
+
+/* 캐릭터 설명 */
+.c_info {
+    border:3px solid #000; 
+    border-radius:4vw; 
+    padding:3.5vw; margin:10px 0;
+}
+
+

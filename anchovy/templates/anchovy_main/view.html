@@ -260,7 +260,7 @@
                         // 빼앗을 경우
                         else if (data.B_data[i].username == data.B_data[i].earn_username){
                             Notice += "<div class='exercise_text_area notice_data'><div class='steal_circle_m'></div>";
-                            Notice += "<p>"+data.B_data[i].earn_nickname+"님 🥳"
+                            Notice += "<p>"+data.B_data[i].lose_nickname+"님 🥳"
                             Notice += "<span class='an_sm_txt'>(프로틴 +1)</span> </p></div>";
                         }
                     }
@@ -382,34 +382,6 @@
 
                 
         }
-
-
-    
-
-    // django의 변수 불러오기
-
-    // 기록하기
-    /*
-    tag += "<div class='upper_body_circle_m'></div>";
-    tag += "<div class='lower_body_circle_m'></div>";
-
-    tag += "<div class='stolen_circle_m'></div>";
-    tag += "<div class='steal_circle_m'></div>";
-
-
-    Exercise += "<div class='exercise_text_area'><div class='upper_body_circle_m'></div>";
-    Exercise += "<p>스쿼트</p>";
-    Exercise += "<p>5세트 15회</p>";
-    Exercise += "<p>45점</p></div>";
-    Exercise += "<div class='exercise_text_area'><div class='lower_body_circle_m'></div>";
-    Exercise += "<p>스쿼트</p>";
-    Exercise += "<p>5세트 15회</p>";
-    Exercise += "<p>45점</p></div>;
-
-
-    Notice += "<div class='exercise_text_area'><div class='stolen_circle_m'></div>";
-    Notice += "<p>친구 1님에게 1프로틴을 뺏겼습니다.</p></div>";
-    */ 
 
     </script>
 {% endblock %}

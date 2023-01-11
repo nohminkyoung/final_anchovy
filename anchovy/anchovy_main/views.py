@@ -109,6 +109,7 @@ def cal(request):
             battle_arr['earn_nickname'] = j.earn_nickname
             B_data.append(battle_arr)
         
+        print(B_data)
 
         return HttpResponse(json.dumps({'T_data':T_data, 'B_data':B_data}))
 

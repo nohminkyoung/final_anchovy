@@ -26,7 +26,14 @@ def index(request):
     if target_status.character_lv == 0 and target_status.week_train_count >= 3:
         target_status.character_lv = 1
         target_status.save()
-
+    # ----------------------------------------------------- # 
+    # Train Null 값 제거
+    if target_status.week_train_count > 0: #week_train_count 값이 1이상일 경우 Null 값을 확인한다
+        target_train = Train.objects.filter()
+        for t_values in target_train:
+            if t_values.train_set == None or t_values.train_all_count == None or t_values.train_accurate_count == None:
+                t_values.delete()
+                
     # ----------------------------------------------------- # 
     # 프로틴 자동 갱신
     if target_status.protein >= 0 and target_status.protein <= 4:

@@ -26,6 +26,7 @@ urlpatterns = [
     path('stop', views.stop, name='stop')
     
     
+    
 
 
 

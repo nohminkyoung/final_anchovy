@@ -19,7 +19,8 @@ def nickname(request):
     
     data = request.POST.get('newnickname')
     errMsg = {}
-
+    print(log_user_status)
+    print("########################################",log_user.nickname)
     if data != None:
         if data == '':
             errMsg['error'] = '닉네임을 입력해주세요'
@@ -68,4 +69,4 @@ def delete(request):
     user_info = Custom_User.objects.get(username = request.user)
     logout(request) 
     user_info.delete()
-    return render(request, 'anchovy_common/login3.html')
+    return redirect('login')

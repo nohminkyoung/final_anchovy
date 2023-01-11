@@ -19,7 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('anchovy_common/', include('anchovy_common.urls')),
+    path('', include('anchovy_common.urls')),  # common을 ip주소만 통해서 바로 들어갈 수 있도록 하기위함
     path('anchovy_main/', include('anchovy_main.urls')),
     path('anchovy_notice/', include('anchovy_notice.urls')),
     path('anchovy_settings/', include('anchovy_settings.urls')),

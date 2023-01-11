@@ -52,9 +52,9 @@
 
 .notice_text {
     position: fixed;
-    bottom: 83vw;
+    top: 67vw;
     width: 100%;
-    left: -34vw;
+    right: -40vw;
     text-align: center;
     transform: rotate(90deg);
 }
@@ -82,4 +82,15 @@
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+
+
+/* 포즈 라인 */
+.canvas_area img{
+    position: absolute;
+    left: -29%;
+    top: 18%;
+    height: 50%;
+    transform: rotate(83deg);
 }

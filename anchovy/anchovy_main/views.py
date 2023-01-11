@@ -109,7 +109,6 @@ def cal(request):
             battle_arr['earn_nickname'] = j.earn_nickname
             B_data.append(battle_arr)
         
-        print(B_data)
 
         return HttpResponse(json.dumps({'T_data':T_data, 'B_data':B_data}))
 
@@ -199,7 +198,6 @@ def main_record(request):
                 max_value = '일주일 이내 3번 운동하기'
                 status_dic['goal'] = max_value
                 status_dic['ing'] = target_weektrain.week_train_count
-                print(status_dic['ing'])
                 status_dic['percent'] = target_weektrain.week_train_count*33.3333333333333333
             elif target_user_protein >= '0' and target_user_protein <= '4':
                 max_value = 120

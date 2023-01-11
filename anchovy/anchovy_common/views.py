@@ -98,7 +98,7 @@ def signup(request):
             errMsg['error_pw1'] = '* 비밀번호가 전부 숫자로만 되어 있습니다. '
             error_check = 1
             
-        elif len(password1) < 8:
+        elif len(password1) < 9:
             errMsg['error_pw1'] = '* 비밀번호가 너무 짧습니다.'
             error_check = 1
         

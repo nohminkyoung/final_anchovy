@@ -36,15 +36,26 @@
     text-shadow: #000 1px 0 10px;
 }
 
-.notice_text{
-    position:fixed;
-    bottom:25vw;
-    width:100%;
+.notice_text {
+    position: fixed;
+    bottom: 30%;
+    width: 100%;
     text-align: center;
+    right: 40vw;
 }
 
 .output_canvas{
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+
+/* 포즈 라인 */
+.canvas_area img {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    transform: translate(-50%, -50%);
+    height: 82%;
 }

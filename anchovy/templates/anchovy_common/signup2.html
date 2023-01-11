@@ -55,7 +55,7 @@
             <div class="form-group">
                 <label class="an_input" for="password1">비밀번호</label>
                 <input class="an_request pw_box check_pw1" type="password" class="form-control" name="password1" id="password1" 
-                    value="{{ form.password1.value|default_if_none:'' }}" placeholder="8~15 이내로 입력해주세요." maxlength=15>
+                    value="{{ form.password1.value|default_if_none:'' }}" placeholder="9~15 이내로 입력해주세요." maxlength=15>
             </div>
 
             <div class = "un_border pw1_msg_box">
@@ -94,7 +94,7 @@
     $('#top_menu .logo').css('display', 'block');
 
     // 연결된 주소 변경
-    $('#top_menu .prev a').attr("href", "../login") 
+    $('#top_menu .prev a').attr("href", "../../") 
 
     $("#duplication").click(function(){
         var id_values = $('.id_box').val();

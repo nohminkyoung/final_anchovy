@@ -593,3 +593,4 @@ def stop(request):
         del_data.delete()
         
     return redirect('main')
+    

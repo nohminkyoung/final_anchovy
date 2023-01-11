@@ -22,9 +22,6 @@
             <div>
               <p id="ex-kind" class="text_style train_text_color">푸쉬업</p>
               <p id="ex-status" class="an_title_sm_700 train_text_color">대기중..</p>
-              <h1 class="test1"></h1>
-              <h1 class="test2"></h1>
-              <h1 class="test3"></h1>
             </div>
             <div>
               <p id="user_set" class="an_title train_text_color">0세트</p>
@@ -36,10 +33,11 @@
 
       <div class="canvas_area">
         <canvas class="output_canvas" width="640" height="480"></canvas> <!--화면 크기 변경 // 화면 크기에 맞게 변경 화면이 줄어든다 (찌글어짐).-->
+        <img class = 'line_img' src = '/static/image/p_line.png'>
       </div>
     </div>
     <div class="landmark-grid-container" style="display:none"></div>
-    <p class="notice_text train_text_color">라인 안쪽으로 들어와 주세요</p>
+    <p class="notice_text train_text_color">라인과 같은 포즈를 취해주세요</p>
     
     <div class="button_area">
       <button type="button" class ='full_btn'>시<br>작<br>하<br>기</button>
@@ -99,12 +97,16 @@
 
       setTimeout(function() {
         check_status = 1;
-      }, 10000)
+      }, 15000)
 
       setTimeout(function() {
+        $('.line_img').css({'display':'none'})
+
+        $('.notice_text').css({'display':'none'})
+
         myAudio.play();
        //$("#myAudio").get([0]).play();
-    }, 10000-3500);
+    }, 15000-3500);
 
     });
     
@@ -191,11 +193,21 @@
             // Status 값에 따라 갱신
             if (check_status == '2'){
               $("#ex-status").empty();
-              $("#ex-status").append('푸쉬업 진행 중...');
+              $("#ex-status").append('진행 중...');
+              
+              $('.line_img').css({'display':'none'})
+
+              $('.notice_text').css({'display':'none'})
+
+              
             }
             else if (rest == '2'){
               $("#ex-status").empty();
               $("#ex-status").append('휴식 중...');
+
+              $('.line_img').css({'display':'inline'})
+
+              $('.notice_text').css({'display':'block'}) 
             }
           },
           error: function (data) { //데이터 받아오기 실패 (준비 시간에는 데이터를 넣지 않고 실패 형태로 진행)
@@ -246,18 +258,7 @@
           $("#user_count").append(full_count_text);
 
           $("#user_set").empty();
-          $("#user_count").append(user_set_text);
-
-          $(".test1").empty();
-          $(".test2").append("정확한 횟수 : "+excellent_count);
-
-          $(".test2").empty();
-          $(".test2").append("한 회당 점수"+score);
-
-          $(".test3").empty();
-          $(".test3").append("현재 단계"+check_status);
-
-          
+          $("#user_count").append(user_set_text);         
           
         });
       }

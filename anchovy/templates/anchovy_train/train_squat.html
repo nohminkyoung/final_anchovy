@@ -32,10 +32,11 @@
 
       <div class="canvas_area">
         <canvas class="output_canvas" width="640" height="480"></canvas> <!--화면 크기 변경 // 화면 크기에 맞게 변경 화면이 줄어든다 (찌글어짐).-->
+        <img src = '/static/image/s_line.png'>
       </div>
     </div>
     <div class="landmark-grid-container" style="display:none"></div>
-    <p class="notice_text train_text_color">라인 안쪽으로 들어와 주세요</p>
+    <p class="notice_text train_text_color">라<br>인<br>과<br> 같<br>은<br> 포<br>즈<br>를<br> 취<br>해<br>주<br>세<br>요</p>
     
     <div class="button_area">
       <button type="button" class ='full_btn'>시작하기</button>
@@ -98,6 +99,9 @@
       }, 10000)
 
       setTimeout(function() {
+        $('.line_img').css({'display':'none'})
+        $('.notice_text').css({'display':'none'})
+
         myAudio.play();
        //$("#myAudio").get([0]).play();
     }, 10000-3500);
@@ -188,11 +192,18 @@
             // Status 값에 따라 갱신
             if (check_status == '2'){
               $("#ex-status").empty();
-              $("#ex-status").append('스쿼트 진행 중...');
+              $("#ex-status").append('진행 중...');
+
+              $('.line_img').css({'display':'none'})
+              $('.notice_text').css({'display':'none'})
+
             }
             else if (rest == '2'){
               $("#ex-status").empty();
               $("#ex-status").append('휴식 중...');
+
+              $('.line_img').css({'display':'inline'})
+              $('.notice_text').css({'display':'block'}) 
             }
           },
           error: function (data) { //데이터 받아오기 실패 (준비 시간에는 데이터를 넣지 않고 실패 형태로 진행)

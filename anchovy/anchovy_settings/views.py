@@ -69,4 +69,4 @@ def delete(request):
     user_info = Custom_User.objects.get(username = request.user)
     logout(request) 
     user_info.delete()
-    return render(request, 'anchovy_common/login3.html')
+    return redirect('login')

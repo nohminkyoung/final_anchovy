@@ -25,7 +25,7 @@
 input.an_request::placeholder {color: #bcbcbc;}
 
 /* input 박스 크기 조절 */
-.an_request.nic_box{width:80%}
+.an_request.nic_box{width:85%}
 .an_request.id_box{width:66%}
 .an_request.pw_box{width:65%}
 

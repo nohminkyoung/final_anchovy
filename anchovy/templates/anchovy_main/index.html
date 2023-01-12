@@ -242,22 +242,7 @@
     $("#sse_area").click(function(){
       location.reload();
     });
-     // SSE 기능
-    if(typeof(EventSource) !== "undefined") {
-      var source = new EventSource("{% url 'stream' %}");
-      source.onmessage = function(event) {
-        if (event.data == '1'){
-          re_position = $('#sse_area').css('top');
-          if (re_position == msg_position){
-            $('#sse_area').animate({'top':'+=10vw'}, 500);
-          }
-        }
-        else if (event.data == '2'){
-          alert('로그인이 변경되었습니다.');
-          location.reload();
-        }
-      }; 
-    }
+    
 
      // 성장하기팝업 노출
      var coupons = "{{ log_status.coupon}}";
@@ -510,6 +495,23 @@
       $(".main_char").append(imgtag);
 
     
+    }
+
+     // SSE 기능
+     if(typeof(EventSource) !== "undefined") {
+      var source = new EventSource("{% url 'stream' %}");
+      source.onmessage = function(event) {
+        if (event.data == '1'){
+          re_position = $('#sse_area').css('top');
+          if (re_position == msg_position){
+            $('#sse_area').animate({'top':'+=10vw'}, 500);
+          }
+        }
+        else if (event.data == '2'){
+          alert('로그인이 변경되었습니다.');
+          location.reload();
+        }
+      }; 
     }
   </script>
 {% endblock %}

@@ -302,12 +302,13 @@
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
     var lv = "{{log_dic.lv}}";
-    var percent = "{{log_dic.percent}}" //퍼센트 추가
-    var user_goal = "{{log_dic.goal}}" // 유저 목표
-    var recent_date = "{{log_dic.recent_date}}" //최근 운동 날짜
-    var recent_ex = "{{log_dic.recent_ex}}" // 최근 운동 종류
-    var recent_score = "{{log_dic.recent_score}}" // 최근 운동 점수 합계
-    
+    var percent = "{{log_dic.percent}}"; //퍼센트 추가
+    var user_goal = "{{log_dic.goal}}"; // 유저 목표
+    var recent_date = "{{log_dic.recent_date}}"; //최근 운동 날짜
+    var recent_ex = "{{log_dic.recent_ex}}"; // 최근 운동 종류
+    var recent_score = "{{log_dic.recent_score}}"; // 최근 운동 점수 합계
+    var week_score = "{{log_dic.week_score}}";
+
     if (recent_ex == "없음"){
       // 최근 기록 데이터
       var recode_data = "운동 기록이 없습니다.";
@@ -324,7 +325,15 @@
       // 목표 설정하기
       $('.goal_score').empty()
       $('.goal_score').append(user_goal)
-    
+
+      // 유저 점수 작성하기
+      $('.user_progress').empty()
+      $('.user_progress').append()
+
+      // 유저 점수 주기
+      $('.user_progress').empty()
+      $('.user_progress').append(week_score)
+      
     goal_progress(percent); // 이곳에 넣어서 실행
 
     // 자동 게이지 진행

@@ -528,8 +528,6 @@ def add_database(request):
     excellent_count = request.POST.get('excellent_count') # 정확하게 진행한 횟수
     null_data.train_accurate_count = excellent_count
     null_data.save()
-    
-    
     #순차적으로 넣어야 한다. id 값을 받아와서 해당 아이디와 연결해서 진행을 한다.
     
     

@@ -7,6 +7,7 @@ import json
 from django.http import HttpResponse 
 import time
 from django.http import StreamingHttpResponse
+from datetime import datetime, timedelta 
 
 
 # index : Custom_User, User_status 참조 // 중앙 이미지 변경
@@ -67,9 +68,8 @@ def index(request):
     # 퍼센트 불러오기
     #print(target_training)
     target_weektrain = User_status.objects.get(username=target_user)
-    status_dic = {'lv':0, 'name':'', 'percent':0, 'recent_date':'', 'recent_ex':0, 'recent_score':0}
+    status_dic = {'lv':0, 'name':'', 'percent':0, 'recent_date':'', 'recent_ex':0, 'recent_score':0, 'week_score':0}
 
-    
     # 마지막 운동 기록
     try:
         target_recent = Train.objects.filter(username=target_user).last() 
@@ -79,14 +79,48 @@ def index(request):
         
         # 마지막 운동 전체 불러오기
         # 전체 운동 합계
-        target_training = Train.objects.filter(username=target_user).filter(train_date = target_date).aggregate(Sum('train_accurate_count')) 
+        
+        # 일주일 전까지 날짜 구하기
+        today = datetime.now() # 오늘 날짜
+        month30 = [2,4,6,9,11]
+        month31 = [1,3,5,7,8,10,12]
+        if today.strftime('%w') == '0': # 일요일 이였을 경우
+            check_num = 6
+        else:
+            check_num = int((today - timedelta(days=1)).strftime('%w')) # 그외 요일이였을 경우
+               
+        target_training = Train.objects.filter(username=target_user).filter(train_date = target_date).aggregate(Sum('train_accurate_count'))
+        all_dates = Train.objects.filter(username=target_user).values()
+        
+        # 찾을 년월일 계산
+        cal_day = int(today.strftime('%d')) - check_num
+        cal_month = int(today.strftime('%m'))
+        cal_year = int(today.strftime('%Y'))
+        
+        if cal_day < 1: #계산한 날짜가 1보다 작을경우
+            cal_month = int(today.strftime('%m')) -1 #1보다 작았을 경우 월을 1줄인다.
+            if int(today.strftime('%m')) in month30:
+                cal_day+=30
+            elif int(today.strftime('%m')) in month31:
+                cal_day+=31
+            else:
+                cal_day+=28
+            if cal_month < 1: # 해가 바뀌었을 경우 
+                cal_year -=1
+                
+        for all_date in all_dates:
+            check_day = int(all_date['train_date'].strftime('%d'))
+            check_month = int(all_date['train_date'].strftime('%m'))
+            check_year = int(all_date['train_date'].strftime('%Y'))
+            if check_year >= cal_year and check_month >= cal_month :  
+                if check_day >= cal_day:
+                    status_dic['week_score'] += all_date['train_accurate_count']
+    
     except:
         status_dic['recent_ex'] = '없음'
         status_dic['goal'] = "목표 :일주일 이내 3번 운동하기"
         status_dic['percent'] = 0
     else:
-        status_dic = {'lv':0, 'name':'', 'percent':0, 'recent_date':'', 'recent_ex':0, 'recent_score':0}
-
         #최근 날짜 기록
         status_dic['recent_date'] = re_date
         
@@ -97,8 +131,7 @@ def index(request):
             status_dic['recent_ex'] = '푸쉬업'
         
         # 최근 운동 정확한 점수 합계 and 변수 선언
-        status_dic['recent_score'] = target_training['train_accurate_count__sum'] 
-        user_value = target_training['train_accurate_count__sum']
+        status_dic['recent_score'] = target_training['train_accurate_count__sum']         
         
         # 목표 및 퍼센트 설정 하기
         if target_weektrain.protein == 0 and target_weektrain.character_lv == 0:
@@ -108,23 +141,22 @@ def index(request):
         elif target_weektrain.protein >= 0 and target_weektrain.protein <= 4:
             max_value = '목표 점수 : 120'
             status_dic['goal'] = max_value
-            status_dic['percent'] = int(round(user_value/120, 2) * 100)
+            status_dic['percent'] = int(round(status_dic['week_score']/120, 2) * 100)
         elif target_weektrain.protein >= 5 and target_weektrain.protein <= 11:
             max_value = '목표 점수 : 150'
             status_dic['goal'] = max_value
-            status_dic['percent'] = int(round(user_value/150, 2) * 100)
+            status_dic['percent'] = int(round(status_dic['week_score']/150, 2) * 100)
         elif target_weektrain.protein >= 12 and target_weektrain.protein <= 21:
             max_value = '목표 점수 : 180'
             status_dic['goal'] = max_value
-            status_dic['percent'] = int(round(user_value/180, 2) * 100)
+            status_dic['percent'] = int(round(status_dic['week_score']/180, 2) * 100)
         elif target_weektrain.protein >= 22:
             max_value = '목표 점수 : 210'
             status_dic['goal'] = max_value
-            status_dic['percent'] = int(round(user_value/210, 2) * 100)
-    
-    
+            status_dic['percent'] = int(round(status_dic['week_score']/210, 2) * 100)
+
+
     # ------------------------------------#
-    
     ## 가져온 lv값에 따라 목표 점수 전달
     if target_status.character_lv == 0:
         status_dic['lv'] = 0

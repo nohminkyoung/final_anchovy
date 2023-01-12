@@ -29,7 +29,7 @@ def index(request):
     # ----------------------------------------------------- # 
     # Train Null 값 제거
     if target_status.week_train_count > 0: #week_train_count 값이 1이상일 경우 Null 값을 확인한다
-        target_train = Train.objects.filter(username=login_user)
+        target_train = Train.objects.filter()
         for t_values in target_train:
             if t_values.train_set == None or t_values.train_all_count == None or t_values.train_accurate_count == None:
                 t_values.delete()

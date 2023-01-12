@@ -243,7 +243,7 @@
       location.reload();
     });
      // SSE 기능
-    if(typeof(EventSource) !== "undefined") {
+    /* if(typeof(EventSource) !== "undefined") {
       var source = new EventSource("{% url 'stream' %}");
       source.onmessage = function(event) {
         if (event.data == '1'){
@@ -256,8 +256,8 @@
           alert('로그인이 변경되었습니다.');
           location.reload();
         }
-      };
-    }
+      }; 
+    } */
 
      // 성장하기팝업 노출
      var coupons = "{{ log_status.coupon}}";

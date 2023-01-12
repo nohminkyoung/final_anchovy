@@ -315,8 +315,6 @@
 
             if (data.progress_data[0].status == '1'){
 
-              change_img(protein, lv);
-
               console.log(data.progress_data[0].percent)
               
               percent = data.progress_data[0].percent
@@ -329,7 +327,6 @@
               var goal_value ="";
               var ing_value ="";
 
-            
 
               recode_value += ""+recent_date+" "+recent_exercise+" "+recent_count+"점 달성";
               
@@ -404,99 +401,6 @@
     }
 
   
-
-    // 불러온 ID 값에 따라서 이미지 변경하기
-    {% comment %} function change_img(protein, lv){
-      var imgtag = '';
-
-      if (protein == 1){
-        // lv 1인 경우 멸치 이미지 추가
-        imgtag+= "<img src='/static/image/anchovy_1.png'/>"
-      }
-      else if (protein >= 2 && protein < 4){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/anchovy_2.png'/>"
-      }
-      else if (protein >= 4 && protein < 5){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/anchovy_3.png'/>"
-      }
-      else if (protein == 5){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/swordfish_1.png'/>"
-      }
-      // ********** 여기서 부터 진행 ****************//
-      else if (protein >= 6 && protein < 8){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/swordfish_2.png'/>"
-      }
-      else if (protein >= 8 && protein < 10){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/swordfish_3.png'/>"
-      }
-      else if (protein >= 10 && protein < 12){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/swordfish_4.png'/>"
-      }
-      else if (protein == 12){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/mackerel_1.png'/>"
-      }
-      else if (protein >= 13 && protein < 15){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/mackerel_2.png'/>"
-      }
-      else if (protein >= 15 && protein < 17){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/mackerel_3.png'/>"
-      }
-      else if (protein >= 17 && protein < 19){
-        // lv 2인 경우 황새치 이미지 추가
-        imgtag+= "<img src='/static/image/mackerel_4.png'/>"
-      }
-      else if (protein >= 19 && protein <22){
-        // lv 3인 경우 고등어 이미지 추가
-        imgtag+= "<img src='/static/image/mackerel_5.png'/>"
-      }
-      else if (protein == 22){
-        // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_1.png'/>"
-      }
-      else if (protein >= 23 && protein < 25){
-        // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_2.png'/>"
-      }
-      else if (protein >= 25 && protein < 27){
-        // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_3.png'/>"
-      }
-      else if (protein >= 27 && protein < 29){
-        // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_4.png'/>"
-      }
-      else if (protein >= 29 && protein < 31){
-        // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_5.png'/>"
-      }
-      else if (protein >= 31){
-        // lv 4인 경우 상어 이미지 추가
-        imgtag+= "<img src='/static/image/shark_6.png'/>"
-      }
-      // 중간에 프로틴을 빼앗겨서 0 이지만 lv이 1 이상의 경우
-      else if (protein == 0 && lv > 0){
-        imgtag+= "<img src='/static/image/anchovy_1.png'/>"
-      }
-      else {
-        // 나머지의 경우 뼈다귀 이미지 추가
-        imgtag+= "<img src='/static/image/bone.png'/>"
-      };
-      
-      $(".main_char").empty();
-      $(".main_char").append(imgtag);
-
-    
-    } {% endcomment %}
-
      // SSE 기능
      if(typeof(EventSource) !== "undefined") {
       var source = new EventSource("{% url 'stream' %}");

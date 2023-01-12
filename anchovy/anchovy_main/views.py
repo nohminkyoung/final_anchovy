@@ -105,15 +105,15 @@ def index(request):
             max_value = '목표 :일주일 이내 3번 운동하기'
             status_dic['goal'] = max_value
             status_dic['percent'] = target_weektrain.week_train_count*33.3333333333333333
-        elif target_weektrain.protein >= 0 and target_weektrain.protein <= '4':
+        elif target_weektrain.protein >= 0 and target_weektrain.protein <= 4:
             max_value = '목표 점수 : 120'
             status_dic['goal'] = max_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-        elif target_weektrain.protein >= 5 and target_weektrain.protein <= '11':
+        elif target_weektrain.protein >= 5 and target_weektrain.protein <= 11:
             max_value = '목표 점수 : 150'
             status_dic['goal'] = max_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-        elif target_weektrain.protein >= 12 and target_weektrain.protein <= '21':
+        elif target_weektrain.protein >= 12 and target_weektrain.protein <= 21:
             max_value = '목표 점수 : 180'
             status_dic['goal'] = max_value
             status_dic['percent'] = int(round(user_value/max_value, 2) * 100)

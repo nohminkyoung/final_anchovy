@@ -32,7 +32,7 @@
 
       <div class="canvas_area">
         <canvas class="output_canvas" width="640" height="480"></canvas> <!--화면 크기 변경 // 화면 크기에 맞게 변경 화면이 줄어든다 (찌글어짐).-->
-        <img src = '/static/image/s_line.png'>
+        <img src = '/static/image/s_line.png' class="line_img">
       </div>
     </div>
     <div class="landmark-grid-container" style="display:none"></div>
@@ -96,7 +96,7 @@
 
       setTimeout(function() {
         check_status = 1;
-      }, 10000)
+      }, 15000)
 
       setTimeout(function() {
         $('.line_img').css({'display':'none'})
@@ -104,7 +104,7 @@
 
         myAudio.play();
        //$("#myAudio").get([0]).play();
-    }, 10000-3500);
+    }, 15000-3500);
 
     });
     
@@ -247,7 +247,7 @@
           var full_count_text = "";
           var user_set_text = "";
 
-          full_count_text+= '<p id="user_count" class="text_style train_text_color">'+user_count + '회</p>'
+          full_count_text+= '<p id="user_count" class="text_style train_text_color">'+full_count + '회</p>'
           user_set_text+= '<p id="user_set" class="an_title train_text_color">'+ user_set + '세트</p>'
 
           $("#user_count").empty();

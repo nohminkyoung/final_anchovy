@@ -40,7 +40,7 @@
   <div class="fixed_main_char_area">
     <div class="main_char_area">
       <div class="main_char">
-        
+        {% include 'ch_img/ch_img4.html' %}
       </div>
       <div class="char_info" onclick="openNav()">
           <img src="/static/image/info.png"/>
@@ -406,7 +406,7 @@
   
 
     // 불러온 ID 값에 따라서 이미지 변경하기
-    function change_img(protein, lv){
+    {% comment %} function change_img(protein, lv){
       var imgtag = '';
 
       if (protein == 1){
@@ -495,7 +495,7 @@
       $(".main_char").append(imgtag);
 
     
-    }
+    } {% endcomment %}
 
      // SSE 기능
      if(typeof(EventSource) !== "undefined") {

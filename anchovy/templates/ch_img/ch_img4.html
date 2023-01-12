@@ -1,0 +1,69 @@
+<!--멸치-->
+{% if log_status.protein == 1%}  
+    <img src = "/static/image/anchovy_1.png" />
+{% endif%}
+{% if log_status.protein == 2 or log_status.protein == 3%}
+    <img src = "/static/image/anchovy_2.png" />
+{% endif%}
+{% if log_status.protein == 4%} 
+    <img src = "/static/image/anchovy_3.png" />
+{% endif%}
+<!--황새치-->
+{% if log_status.protein == 5%} 
+    <img src = "/static/image/swordfish_1.png" />
+{% endif%}
+{% if log_status.protein == 6 or log_status.protein == 7%}  
+    <img src = "/static/image/swordfish_2.png" />
+{% endif%}
+{% if log_status.protein == 8 or log_status.protein == 9 %} 
+    <img src = "/static/image/swordfish_3.png" />
+{% endif%}
+{% if log_status.protein == 10 or log_status.protein == 11%} 
+    <img src = "/static/image/swordfish_4.png" />
+{% endif%}
+<!--고등어-->
+{% if log_status.protein == 12%} 
+    <img src = "/static/image/mackerel_1.png" />
+{% endif%}
+{% if log_status.protein == 13 or log_status.protein == 14%} 
+    <img src = "/static/image/mackerel_2.png" />
+{% endif%}
+{% if log_status.protein == 15 or log_status.protein == 16 %} 
+    <img src = "/static/image/mackerel_3.png" />
+{% endif%}
+{% if log_status.protein == 17 or log_status.protein == 18%} 
+    <img src = "/static/image/mackerel_4.png" />
+{% endif%}
+{% if log_status.protein == 19 or log_status.protein == 20 or log_status.protein == 21%} 
+    <img src = "/static/image/mackerel_5.png" />
+{% endif%}
+<!--상어-->
+{% if log_status.protein == 22%} 
+    <img src = "/static/image/shark_1.png" />
+{% endif%}
+{% if log_status.protein == 23 or log_status.protein == 24%} 
+    <img src = "/static/image/shark_2.png" />
+{% endif%}
+{% if log_status.protein == 25 or log_status.protein == 26 %} 
+    <img src = "/static/image/shark_3.png" />
+{% endif%}
+{% if log_status.protein == 27 or log_status.protein == 28%} 
+    <img src = "/static/image/shark_4.png" />
+{% endif%}
+{% if log_status.protein == 29 or log_status.protein == 30 %} 
+    <img src = "/static/image/shark_5.png" />
+{% endif%}
+{% if log_status.protein >= 31 %} 
+        <img src = "/static/image/shark_6.png" />
+{% endif%}
+
+{% if log_status.protein == 0 %}
+    {% if log_status.character_lv == 0%}
+    <img src='/static/image/bone.png'/>
+    {% endif %}
+    {% if log_status.character_lv > 0%}
+        <img src = "/static/image/anchovy_1.png" />
+    {% endif%}
+{% endif %}
+
+

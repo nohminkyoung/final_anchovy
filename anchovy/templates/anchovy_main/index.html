@@ -302,83 +302,30 @@
     var protein = "{{ log_status.protein}}";
     var user = "{{log_user.username}}";
     var lv = "{{log_dic.lv}}";
-
-    // 화면이 실행 되었을 때 진행
-    $(document).ready(function(){
-
-      $.ajax({
-        type: "POST",
-        url: "{% url 'main_record' %}",
-        data: {"user" : user, "protein": protein},
-        dataType:'json',
-        success: function (data) {
-
-            if (data.progress_data[0].status == '1'){
-
-              console.log(data.progress_data[0].percent)
-              
-              percent = data.progress_data[0].percent
-              recent_date = data.recent_data[0].date
-              recent_exercise = data.recent_data[0].exercise
-              recent_count = data.recent_data[0].count
-
-
-              var recode_value = "";
-              var goal_value ="";
-              var ing_value ="";
-
-
-              recode_value += ""+recent_date+" "+recent_exercise+" "+recent_count+"점 달성";
-              
-              if (lv != 0) {
-                goal_value += "목표 점수 : "+data.progress_data[0].goal+""
-              }
-              else{
-                goal_value += "목표 : "+data.progress_data[0].goal+""
-              }
-              
-              ing_value += ""+data.progress_data[0].ing+""
-              
-              goal_progress(percent);
-
-              $(".user_progress").empty();
-              $(".user_progress").append(ing_value);
-
-              $(".recode").empty();
-              $(".recode").append(recode_value);
-
-              $(".goal_score").empty();
-              $(".goal_score").append(goal_value);
-            }
-            else{
-              change_img(protein, lv);
-              var goal_value ="";
-              percent = 0;
-              var recode_value = "기록 된 결과값 없어요!";
-              if (lv != 0) {
-                  goal_value += "목표 점수 : 0"
-              }
-              else{
-                  goal_value += "목표 : 일주일 이내 3번 운동하기"
-              }
-              
-              goal_progress(percent);
+    var percent = "{{log_dic.percent}}" //퍼센트 추가
+    var user_goal = "{{log_dic.goal}}" // 유저 목표
+    var recent_date = "{{log_dic.recent_date}}" //최근 운동 날짜
+    var recent_ex = "{{log_dic.recent_ex}}" // 최근 운동 종류
+    var recent_score = "{{log_dic.recent_score}}" // 최근 운동 점수 합계
     
-              $(".recode").empty();
-              $(".recode").append(recode_value);
-    
-              $(".goal_score").empty();
-              $(".goal_score").append(goal_value);
-              }
+    if (recent_ex == "없음"){
+      // 최근 기록 데이터
+      var recode_data = "운동 기록이 없습니다.";
+      $('.recode').empty()
+      $('.recode').append(recode_data)
+    }
+    else{
+      // 최근 기록 데이터
+      var recode_data = recent_date + " " + recent_ex + " " + recent_score + "점 달성";
+      $('.recode').empty()
+      $('.recode').append(recode_data)
+    }
 
-        },
-        error: function (data) { //데이터 받아오기 실패했습니다.
-          console.log('운동 결과 데이터 불러오기 실패');
-        }
-    });   
-      
-      goal_progress();
-    });
+      // 목표 설정하기
+      $('.goal_score').empty()
+      $('.goal_score').append(user_goal)
+    
+    goal_progress(percent); // 이곳에 넣어서 실행
 
     // 자동 게이지 진행
     function goal_progress(a){

@@ -13,7 +13,7 @@ from django.http import StreamingHttpResponse
 def index(request):
 
 
-    status_dic = {'lv':0, 'name':''}
+    status_dic = {'lv':0, 'name':'', 'percent':0, 'recent_date':'', 'recent_ex':'', 'recent_score':0, 'goal':''}
 
     login_user = request.user
 
@@ -29,7 +29,7 @@ def index(request):
     # ----------------------------------------------------- # 
     # Train Null 값 제거
     if target_status.week_train_count > 0: #week_train_count 값이 1이상일 경우 Null 값을 확인한다
-        target_train = Train.objects.filter()
+        target_train = Train.objects.filter(username=login_user)
         for t_values in target_train:
             if t_values.train_set == None or t_values.train_all_count == None or t_values.train_accurate_count == None:
                 t_values.delete()
@@ -63,8 +63,68 @@ def index(request):
             target_status.character_lv = 4
             target_status.save()
     # ------------------------------------#
+    
+    # 퍼센트 불러오기
+    #print(target_training)
+    target_weektrain = User_status.objects.get(username=target_user)
+    status_dic = {'lv':0, 'name':'', 'percent':0, 'recent_date':'', 'recent_ex':0, 'recent_score':0}
 
+    
+    # 마지막 운동 기록
+    try:
+        target_recent = Train.objects.filter(username=target_user).last() 
+        target_ex = target_recent.train_kind # 최근 운동 종류
+        target_date = target_recent.train_date
+        re_date = target_date.strftime("%y/%m/%d") #최근 운동 날짜
+        
+        # 마지막 운동 전체 불러오기
+        # 전체 운동 합계
+        target_training = Train.objects.filter(username=target_user).filter(train_date = target_date).aggregate(Sum('train_accurate_count')) 
+    except:
+        status_dic['recent_ex'] = '없음'
+        status_dic['goal'] = "목표 :일주일 이내 3번 운동하기"
+        status_dic['percent'] = 0
+    else:
+        status_dic = {'lv':0, 'name':'', 'percent':0, 'recent_date':'', 'recent_ex':0, 'recent_score':0}
 
+        #최근 날짜 기록
+        status_dic['recent_date'] = re_date
+        
+        # 최근 운동 기록
+        if target_ex == 1:
+            status_dic['recent_ex'] = '스쿼트'
+        elif target_ex == 2:
+            status_dic['recent_ex'] = '푸쉬업'
+        
+        # 최근 운동 정확한 점수 합계 and 변수 선언
+        status_dic['recent_score'] = target_training['train_accurate_count__sum'] 
+        user_value = target_training['train_accurate_count__sum']
+        
+        # 목표 및 퍼센트 설정 하기
+        if target_weektrain.protein == 0 and target_weektrain.character_lv == 0:
+            max_value = '목표 :일주일 이내 3번 운동하기'
+            status_dic['goal'] = max_value
+            status_dic['percent'] = target_weektrain.week_train_count*33.3333333333333333
+        elif target_weektrain.protein >= 0 and target_weektrain.protein <= '4':
+            max_value = '목표 점수 : 120'
+            status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
+        elif target_weektrain.protein >= 5 and target_weektrain.protein <= '11':
+            max_value = '목표 점수 : 150'
+            status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
+        elif target_weektrain.protein >= 12 and target_weektrain.protein <= '21':
+            max_value = '목표 점수 : 180'
+            status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
+        elif target_weektrain.protein >= 22:
+            max_value = '목표 점수 : 210'
+            status_dic['goal'] = max_value
+            status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
+    
+    
+    # ------------------------------------#
+    
     ## 가져온 lv값에 따라 목표 점수 전달
     if target_status.character_lv == 0:
         status_dic['lv'] = 0
@@ -159,79 +219,6 @@ def get_cal(request):
             
         return HttpResponse(json.dumps({'T_data':T_data, 'B_data':B_data}))
             
-                        
-@csrf_exempt 
-def main_record(request):
-    
-    if request.POST:
-        target_user = request.POST.get('user')
-        target_user_protein = request.POST.get('protein')
-        recent_data = []
-        progress_data = []
-        ## 최근 운동 기록 
-        try:
-            # --> 정확한 운동 점수 합산 (일주일 단위 추가해야 함)
-            # --> training 값은 단일 값이 아니기 때문에 filter 사용
-            target_training = Train.objects.filter(username=target_user).aggregate(Sum('train_accurate_count'))
-            target_weektrain = User_status.objects.get(username=target_user)
-            target_recent = Train.objects.filter(username=target_user).last() 
-            target_accurate_count = target_recent.train_accurate_count # 최근 운동 중 정확하게 한 운동
-            # --> 마지막 운동 기록
-            # -->최근 운동 기록 통합하기
-            target_date = target_recent.train_date
-            re_date = target_date.strftime("%y/%m/%d")
-        except:
-            status_dic = {'percent':0, 'goal':0, 'ing':0, 'week':0 , 'status':0}
-            progress_data.append(status_dic)
-            return HttpResponse(json.dumps({'progress_data':progress_data}))
-        else:
-            if target_recent.train_kind == 1:
-                ex = '스쿼트'
-            elif target_recent.train_kind == 2:
-                ex = '푸쉬업'
-            else:
-                pass
-
-            recent_record = {'date': re_date, 'count':target_accurate_count,'exercise':ex}
-
-            
-            ## 게이지 값 계산
-            status_dic = {'percent':0, 'goal':0, 'ing':0, 'week':0 , 'status':1}
-            
-            user_value = target_training['train_accurate_count__sum']
-            
-            
-            if target_user_protein == '0' and target_weektrain.character_lv == 0:
-                max_value = '일주일 이내 3번 운동하기'
-                status_dic['goal'] = max_value
-                status_dic['ing'] = target_weektrain.week_train_count
-                status_dic['percent'] = target_weektrain.week_train_count*33.3333333333333333
-            elif target_user_protein >= '0' and target_user_protein <= '4':
-                max_value = 120
-                status_dic['goal'] = max_value
-                status_dic['ing'] = user_value
-                status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-            elif target_user_protein >= '5' and target_user_protein <= '11':
-                max_value = 150
-                status_dic['goal'] = max_value
-                status_dic['ing'] = user_value
-                status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-            elif target_user_protein >= '12' and target_user_protein <= '21':
-                max_value = 180
-                status_dic['goal'] = max_value
-                status_dic['ing'] = user_value
-                status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-            elif target_user_protein >= '22':
-                max_value = 210
-                status_dic['goal'] = max_value
-                status_dic['ing'] = user_value
-                status_dic['percent'] = int(round(user_value/max_value, 2) * 100)
-            
-            recent_data.append(recent_record)
-            progress_data.append(status_dic)
-    
-            return HttpResponse(json.dumps({'recent_data':recent_data, 'progress_data':progress_data}))
-
 def coupon_active(request):
     if request.GET:
         login_user = request.user

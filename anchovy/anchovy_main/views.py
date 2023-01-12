@@ -256,7 +256,6 @@ def stream(request):
         tmp = User_status.objects.get(username=tmp_user) #처음 
         while True:
             # 정상 실행
-            time.sleep(20)
             login_user = request.user
             if tmp_user == login_user:
                 target_status = User_status.objects.get(username=login_user)

@@ -129,7 +129,7 @@ def new_steal(request):
             # 현재시간
             now = datetime.now()
             create_date = date(now.year, now.month, now.day)
-            create_time = time(now.hour, now.minute, 0)
+            create_time = time(now.hour, now.minute, now.second)
             # 베틀 데이터 추가
             status_data1 = battle(username = target_user.username, lose_username=user.username,lose_nickname=user.nickname,
                                 earn_username=target_user.username, earn_nickname=target_user.nickname,

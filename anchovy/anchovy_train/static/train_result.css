@@ -31,8 +31,16 @@
 }
 .result_list li strong {font-size:6vw}
 
+.set_txt {padding-top:1.4vw}
+
 /* 총 점수 */
-.total_score {text-align: center; margin-top:6vw; }
+.total_score {
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  bottom: 27vw;
+  transform: translateX(-50%);
+}
 .total_score strong {font-size:7vw}
 
 

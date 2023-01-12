@@ -52,6 +52,7 @@ thead.cal_week th{
     height: 10vw;
 }
 .marking_area{
+    position:relative;
     height:13vw;
 }
 #custom_set_date tr td{
@@ -87,23 +88,34 @@ thead.cal_week th{
 /*캘린더 안에 원 만들기*/
 .exercise_check{
     margin-top:2vw;
-    display: flex;
-    justify-content:center;
-    margin-bottom:1.5vw;
     
 }
 
 .exercise_check div:nth-child(1){
-    margin-right: 0.8vw;
+    position:absolute;
+    left:4.5vw;
+    top:0;
+}
+.exercise_check div:nth-child(2){
+    position:absolute;
+    left:8vw;
+    top:0;
 }
 
 .battle_check{
-    display: flex;
-    justify-content:center;
+    /* display: flex;
+    justify-content:center; */
 }
 
 .battle_check div:nth-child(1){
-    margin-right: 0.8vw;
+    position:absolute;
+    left:4.5vw;
+    top:3.5vw;
+}
+.battle_check div:nth-child(2){
+    position:absolute;
+    left:8vw;
+    top:3.5vw;
 }
 
 .upper_body_circle_m{
@@ -138,6 +150,29 @@ thead.cal_week th{
     width: 100%;
 }
 
+/* 오늘 날짜 아이콘 */
+.now_check_area + .marking_area .exercise_check div:nth-child(1){
+    position:absolute;
+    left:3.5vw;
+    top:0;
+}
+.now_check_area + .marking_area .exercise_check div:nth-child(2){
+    position:absolute;
+    left:7vw;
+    top:0;
+}
+
+.now_check_area + .marking_area .battle_check div:nth-child(1){
+    position:absolute;
+    left:3.5vw;
+    top:3.5vw;
+}
+
+.now_check_area + .marking_area .battle_check div:nth-child(2){
+    position:absolute;
+    left:7vw;
+    top:3.5vw;
+}
 .now_check{
     width: 8vw;
     height: 8vw;

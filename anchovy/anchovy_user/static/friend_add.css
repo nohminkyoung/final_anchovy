@@ -8,7 +8,12 @@
 }
 
 /* 입력란 */
-input.fd_id {width:100%; border:2px solid #000; padding:3vw 4.5vw; }
+input.fd_id {
+  width:100%; 
+  border:2px solid #000; 
+  padding:3vw 4.5vw; 
+  font-size: 4vw;
+}
 input.fd_id::placeholder {
   font-size:4vw; padding:0; margin:0;
   color: #BCBCBC;

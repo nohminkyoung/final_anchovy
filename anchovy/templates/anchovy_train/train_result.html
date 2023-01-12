@@ -25,14 +25,14 @@
   </div>
 
   <!-- 세트별 결과 -->
-  {% for set_1 in data_list %}
-    <ul class="result_list">
+  <ul class="result_list">
+      {% for set_1 in data_list %}
       <li>
         <p class="set_txt">{{set_1.set}}세트</p>
         <p class="success_count">{{set_1.train_all_count}}회 중 <strong>{{set_1.train_accurate_count}}회</strong> 성공</p>
       </li>
-    </ul>
-  {% endfor%}
+      {% endfor%}
+  </ul>
 
   <!-- 총 점수 -->
   <p class="total_score">총 {{all_score}}점 중 <strong>{{accurate_score}}점</strong> 달성!</p>

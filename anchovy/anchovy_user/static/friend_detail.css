@@ -1,3 +1,7 @@
+/* 해당 페이지에서만 공통 css 수정 */
+#top_menu{margin-bottom:0}
+.an_container{margin-top:8vw}
+
 .fd_info_box {
   display: flex;
   flex-direction: column;
@@ -7,6 +11,6 @@
 .fd_info_box .fd_id {font-size:4.5vw; margin-top: 3vw;}
 
 /* 캐릭터 */
-.fd_char {margin:15vw 0 7vw}
+.fd_char {margin:8vw 0 7vw}
 /* 프로틴 */
 .protein {font-weight: 500;}

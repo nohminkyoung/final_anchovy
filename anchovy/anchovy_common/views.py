@@ -40,7 +40,6 @@ def make_login(request): #auth의 login과 혼동이 안되게 이름 지정
 
 
 
-
 def signup(request):
     if request.method == "POST": # 포스트로 넘어올 때 
         
@@ -55,8 +54,9 @@ def signup(request):
         error_check = 0 # 에러 체크용
 
         reg = re.compile(r'^[A-Z|a-z|1-9]+$')
-
-        print(len(nickname))
+        reg_pw = re.compile(r'[A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ]')
+        
+        
          # 에러시작
         #닉네임 에러
         if ' ' in nickname : 
@@ -94,14 +94,15 @@ def signup(request):
             errMsg['error_pw1'] = '* 비밀번호는 필수사항 입니다. '
             error_check = 1
         
-        elif password1.isdigit() :
-            errMsg['error_pw1'] = '* 비밀번호가 전부 숫자로만 되어 있습니다. '
-            error_check = 1
-            
         elif len(password1) < 9:
             errMsg['error_pw1'] = '* 비밀번호가 너무 짧습니다.'
             error_check = 1
-        
+            
+        elif len(reg_pw.findall(password1)) == 0 :
+            errMsg['error_pw1'] = '영어 또는 한글을 포함해주세요. '
+            error_check = 1
+            
+            
          #pw1+pw2의 에러
         else:  
             if password1 != password2:
@@ -143,6 +144,8 @@ def signup(request):
         form = UserForm()
     
     return render(request, 'anchovy_common/signup2.html',{'form': form}) #form을 통헤 db에 저장
+
+
 
 def tutorial(request):
     return render(request, 'anchovy_common/tutorial.html')

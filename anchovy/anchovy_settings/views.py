@@ -26,6 +26,11 @@ def nickname(request):
             errMsg['error'] = '닉네임을 입력해주세요'
         elif ' ' in data:
             errMsg['error'] = '닉네임은 공백을 포함할 수 없습니다'
+            
+        elif len(data) >= 9: 
+            errMsg['error'] ='닉네임은 8자를 초과 할 수 없습니다.'
+    
+            
         else:
             log_user.nickname = data #custom_user의 닉네임 변경
             log_user.save()

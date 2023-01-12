@@ -33,6 +33,8 @@ def index(request):
     friend= Friend.objects.filter(username =request.user).values() # 로그인 된 내 상태 request.user로 불러옴
     sort_fiend = friend.order_by('id')
     
+    print(sort_fiend)
+    
     #html에 노출시킬 데이터
     return render(request, 'anchovy_user/user.html', {'sort_data':sort_data, 'sort_fiend':sort_fiend,'user':user} )
 
@@ -98,9 +100,10 @@ def add(request):
 def new_steal(request):
     if request.POST:
         user_id = request.POST.get('user_id')
-        print(user_id)
+        print('##########################',user_id)
         
         user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기(친구)
+        friend_status = Friend.objects.filter(fd_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기(친구)
     
         target_user = User_status.objects.get(username=request.user) #로그인된 정보(나)
         
@@ -117,6 +120,11 @@ def new_steal(request):
             target_user.coupon -= 1
             target_user.save()
             user.save()
+            
+            # #Freind db에도 반영이 필요
+            for freind in friend_status : 
+                freind.friend_protein -= 1
+                freind.save()
             
             # 현재시간
             now = datetime.now()
@@ -178,5 +186,7 @@ def btn_add(request):
             icon_status = 1 # 삭제를 함 / 검정 -> 흰색
             
     return HttpResponse(json.dumps({'icon_status':icon_status}))
+
+
         
     

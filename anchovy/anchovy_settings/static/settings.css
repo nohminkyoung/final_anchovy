@@ -130,12 +130,24 @@ p.an_title {text-align: center;}
 
 .qu_per_box {margin:0.4vw 0 3vw}
 
+.swiper-slide:nth-child(4) .qu_item{
+  width: 78%;
+  margin: 0 auto;
+}
+
+.swiper-slide:nth-child(3) .qu_item li{
+  font-size: 3.28vw;
+}
 
 .qu_item li {margin-bottom:2vw}
 .qu_txt strong {font-size:5.5vw}
-.qu_item img {width:34vw }
+.qu_item img {width:100% }
 .qu_item,.qu_per {font-size: 3.5vw;}
 
+
+.swiper-slide:nth-child(4) .qu_txt{
+  margin-bottom:4vw;
+}
 /* 프로그레스바 */
 .qu_pg {
   display:inline-block; 
@@ -157,7 +169,7 @@ p.an_title {text-align: center;}
 .team_info {margin-top:20vw}
 .team_info li {display:flex; margin-bottom:10vw}
 .team_info li img {width:20vw}
-.team_info .info_txt {margin-left:4vw}
+.team_info .info_txt {margin-left:4vw; padding-top: 3vw;}
 .team_info .info_txt span {display:block; margin-bottom:2vw; font-size:3.8vw}
 .team_info .info_txt span img {width:4.5vw; margin-left:2vw}
 .team_info .info_txt a {text-decoration-line: underline;}

@@ -175,3 +175,6 @@ def duplication(request):
                 
             
             return HttpResponse(json.dumps({'duplication': result }))
+
+
+

@@ -71,9 +71,10 @@ def index(request):
 
     # 마지막 운동 기록
     try:
-        target_recent = Train.objects.filter(username=target_user).last() 
+        target_recent = Train.objects.filter(username=target_user).last() # ID 값 기준 마지막 데이터 나옴
         target_ex = target_recent.train_kind # 최근 운동 종류
         target_date = target_recent.train_date
+        target_set = target_recent.train_set
         re_date = target_date.strftime("%y/%m/%d") #최근 운동 날짜
         
         # 마지막 운동 전체 불러오기
@@ -87,8 +88,20 @@ def index(request):
             check_num = 6
         else:
             check_num = int((today - timedelta(days=1)).strftime('%w')) # 그외 요일이였을 경우
-               
-        target_training = Train.objects.filter(username=target_user).filter(train_date = target_date).aggregate(Sum('train_accurate_count'))
+            
+        # 마지막 날의 합산  
+        #target_training = Train.objects.filter(username=target_user).filter(train_date = target_date).aggregate(Sum('train_accurate_count'))
+        
+        # 최근 마지막 운동 3세트 구하기
+        target_recenttrain = Train.objects.filter(username=target_user).filter(train_date = target_date).filter(train_kind=target_ex).order_by('-id')
+        
+        for idx,recenttrain in enumerate(target_recenttrain):
+            if idx == target_set:
+                break
+            status_dic['recent_score'] += recenttrain.train_accurate_count
+            
+        #####################################################################
+        
         all_dates = Train.objects.filter(username=target_user).values()
         
         # 찾을 년월일 계산
@@ -114,6 +127,7 @@ def index(request):
             if check_year >= cal_year and check_month >= cal_month :  
                 if check_day >= cal_day:
                     status_dic['week_score'] += all_date['train_accurate_count']
+                    
     
     except:
         status_dic['recent_ex'] = '없음'
@@ -130,7 +144,7 @@ def index(request):
             status_dic['recent_ex'] = '푸쉬업'
         
         # 최근 운동 정확한 점수 합계 and 변수 선언
-        status_dic['recent_score'] = target_training['train_accurate_count__sum']         
+        #status_dic['recent_score'] = target_training['train_accurate_count__sum']         
         
         # 목표 및 퍼센트 설정 하기
         if target_weektrain.protein == 0 and target_weektrain.character_lv == 0:

@@ -87,10 +87,10 @@
 
 
 /* 포즈 라인 */
-.canvas_area img{
+.canvas_area img {
     position: absolute;
     left: -29%;
-    top: 18%;
-    height: 50%;
+    top: 24%;
+    height: 43%;
     transform: rotate(83deg);
 }

@@ -29,7 +29,7 @@ def index(request):
         target_status.save()
     # ----------------------------------------------------- # 
     # Train Null 값 제거
-    target_train = Train.objects.all()
+    target_train = Train.objects.filter(username=login_user)
     for t_values in target_train:
         if (t_values.train_set == None) or (t_values.train_all_count == None) or (t_values.train_accurate_count == None):
             t_values.delete()

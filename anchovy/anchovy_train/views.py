@@ -497,7 +497,7 @@ def squat(request):
     # 계산 값 정산 시작
     elif result['check_status'] == '5':
         print('점수 정산 중')
-        if result['score'] >= 6: # 7점 이상일 경우에만 진행
+        if result['score'] >= 5: # 7점 이상일 경우에만 진행
             result['score'] = 0
             result['excellent_count'] = result['excellent_count'] + 1
             result['full_count'] =  result['full_count'] + 1

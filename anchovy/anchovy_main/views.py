@@ -280,7 +280,7 @@ def coupon_active(request):
             target_status.save()
             
             for freind in friends : 
-                freind.friend_protein -= 1
+                freind.friend_protein += 1
                 freind.save()
             
             

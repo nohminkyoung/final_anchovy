@@ -115,6 +115,7 @@ def new_steal(request):
             check =3
             
         elif target_user.coupon >= 1: # 쿠폰이 있을 때
+            check = 1
             target_user.protein += 1
             user.protein -= 1
             target_user.coupon -= 1
@@ -159,7 +160,7 @@ def new_steal(request):
             status_data_lose = Notice(notice_date=create_date, notice_time=create_time,
                                 username=user.username,notice_status=3, author_id=user.author_id)
             status_data_lose.save()
-            check = 1
+            
             
 
     print(user.protein)

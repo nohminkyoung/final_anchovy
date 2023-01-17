@@ -103,8 +103,8 @@ def new_steal(request):
         print('##########################',user_id)
         
         user = User_status.objects.get(author_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기(친구)
-        friend_status = Friend.objects.filter(fd_id=user_id) # 고유한 id 값이 user_id와 같은 값만 불러오기(친구)
-    
+        friend_status = Friend.objects.filter(fd_id=user_id) 
+        friend_mes = Friend.objects.filter(friend_name=request.ueser)
         target_user = User_status.objects.get(username=request.user) #로그인된 정보(나)
         
         
@@ -125,6 +125,10 @@ def new_steal(request):
             for freind in friend_status : 
                 freind.friend_protein -= 1
                 freind.save()
+                
+            for freind_me in friend_mes : 
+                freind_me.friend_protein += 1
+                freind_me.save()
             
             # 현재시간
             now = datetime.now()

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from anchovy_common.models import Custom_User, User_status, battle
 from anchovy_train.models import Train
+from anchovy_user.models import Friend
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -268,6 +269,7 @@ def coupon_active(request):
     if request.GET:
         login_user = request.user
         target_coupons = request.GET.get('coupons')
+        friends = Friend.objects.filter(friend_name = login_user)
 
         # 쿠폰 사용
         if int(target_coupons) > 0:
@@ -276,6 +278,12 @@ def coupon_active(request):
             target_status.coupon -= 1
             target_status.protein += 1
             target_status.save()
+            
+            for freind in friends : 
+                freind.friend_protein -= 1
+                freind.save()
+            
+            
         else:
             coupon_error = 1
             

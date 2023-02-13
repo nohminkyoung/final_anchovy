@@ -83,7 +83,7 @@
 <br>따라서 단계를 세분화 하여 조금 더 세밀한 알고리즘을 만들고자 다음과 같은 방법으로 진행하였습니다.
 
 
-![image](https://user-images.githubusercontent.com/111229365/218351115-32e78e63-87c0-4d1e-bba9-d446a09594bb.png)
+<img width="598" alt="KakaoTalk_Photo_2023-02-13-11-29-18" src="https://user-images.githubusercontent.com/111229365/218357176-704e7a91-3f93-4520-92c7-ee0d43e4ea60.png">
 <br>사용자가 세트, 횟수, 휴식시간을 선택한 후 운동이 시작되면 다음과 같은 알고리즘이 실행됩니다. 
 <br>(1) 사용자의 자세를 비교하기 위해 운동이 시작되면 최초 상태의 좌표를 기준에 저장합니다. 이 때 스쿼트는 골반, 푸쉬업은 코 좌표를 사용합니다. 
 <br>(2) 기준 좌표보다 아래로 내려가면 모델이 다운 상태로 인식하게 되고 이 상태에서, 앞서 설명드린 각각의 기준을 하나씩 만족할 때마다 스코어 점수를 1점씩 가중합니다. 
@@ -112,3 +112,8 @@ https://drive.google.com/file/d/1oK9f5HALQoajJ0BRhkdvAM1RnVUPmap8/view?usp=share
 ## 6. 협업
 ### 6-1. <a href="https://www.notion.so/yujin-yudi/Final_project-ai-anchovy-47e0dd70ac1a4467881ffa45afae7b21?pvs=4" target="_blank">Notion</a>
 ### 6-2. <a href="https://www.figma.com/file/bTBLmD9SCfWayJICqoQqpX/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1&t=2C214jTdJLgUVZNZ-1" target="_blank">Figma</a>
+
+
+
+
+

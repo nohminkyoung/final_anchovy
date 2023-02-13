@@ -3,31 +3,31 @@
 
 <br><br>
 
-## 개요
+## 1. 개요
 
-### 배경
+### 1-1. 배경
 <img width="797" alt="image" src="https://user-images.githubusercontent.com/111229365/218349224-38c751d0-a75d-4557-a230-aacd7934c948.png">
 
-### 목적
+### 1-2. 목적
 ![image](https://user-images.githubusercontent.com/111229365/218353342-ad594467-e74b-48f4-9765-524008713791.png)
 
-### 기대효과
+### 1-3. 기대효과
 ![image](https://user-images.githubusercontent.com/111229365/218353404-eb81a3bb-5db6-4d32-aace-7a5807614c7e.png)
 
-### 서비스 장점
+### 1-4. 서비스 장점
 ![image](https://user-images.githubusercontent.com/111229365/218353437-6d820eca-85e9-4759-83fa-e059d6a973e2.png)
 
 ![image](https://user-images.githubusercontent.com/111229365/218353478-23fb796f-5db4-4e4b-8512-fcf427a8f3e2.png)
 
 ![image](https://user-images.githubusercontent.com/111229365/218349599-92425b18-42b1-4f66-9338-8be622e9bd1b.png)
 
-### 개발환경
+### 1-5. 개발환경
 ![image](https://user-images.githubusercontent.com/111229365/218353522-d2152f74-1186-47ef-8081-389c70f12a1b.png)
 
 ***
-## 모델 history
+## 2. 모델 history
 
-### CNN
+### 2-1. CNN
 
 ![image](https://user-images.githubusercontent.com/111229365/218353555-a7caf5e6-0d36-4629-a69f-189327e78eb5.png)
 <br>CNN으로 분류모델을 제작하기 위해 AI HUB에서 필요한 데이터를 수집하였고, 모델의 정확성을 올리기 위해 전처리를 진행하였습니다.
@@ -44,7 +44,7 @@
 <br>다만 스켈레톤 추출모델을 자체 생성하기에는 시간 및 자원이 부족하였기 때문에 오픈 소스를 활용하는 것으로 결론을 내렸습니다.
 
 
-### open source
+### 2-2. open source
 ![image](https://user-images.githubusercontent.com/111229365/218353671-9d6daf9e-6d88-4d15-b060-a561ed2d2609.png)
 ![image](https://user-images.githubusercontent.com/111229365/218353713-790fe2aa-d135-4e35-b790-217b6eb865f2.png)
 ![image](https://user-images.githubusercontent.com/111229365/218353747-42eead56-b884-43de-b42c-d1f568ecdbf6.png)
@@ -53,14 +53,14 @@
 <br>앞서 모델들을 분석해본 결과, 가볍고 자세 인식률이 높은 미디어파이프로 최종 선정하였습니다.
 
 ***
-## 서비스 
-### 개념도
+## 3. 서비스 
+### 3-1. 개념도
 ![image](https://user-images.githubusercontent.com/111229365/218353927-d201dd6b-d9a5-43b2-9692-c24d5b7e46ae.png)
 
-### ERD
+### 3-2. ERD
 ![image](https://user-images.githubusercontent.com/111229365/218350964-f09f8943-8b70-4e41-9a33-2004008c90c9.png)
 
-### 구현
+### 3-3. 구현
 ![image](https://user-images.githubusercontent.com/111229365/218350998-04084a05-4737-4c9d-bac4-a17f36d551d4.png)
 <br>사람들의 모습과 스켈레톤 정보를 화면에 출력하기 위한 코드입니다.
 <br>미디어 파이프에 내장되어 있는 API 카메라를 통해 사용자의 핸드폰 카메라를 연결하고 데이터를전달 받습니다. 
@@ -98,10 +98,10 @@
 ![image](https://user-images.githubusercontent.com/111229365/218351129-6b7eb098-fde3-4811-a94f-50e1aef0cf89.png)
 
 ***
-## 시연영상
+## 4. 시연영상
 https://drive.google.com/file/d/1oK9f5HALQoajJ0BRhkdvAM1RnVUPmap8/view?usp=share_link
 ***
-## 팀원 정보
+## 5. 팀원 정보
 |이름|git|e-mail|
 |---|---|---|
 |노민경|nohminkyoung|nmk1188@naver.com|

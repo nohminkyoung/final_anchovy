@@ -110,6 +110,6 @@ https://drive.google.com/file/d/1oK9f5HALQoajJ0BRhkdvAM1RnVUPmap8/view?usp=share
 |전정훈|wjswjdgns|wjswjdgns7@naver.com|
 ***
 ## 6. 협업
-### 6-1. [Notion](https://www.notion.so/yujin-yudi/Final_project-ai-anchovy-47e0dd70ac1a4467881ffa45afae7b21?pvs=4)
-### 6-2. [Google Drive](https://drive.google.com/drive/folders/1-wczzkeo5k-lD5fDDWdV96aZj1CcrvL4)
-### 6-3. [Figma](https://www.figma.com/file/bTBLmD9SCfWayJICqoQqpX/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1&t=jUGtSGDXNJZ2ImVa-0)
+### 6-1. [Notion](https://www.notion.so/yujin-yudi/Final_project-ai-anchovy-47e0dd70ac1a4467881ffa45afae7b21?pvs=4){:target="_blank"}
+### 6-2. [Google Drive](https://drive.google.com/drive/folders/1-wczzkeo5k-lD5fDDWdV96aZj1CcrvL4){:target="_blank"}
+### 6-3. [Figma](https://www.figma.com/file/bTBLmD9SCfWayJICqoQqpX/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1&t=2C214jTdJLgUVZNZ-1){:target="_blank"}

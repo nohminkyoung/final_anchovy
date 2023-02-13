@@ -1,6 +1,7 @@
 
-![image](https://user-images.githubusercontent.com/111229365/218350616-b691f95f-6aa4-43f9-b9c7-eaeb61afa2ac.png)
+![image](https://user-images.githubusercontent.com/111229365/218354484-315efbfb-74f8-48a4-84ee-a14e3372c209.png)
 
+<br><br>
 
 ## 개요
 
@@ -49,7 +50,7 @@
 ![image](https://user-images.githubusercontent.com/111229365/218353747-42eead56-b884-43de-b42c-d1f568ecdbf6.png)
 ![image](https://user-images.githubusercontent.com/111229365/218353775-3539fe96-7f80-4aa1-bcea-fd5271668052.png)
 ![image](https://user-images.githubusercontent.com/111229365/218353808-6d143258-dc3e-403d-83f4-e37a1e786627.png)
-앞서 모델들을 분석해본 결과, 가볍고 자세 인식률이 높은 미디어파이프로 최종 선정하였습니다.
+<br>앞서 모델들을 분석해본 결과, 가볍고 자세 인식률이 높은 미디어파이프로 최종 선정하였습니다.
 
 ***
 ## 서비스 
